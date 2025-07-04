@@ -807,7 +807,7 @@
         let musicVolume = 0.7;
         let effectsVolume = 0.7;
         let currentTrackIndex = 0;
-        // let audioContext; // No longer needed for button sounds
+        let audioContext; 
 
         // Фоновая музыка
         const backgroundMusic = new Audio('https://pixabay.com/music/download/?id=63198');
@@ -815,7 +815,7 @@
         backgroundMusic.volume = musicVolume;
 
         // Новый звук для кнопок
-        const buttonSound = new Audio('zvuk knopok.wav'); // Assumes the WAV file is in the same directory
+        const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav'); 
         buttonSound.volume = effectsVolume;
 
         // DOM элементы
@@ -856,11 +856,11 @@
         const ratingButtons = document.getElementById('ratingButtons');
 
         // Инициализация AudioContext (only if specific programmatic sounds are still needed, e.g., timer ticks)
-        // function initAudioContext() {
-        //     if (!audioContext) {
-        //         audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        //     }
-        // }
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
 
         // Воспроизведение звукового эффекта
         function playSound(type) {
