@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍻 Правда или Действие 🎲</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* Общие стили */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans', sans-serif;
+            background-color: #0d0d1a;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 15px;
+            width: 90%;
+            max-width: 750px;
+            margin: 0 auto;
+            background-image: radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Стили для прелоадера */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 999;
+            transition: opacity 0.5s ease-out;
+            opacity: 1;
+        }
+
+        #preloader.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #preloader-title {
+            font-family: 'Merriweather', serif;
+            color: #e0e0e0;
+            font-size: clamp(2.5em, 6vw, 4em);
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+            margin-bottom: 50px;
+            animation: pulseText 2s infinite alternate;
+        }
+
+        @keyframes pulseText {
+            from { text-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(138, 43, 226, 0.6); }
+            to { text-shadow: 0 0 20px rgba(255, 0, 255, 1), 0 0 30px rgba(138, 43, 226, 1); }
+        }
+
+        /* Стили для прогресс-бара */
+        #progress-bar-container {
+            width: 80%;
+            max-width: 400px;
+            height: 25px;
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        #progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background-image: linear-gradient(to right, #8a2be2, #ff00ff, #00ffff);
+            border-radius: 15px;
+            transition: width 0.1s linear;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+        }
+
+        #progress-percentage {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+        
+        h1 {
+            font-family: 'Merriweather', serif;
+            color: #e0e0e0;
+            text-align: center;
+            margin: 5px 0 15px 0;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            font-size: clamp(1.8em, 4vw, 2.5em);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow: visible;
+        }
+        
+        .container {
+            background-color: rgba(20, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), 0 0 15px rgba(138, 43, 226, 0.5), 0 0 15px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+        
+        input {
+            flex-grow: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #8a2be2;
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            min-width: 150px;
+        }
+        
+        input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+        
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #8a2be2;
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            min-width: 150px;
+        }
+        
+        select:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+        
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            z-index: 1;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+            z-index: -1;
+        }
+
+        button.ripple::before {
+            width: 150%;
+            height: 150%;
+            opacity: 1;
+        }
+
+        button.button-reset::before {
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            transition: none !important;
+        }
+        
+        .btn-primary {
+            background-color: #8a2be2;
+            color: white;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            width: 150px;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            background-color: #9932cc;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #ff00ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            width: 150px;
+            text-align: center;
+        }
+        
+        .btn-success:hover {
+            background-color: #e600e6;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #00ffff;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn-danger:hover {
+            background-color: #00e6e6;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-purple {
+            background-color: transparent;
+            color: white;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .btn-purple:hover {
+            background-color: rgba(138, 43, 226, 0.2);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ff00ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e600e6;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-sound {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            padding: 6px 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-sound:hover {
+            background-color: rgba(40, 40, 80, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-rounds {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+            padding: 6px 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-rounds:hover {
+            background-color: rgba(40, 40, 80, 0.8);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        #playersList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 120px;
+            overflow-y: auto;
+            background-color: rgba(20, 20, 40, 0.5);
+            border-radius: 5px;
+            padding: 8px;
+            border: 1px solid #8a2be2;
+        }
+        
+        #playersList li {
+            padding: 6px;
+            margin-bottom: 4px;
+            background-color: rgba(30, 30, 60, 0.7);
+            border-radius: 5px;
+            border-left: 3px solid #ff00ff;
+            font-size: clamp(0.9em, 2vw, 1.1em);
+        }
+
+        #playersList li:nth-child(1) { color: #00ffff; }
+        #playersList li:nth-child(2) { color: #ff00ff; }
+        #playersList li:nth-child(3) { color: #8a2be2; }
+        #playersList li:nth-child(4) { color: #00ff00; }
+        #playersList li:nth-child(5) { color: #ffff00; }
+        #playersList li:nth-child(6) { color: #ff69b4; }
+        #playersList li:nth-child(7) { color: #7fffd4; }
+        #playersList li:nth-child(8) { color: #ffa500; }
+        #playersList li:nth-child(9) { color: #dda0dd; }
+        #playersList li:nth-child(10) { color: #adff2f; }
+
+        
+        #gameContainer {
+            display: none;
+        }
+        
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .info-box {
+            flex: 1;
+            min-width: 100px;
+            padding: 8px;
+            background-color: rgba(20, 20, 40, 0.6);
+            border-radius: 8px;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            text-align: center;
+        }
+
+        .info-box div {
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+
+        .info-box #currentPlayer {
+            font-weight: bold;
+            color: #ff00ff;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.7);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            margin-bottom: 0;
+            text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .info-box #timer {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            font-size: clamp(1.5em, 4vw, 2.5em);
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+
+        #timer.timer-warning {
+            color: #ff00ff;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 1);
+            animation: pulseTimer 0.8s infinite alternate;
+        }
+
+        @keyframes pulseTimer {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        #taskDisplay {
+            background-color: rgba(10, 10, 20, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: clamp(1em, 3vw, 1.2em);
+            font-weight: bold;
+            color: #e0e0e0;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            animation: borderGlow 3s infinite alternate;
+        }
+
+        @keyframes borderGlow {
+            0% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            }
+            33% { 
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            }
+            66% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 25px rgba(138, 43, 226, 0.6), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #8a2be2, #00ffff, #ff00ff) 1;
+            }
+            100% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 25px rgba(0, 255, 255, 0.6);
+                border-image: linear-gradient(90deg, #00ffff, #ff00ff, #8a2be2) 1;
+            }
+        }
+        
+        .choice-buttons, .rating-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        /* Новые стили для кнопок Правда/Действие */
+        .choice-buttons button {
+            background-color: transparent !important;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            animation: borderGlow 3s infinite alternate;
+            font-weight: bold;
+            min-width: 100px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+
+        .choice-buttons button:hover {
+            background-color: rgba(30, 30, 60, 0.3) !important;
+            transform: translateY(-3px);
+        }
+
+        .choice-buttons button:active {
+            transform: translateY(1px);
+        }
+        
+        /* Стили для кнопок рейтинга (лайк/дизлайк) */
+        .rating-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .rating-buttons button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            font-size: 1.8em;
+            background-color: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            animation: borderGlow 3s infinite alternate;
+            transition: all 0.3s;
+        }
+        
+        .rating-buttons button:hover {
+            background-color: rgba(30, 30, 60, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .rating-buttons button:active {
+            transform: translateY(1px);
+        }
+
+        #likeBtn {
+            color: #00ff00;
+        }
+
+        #dislikeBtn {
+            color: #ff0000;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+        }
+
+        .modal-content {
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 20px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+        }
+        
+        .trophy-icon {
+            font-size: clamp(3em, 8vw, 5em);
+            text-align: center;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+            margin-bottom: 15px;
+            animation: pulseTrophy 1.5s infinite alternate;
+        }
+
+        @keyframes pulseTrophy {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.1); opacity: 0.9; }
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding: 10px;
+            background-color: rgba(30, 30, 60, 0.7);
+            border-radius: 8px;
+            border-left: 4px solid #00ffff;
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+        }
+        
+        .winner {
+            color: #00ffff;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: clamp(1em, 3vw, 1.3em);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+
+        .glass-container {
+            margin: 15px 0;
+            perspective: 1000px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .glass {
+            width: 70px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatGlass 3s infinite ease-in-out;
+        }
+        
+        .glass-body {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            top: 30px;
+            left: 5px;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid;
+            border-image: linear-gradient(to top, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.3);
+            transform: translateZ(5px);
+        }
+        
+        .glass-bottom {
+            position: absolute;
+            width: 80px;
+            height: 12px;
+            background: linear-gradient(to right, #8a2be2, #00ffff);
+            border-radius: 50%;
+            top: 95px;
+            left: -5px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transform: translateZ(5px);
+        }
+        
+        .liquid {
+            position: absolute;
+            width: 50px;
+            height: 35px;
+            background: linear-gradient(to bottom, #ff00ff, #8a2be2);
+            top: 50px;
+            left: 10px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            animation: fillLiquid 2s ease-out forwards;
+            transform: translateZ(6px);
+        }
+        
+        .bubble {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0;
+            animation: bubbleUp 3s infinite ease-out;
+            transform: translateZ(7px);
+        }
+
+        .bubble:nth-child(1) { top: 60px; left: 15px; animation-delay: 0s; }
+        .bubble:nth-child(2) { top: 65px; left: 35px; animation-delay: 1s; }
+        .bubble:nth-child(3) { top: 55px; left: 25px; animation-delay: 2s; }
+
+        @keyframes floatGlass {
+            0% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(5deg); }
+            100% { transform: translateY(0) rotateX(0deg); }
+        }
+
+        @keyframes fillLiquid {
+            0% { height: 0; top: 85px; }
+            100% { height: 35px; top: 50px; }
+        }
+
+        @keyframes bubbleUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-25px) scale(1.2); opacity: 0; }
+        }
+
+        .modal .modal-title.drink-title {
+            font-size: clamp(1.3em, 4vw, 1.8em);
+            margin-bottom: 8px;
+            color: #ff00ff;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+        }
+
+        .modal .player-to-drink {
+            font-size: clamp(1.5em, 5vw, 2.2em);
+            font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+            margin-top: 8px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .sound-control {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 50;
+        }
+
+        .rounds-control {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 50;
+        }
+
+        .sound-panel {
+            position: fixed;
+            bottom: 50px;
+            right: 15px;
+            z-index: 50;
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            width: 180px;
+        }
+
+        .rounds-panel {
+            position: fixed;
+            bottom: 50px;
+            left: 15px;
+            z-index: 50;
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            width: 180px;
+        }
+        
+        .sound-panel.active, .rounds-panel.active {
+            display: flex;
+        }
+        
+        .volume-control {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .volume-control label {
+            font-size: 0.8em;
+            color: #e0e0e0;
+        }
+        
+        .volume-control input[type="range"] {
+            width: 100%;
+            accent-color: #8a2be2;
+        }
+        
+        .music-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .music-selector-btn, .rounds-selector-btn {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #8a2be2;
+            border-radius: 5px;
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8em;
+            text-align: left;
+        }
+        
+        .music-selector-btn:hover, .rounds-selector-btn:hover {
+            background-color: rgba(50, 50, 90, 0.8);
+            border-color: #ff00ff;
+        }
+        
+        .music-selector-btn.active, .rounds-selector-btn.active {
+            background-color: #8a2be2;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+        }
+
+        .rounds-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .rounds-selector label {
+            font-size: 0.8em;
+            color: #e0e0e0;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: clamp(1.5em, 6vw, 2em);
+                margin: 5px 0 10px 0;
+            }
+
+            .container {
+                padding: 12px;
+                margin-bottom: 10px;
+            }
+
+            .input-group {
+                flex-direction: column;
+                margin-bottom: 8px;
+            }
+
+            input, button, select {
+                width: 100%;
+                padding: 7px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 10px;
+            }
+
+            .info-box {
+                min-width: unset;
+                width: 100%;
+                padding: 7px;
+            }
+
+            #taskDisplay {
+                padding: 12px;
+                min-height: 70px;
+                margin: 10px 0;
+            }
+
+            .choice-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .rating-buttons {
+                flex-direction: row !important;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .rating-buttons button {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5em;
+            }
+
+            .sound-control, .rounds-control {
+                bottom: 10px;
+            }
+
+            .sound-control {
+                right: 10px;
+            }
+
+            .rounds-control {
+                left: 10px;
+            }
+
+            .sound-panel {
+                bottom: 45px;
+                right: 10px;
+                width: 160px;
+                padding: 10px;
+            }
+
+            .rounds-panel {
+                bottom: 45px;
+                left: 10px;
+                width: 160px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="preloader">
+        <div id="preloader-title">🎲 Правда или Действие 🎲</div>
+        <div id="progress-bar-container">
+            <div id="progress-bar-fill"></div>
+            <span id="progress-percentage">0%</span>
+        </div>
+    </div>
+
+    <h1>🎲 Правда или Действие 🎲</h1>
+    
+    <div class="container" id="setupContainer">
+        <div class="input-group">
+            <input type="text" id="playerInput" placeholder="Имя игрока">
+            <button class="btn-primary" id="addPlayerBtn">➕ Добавить</button>
+            <button class="btn-warning" id="startGameBtn" disabled>🎮 Начать игру</button>
+        </div>
+        <ul id="playersList"></ul>
+    </div>
+    
+    <div class="container" id="gameContainer">
+        <div class="info-row">
+            <div class="info-box">
+                <div id="roundInfo">Раунд: 1/10</div>
+                <div id="scoreInfo"></div>
+            </div>
+            <div class="info-box" style="text-align: center;">
+                <div id="currentPlayer"></div> 
+            </div>
+            <div class="info-box">
+                <div id="timer">5:00</div> 
+            </div>
+        </div>
+        
+        <div id="taskDisplay"></div>
+        
+        <div class="choice-buttons">
+            <button class="btn-primary" id="truthBtn">Правда</button>
+            <button class="btn-success" id="dareBtn">Действие</button>
+        </div>
+        
+        <div class="rating-buttons" id="ratingButtons" style="display: none;">
+            <button class="btn-success" id="likeBtn" disabled>✓</button>
+            <button class="btn-danger" id="dislikeBtn" disabled>✗</button>
+        </div>
+    </div>
+    
+    <div class="container" id="endGameContainer" style="display: none;">
+        <button class="btn-purple" id="endGameBtn">🏁 Завершить игру</button>
+    </div>
+    
+    <div class="modal" id="drinkModal">
+        <div class="modal-content">
+            <div class="modal-title drink-title">Игрок должен выпить!</div>
+            <span id="playerToDrink" class="player-to-drink"></span>
+            <div class="glass-container">
+                <div class="glass">
+                    <div class="glass-body"></div>
+                    <div class="glass-bottom"></div>
+                    <div class="liquid"></div>
+                    <div class="bubble" style="top: 60px; left: 20px;"></div>
+                    <div class="bubble" style="top: 65px; left: 40px;"></div>
+                    <div class="bubble" style="top: 70px; left: 30px;"></div>
+                </div>
+            </div>
+            <button class="btn-success" id="confirmDrinkBtn">Выпил!</button>
+        </div>
+    </div>
+    
+    <div class="modal" id="resultsModal">
+        <div class="modal-content">
+            <div class="trophy-icon">🏆</div> 
+            <div id="resultsList"></div>
+            <div id="winnerInfo" class="winner"></div>
+            <button class="btn-primary" id="closeResultsBtn">Закрыть</button>
+        </div>
+    </div>
+    
+    <!-- Кнопки управления звуком и раундами внизу страницы -->
+    <div class="sound-control">
+        <button id="soundToggle" class="btn-sound">🔊 Звук</button>
+    </div>
+
+    <div class="rounds-control">
+        <button id="roundsToggle" class="btn-rounds">🔢 Раунды</button>
+    </div>
+
+    <div class="sound-panel" id="soundPanel">
+        <div class="volume-control">
+            <label for="musicVolume">Громкость музыки</label>
+            <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="volume-control">
+            <label for="effectsVolume">Громкость эффектов</label>
+            <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Выбор музыки</label>
+            </div>
+            <button class="music-selector-btn active" data-track="0">🎵 Трек 1</button>
+            <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
+            <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
+            <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
+        </div>
+    </div>
+
+    <div class="rounds-panel" id="roundsPanel">
+        <div class="rounds-selector">
+            <label for="roundsSelect">Количество раундов</label>
+            <select id="roundsSelect">
+                <option value="5">5 раундов</option>
+                <option value="10" selected>10 раундов</option>
+                <option value="15">15 раундов</option>
+                <option value="20">20 раундов</option>
+                <option value="50">50 раундов</option>
+                <option value="100">100 раундов</option>
+            </select>
+        </div>
+
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Быстрый выбор</label>
+            </div>
+            <button class="rounds-selector-btn" data-rounds="5">5 раундов</button>
+            <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
+        </div>
+    </div>
+    
+    <script>
+        // Игровые данные
+        const players = [];
+        let currentPlayer = "";
+        const scores = {};
+        let gameActive = false;
+        let timerRunning = false;
+        let timeLeft = 300; // 5 минут в секундах
+        let roundsPlayed = 0;
+        let maxRounds = 10; // По умолчанию 10 раундов
+        let timerInterval;
+        let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
+
+        // Настройки звука
+        let soundEnabled = true;
+        let musicVolume = 0.7;
+        let effectsVolume = 0.7;
+        let currentTrackIndex = 0;
+        let audioContext;
+
+        // Фоновая музыка
+        const backgroundMusic = new Audio('https://pixabay.com/music/download/?id=63198');
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = musicVolume;
+
+        // DOM элементы
+        const setupContainer = document.getElementById('setupContainer');
+        const gameContainer = document.getElementById('gameContainer');
+        const endGameContainer = document.getElementById('endGameContainer');
+        const playerInput = document.getElementById('playerInput');
+        const addPlayerBtn = document.getElementById('addPlayerBtn');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const playersList = document.getElementById('playersList');
+        const roundInfo = document.getElementById('roundInfo');
+        const scoreInfo = document.getElementById('scoreInfo');
+        const currentPlayerDisplay = document.getElementById('currentPlayer');
+        const timerDisplay = document.getElementById('timer');
+        const taskDisplay = document.getElementById('taskDisplay');
+        const truthBtn = document.getElementById('truthBtn');
+        const dareBtn = document.getElementById('dareBtn');
+        const likeBtn = document.getElementById('likeBtn');
+        const dislikeBtn = document.getElementById('dislikeBtn');
+        const endGameBtn = document.getElementById('endGameBtn');
+        const drinkModal = document.getElementById('drinkModal');
+        const playerToDrink = document.getElementById('playerToDrink');
+        const confirmDrinkBtn = document.getElementById('confirmDrinkBtn');
+        const resultsModal = document.getElementById('resultsModal');
+        const resultsList = document.getElementById('resultsList');
+        const winnerInfo = document.getElementById('winnerInfo');
+        const closeResultsBtn = document.getElementById('closeResultsBtn');
+        const preloader = document.getElementById('preloader');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const roundsSelect = document.getElementById('roundsSelect');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundPanel = document.getElementById('soundPanel');
+        const roundsToggle = document.getElementById('roundsToggle');
+        const roundsPanel = document.getElementById('roundsPanel');
+        const musicVolumeControl = document.getElementById('musicVolume');
+        const effectsVolumeControl = document.getElementById('effectsVolume');
+        const ratingButtons = document.getElementById('ratingButtons');
+
+        // Инициализация AudioContext
+        function initAudioContext() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+        }
+
+        // Воспроизведение звукового эффекта
+        function playSound(type) {
+            if (!soundEnabled) return;
+            
+            initAudioContext();
+            
+            try {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Настройки звуков для разных событий
+                switch(type) {
+                    case 'addPlayer':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 800;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                        
+                    case 'startGame':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 600;
+                        gainNode.gain.value = effectsVolume * 0.5;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                        
+                    case 'truth':
+                        oscillator.type = 'triangle';
+                        oscillator.frequency.value = 500;
+                        gainNode.gain.value = effectsVolume * 0.4;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                        break;
+                        
+                    case 'dare':
+                        oscillator.type = 'square';
+                        oscillator.frequency.value = 400;
+                        gainNode.gain.value = effectsVolume * 0.4;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                        break;
+                        
+                    case 'like':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 1000;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                        
+                    case 'dislike':
+                        oscillator.type = 'sawtooth';
+                        oscillator.frequency.value = 300;
+                        gainNode.gain.value = effectsVolume * 0.5;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                        
+                    case 'timerTick':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 1200;
+                        gainNode.gain.value = effectsVolume * 0.2;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.05);
+                        break;
+                        
+                    case 'timerEnd':
+                        oscillator.type = 'square';
+                        oscillator.frequency.value = 200;
+                        gainNode.gain.value = effectsVolume * 0.6;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.5);
+                        break;
+                        
+                    case 'drink':
+                        // Двойной звук для эффекта "выпил"
+                        for (let i = 0; i < 2; i++) {
+                            const osc = audioContext.createOscillator();
+                            const gn = audioContext.createGain();
+                            osc.connect(gn);
+                            gn.connect(audioContext.destination);
+                            osc.type = 'sine';
+                            osc.frequency.value = 400 + (i * 200);
+                            gn.gain.value = effectsVolume * 0.4;
+                            osc.start(audioContext.currentTime + (i * 0.1));
+                            osc.stop(audioContext.currentTime + 0.2 + (i * 0.1));
+                        }
+                        break;
+                        
+                    case 'win':
+                        // Победный звук - восходящая последовательность
+                        for (let i = 0; i < 5; i++) {
+                            const osc = audioContext.createOscillator();
+                            const gn = audioContext.createGain();
+                            osc.connect(gn);
+                            gn.connect(audioContext.destination);
+                            osc.type = 'sine';
+                            osc.frequency.value = 500 + (i * 100);
+                            gn.gain.value = effectsVolume * 0.3;
+                            osc.start(audioContext.currentTime + (i * 0.1));
+                            osc.stop(audioContext.currentTime + 0.1 + (i * 0.1));
+                        }
+                        break;
+                        
+                    case 'closeResults':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 700;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                }
+            } catch (e) {
+                console.log("Ошибка воспроизведения звука:", e);
+            }
+        }
+
+        // Функция для форматирования времени в MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Function to get player color based on their index
+        function getPlayerColor(playerIndex) {
+            const colors = [
+                '#00ffff', // Голубой
+                '#ff00ff', // Розовый
+                '#8a2be2', // Индиго
+                '#00ff00', // Зеленый
+                '#ffff00', // Желтый
+                '#ff69b4', // Горячий розовый
+                '#7fffd4', // Аквамарин
+                '#ffa500', // Оранжевый
+                '#dda0dd', // Слива
+                '#adff2f'  // Салатовый
+            ];
+            return colors[playerIndex % colors.length];
+        }
+
+        // Function to handle button click animation
+        function handleButtonClick(button, callback) {
+            // Добавляем класс для анимации
+            button.classList.add('ripple');
+            
+            // Удаляем класс после завершения анимации
+            setTimeout(() => {
+                button.classList.remove('ripple');
+            }, 600);
+            
+            // Вызываем callback функцию
+            if (callback) {
+                callback();
+            }
+        }
+
+        // Инициализация - показ прелоадера, скрытие игрового контента
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAudioSettings();
+
+            setupContainer.style.display = 'none';
+            gameContainer.style.display = 'none';
+            endGameContainer.style.display = 'none';
+            preloader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            let currentProgress = 0;
+            const totalDuration = 3000;
+            const updateInterval = 50;
+            const steps = totalDuration / updateInterval;
+            const increment = 100 / steps;
+
+            const loadingInterval = setInterval(() => {
+                currentProgress += increment;
+                if (currentProgress >= 100) {
+                    currentProgress = 100;
+                    clearInterval(loadingInterval);
+                }
+                progressBarFill.style.width = `${currentProgress}%`;
+                progressPercentage.textContent = `${Math.floor(currentProgress)}%`;
+
+                if (currentProgress === 100) {
+                    setTimeout(() => {
+                        preloader.classList.add('fade-out');
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            setupContainer.style.display = 'block';
+                            document.body.style.overflow = 'auto';
+                        }, 500);
+                    }, 200);
+                }
+            }, updateInterval);
+        });
+
+        // Переключение панели звука
+        soundToggle.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                soundPanel.classList.toggle('active');
+                roundsPanel.classList.remove('active');
+            });
+        });
+
+        // Переключение панели раундов
+        roundsToggle.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                roundsPanel.classList.toggle('active');
+                soundPanel.classList.remove('active');
+            });
+        });
+
+        // Изменение громкости музыки
+        musicVolumeControl.addEventListener('input', function() {
+            musicVolume = parseFloat(this.value);
+            backgroundMusic.volume = musicVolume;
+            localStorage.setItem('musicVolume', musicVolume);
+        });
+
+        // Изменение громкости эффектов
+        effectsVolumeControl.addEventListener('input', function() {
+            effectsVolume = parseFloat(this.value);
+            localStorage.setItem('effectsVolume', effectsVolume);
+        });
+
+        // Выбор трека
+        document.querySelectorAll('.music-selector-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                handleButtonClick(this, () => {
+                    const trackIndex = parseInt(this.dataset.track);
+                    if (trackIndex !== currentTrackIndex) {
+                        currentTrackIndex = trackIndex;
+                        localStorage.setItem('currentTrack', currentTrackIndex);
+
+                        if (soundEnabled && !backgroundMusic.paused) {
+                            backgroundMusic.pause();
+                            backgroundMusic.currentTime = 0;
+                            backgroundMusic.play();
+                        }
+
+                        document.querySelectorAll('.music-selector-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Выбор количества раундов через select
+        roundsSelect.addEventListener('change', function() {
+            maxRounds = parseInt(this.value);
+            localStorage.setItem('maxRounds', maxRounds);
+            
+            // Обновляем активную кнопку быстрого выбора
+            document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.dataset.rounds) === maxRounds) {
+                    btn.classList.add('active');
+                }
+            });
+        });
+
+        // Быстрый выбор количества раундов
+        document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                handleButtonClick(this, () => {
+                    const rounds = parseInt(this.dataset.rounds);
+                    if (rounds !== maxRounds) {
+                        maxRounds = rounds;
+                        roundsSelect.value = rounds;
+                        localStorage.setItem('maxRounds', maxRounds);
+
+                        document.querySelectorAll('.rounds-selector-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Загрузка сохраненных настроек
+        function loadAudioSettings() {
+            const savedMusicVolume = localStorage.getItem('musicVolume');
+            const savedEffectsVolume = localStorage.getItem('effectsVolume');
+            const savedTrack = localStorage.getItem('currentTrack');
+            const savedRounds = localStorage.getItem('maxRounds');
+
+            if (savedMusicVolume) {
+                musicVolume = parseFloat(savedMusicVolume);
+                musicVolumeControl.value = musicVolume;
+                backgroundMusic.volume = musicVolume;
+            }
+
+            if (savedEffectsVolume) {
+                effectsVolume = parseFloat(savedEffectsVolume);
+                effectsVolumeControl.value = effectsVolume;
+            }
+
+            if (savedTrack) {
+                currentTrackIndex = parseInt(savedTrack);
+                document.querySelector(`.music-selector-btn[data-track="${currentTrackIndex}"]`).classList.add('active');
+            }
+
+            if (savedRounds) {
+                maxRounds = parseInt(savedRounds);
+                roundsSelect.value = maxRounds;
+                
+                // Активируем соответствующую кнопку быстрого выбора
+                document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseInt(btn.dataset.rounds) === maxRounds) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
+        }
+
+        // Добавление игрока
+        addPlayerBtn.addEventListener('click', function() {
+            handleButtonClick(this, addPlayer);
+        });
+        playerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleButtonClick(addPlayerBtn, addPlayer);
+            }
+        });
+
+        function addPlayer() {
+            const playerName = playerInput.value.trim();
+            if (playerName && !players.includes(playerName)) {
+                players.push(playerName);
+                scores[playerName] = 0;
+
+                const li = document.createElement('li');
+                li.textContent = playerName;
+                const playerIndex = players.length - 1;
+                li.style.color = getPlayerColor(playerIndex);
+
+                playersList.appendChild(li);
+
+                playerInput.value = '';
+
+                if (players.length >= 2) {
+                    startGameBtn.disabled = false;
+                }
+
+                playSound('addPlayer');
+            }
+        }
+
+        // Начало игры
+        startGameBtn.addEventListener('click', function() {
+            handleButtonClick(this, startGame);
+        });
+
+        function startGame() {
+            if (players.length < 2) {
+                alert("Нужно как минимум 2 игрока!");
+                return;
+            }
+
+            gameActive = true;
+            roundsPlayed = 0;
+            likeUsedInRound = false; // Сброс флага использования лайка
+            currentPlayer = players[Math.floor(Math.random() * players.length)];
+            updatePlayerInfo();
+            roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+
+            setupContainer.style.display = 'none';
+            gameContainer.style.display = 'block';
+            endGameContainer.style.display = 'block';
+
+            truthBtn.disabled = false;
+            dareBtn.disabled = false;
+            endGameBtn.disabled = false;
+
+            updateTaskDisplayForCurrentPlayer();
+
+            playSound('startGame');
+
+            if (soundEnabled) {
+                try {
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.play();
+                } catch (e) {
+                    console.log("Автовоспроизведение музыки заблокировано браузером");
+                }
+            }
+        }
+
+        // Получение задания (Правда/Действие)
+        truthBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => getTask('truth'));
+        });
+        dareBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => getTask('dare'));
+        });
+
+        function getTask(taskType) {
+            if (!gameActive) return;
+
+            let task;
+            if (taskType === 'truth') {
+                task = truths[Math.floor(Math.random() * truths.length)];
+                playSound('truth');
+            } else {
+                task = dares[Math.floor(Math.random() * dares.length)];
+                playSound('dare');
+            }
+
+            taskDisplay.textContent = task;
+            startTimer();
+
+            truthBtn.disabled = true;
+            dareBtn.disabled = true;
+            likeBtn.disabled = true;
+            dislikeBtn.disabled = true;
+            ratingButtons.style.display = 'none';
+
+            // Показываем кнопки оценки через 5 секунд
+            setTimeout(() => {
+                ratingButtons.style.display = 'flex';
+                likeBtn.disabled = likeUsedInRound; // Блокируем лайк, если он уже использован
+                dislikeBtn.disabled = false;
+            }, 5000);
+        }
+
+        // Оценка задания (Лайк/Дизлайк)
+        likeBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => rateTask(true));
+        });
+        dislikeBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => rateTask(false));
+        });
+
+        function rateTask(liked) {
+            if (!gameActive) return;
+
+            stopTimer();
+            ratingButtons.style.display = 'none';
+
+            if (liked) {
+                scores[currentPlayer] += 10;
+                likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
+                likeBtn.disabled = true; // Блокируем кнопку лайка
+                taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
+                updatePlayerInfo();
+
+                playSound('like');
+
+                setTimeout(() => {
+                    if (players.indexOf(currentPlayer) === players.length - 1) {
+                        roundsPlayed++;
+                        roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+                        likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+
+                        if (roundsPlayed >= maxRounds) {
+                            endGame();
+                            return;
+                        }
+                    }
+                    nextPlayer();
+                }, 2000);
+            } else {
+                playSound('dislike');
+                showDrinkWindow();
+            }
+        }
+
+        // Окно с рюмкой
+        function showDrinkWindow() {
+            playerToDrink.textContent = currentPlayer;
+            playerToDrink.style.color = getPlayerColor(players.indexOf(currentPlayer));
+            drinkModal.style.display = 'flex';
+            animateGlass();
+
+            playSound('drink');
+        }
+
+        confirmDrinkBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                drinkModal.style.display = 'none';
+                continueGameAfterDrink();
+            });
+        });
+
+        function animateGlass(step = 0, direction = 1) {
+            if (step < 5) {
+                const glass = document.querySelector('.glass');
+                glass.style.transform = `translateY(${direction * 5}px)`;
+
+                setTimeout(() => {
+                    animateGlass(step + 1, direction * -1);
+                }, 100);
+            } else {
+                const glass = document.querySelector('.glass');
+                glass.style.transform = 'translateY(0)';
+            }
+        }
+
+        function continueGameAfterDrink() {
+            updatePlayerInfo();
+            taskDisplay.textContent = "Игрок выпил! Готовим следующего игрока...";
+
+            setTimeout(() => {
+                if (players.indexOf(currentPlayer) === players.length - 1) {
+                    roundsPlayed++;
+                    roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+                    likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+
+                    if (roundsPlayed >= maxRounds) {
+                        endGame();
+                        return;
+                    }
+                }
+                nextPlayer();
+            }, 2000);
+        }
+
+        // Следующий игрок
+        function nextPlayer() {
+            const currentIndex = players.indexOf(currentPlayer);
+            const nextIndex = (currentIndex + 1) % players.length;
+            currentPlayer = players[nextIndex];
+
+            updatePlayerInfo();
+            updateTaskDisplayForCurrentPlayer();
+
+            truthBtn.disabled = false;
+            dareBtn.disabled = false;
+            likeBtn.disabled = true;
+            dislikeBtn.disabled = true;
+            ratingButtons.style.display = 'none';
+        }
+
+        function updateTaskDisplayForCurrentPlayer() {
+            const playerColor = getPlayerColor(players.indexOf(currentPlayer));
+            taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
+        }
+
+        // Завершение игры
+        endGameBtn.addEventListener('click', function() {
+            handleButtonClick(this, endGame);
+        });
+
+        function endGame() {
+            gameActive = false;
+            stopTimer();
+
+            backgroundMusic.pause();
+
+            playSound('win');
+
+            showResults();
+
+            // Сброс игры
+            gameContainer.style.display = 'none';
+            endGameContainer.style.display = 'none';
+            players.length = 0;
+            for (const key in scores) delete scores[key];
+            playersList.innerHTML = '';
+            startGameBtn.disabled = true;
+            playerInput.value = '';
+            taskDisplay.textContent = '';
+            likeUsedInRound = false; // Сбрасываем флаг
+            ratingButtons.style.display = 'none';
+        }
+
+        // Показ результатов
+        function showResults() {
+            resultsList.innerHTML = '';
+
+            const sortedPlayers = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+            sortedPlayers.forEach(([player, score], index) => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                const playerColor = getPlayerColor(players.indexOf(player));
+                div.innerHTML = `
+                    <span style="color: ${playerColor};">${index + 1}. ${player}</span>
+                    <span>${score} очков</span>
+                `;
+                resultsList.appendChild(div);
+            });
+
+            if (sortedPlayers.length > 0) {
+                const winner = sortedPlayers[0];
+                const winnerColor = getPlayerColor(players.indexOf(winner[0]));
+                winnerInfo.innerHTML = `Победитель: <span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${winner[0]}</span> с ${winner[1]} очками!`;
+            }
+
+            resultsModal.style.display = 'flex';
+        }
+
+        closeResultsBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                resultsModal.style.display = 'none';
+                setupContainer.style.display = 'block';
+                playSound('closeResults');
+            });
+        });
+
+        // Обновление информации об игроке
+        function updatePlayerInfo() {
+            const currentPlayerIndex = players.indexOf(currentPlayer);
+            const playerColor = getPlayerColor(currentPlayerIndex);
+
+            currentPlayerDisplay.style.color = playerColor;
+            currentPlayerDisplay.style.textShadow = `0 0 5px ${playerColor}`;
+            currentPlayerDisplay.textContent = currentPlayer;
+
+            let scoresText = "";
+            for (const [player, score] of Object.entries(scores)) {
+                const index = players.indexOf(player);
+                const color = getPlayerColor(index);
+                scoresText += `<span style="color: ${color};">${player}</span>: ${score}\n`;
+            }
+            scoreInfo.innerHTML = scoresText;
+        }
+
+        // Таймер
+        function startTimer() {
+            timeLeft = 300;
+            timerRunning = true;
+            updateTimer();
+            timerDisplay.classList.remove('timer-warning');
+        }
+
+        function updateTimer() {
+            if (timerRunning && timeLeft > 0) {
+                timerDisplay.textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 10) {
+                    timerDisplay.classList.add('timer-warning');
+                    if (timeLeft <= 5) {
+                        playSound('timerTick');
+                    }
+                } else {
+                    timerDisplay.classList.remove('timer-warning');
+                }
+
+                timeLeft--;
+                timerInterval = setTimeout(updateTimer, 1000);
+            } else if (timeLeft === 0) {
+                timerDisplay.textContent = "0:00";
+                timerDisplay.classList.remove('timer-warning');
+                playSound('timerEnd');
+                rateTask(false);
+            }
+        }
+
+        function stopTimer() {
+            timerRunning = false;
+            clearTimeout(timerInterval);
+            timerDisplay.classList.remove('timer-warning');
+        }
+
+        // Списки заданий (Правда и Действие)
+        const truths = [
+            "Назови свой самый постыдный момент.",
+            "Какое самое странное блюдо ты когда-либо ел?",
+            "Если бы ты мог поменяться жизнью с кем-то на один день, кто бы это был и почему?",
+            "Какая твоя самая большая несбыточная мечта?",
+            "Что бы ты сделал, если бы выиграл в лотерею 1 миллион долларов?",
+            "Какое твое самое раннее воспоминание?",
+            "Что тебя больше всего раздражает в других людях?",
+            "Какое одно из твоих тайных удовольствий?",
+            "Назови то, что ты делаешь, когда никто не видит.",
+            "Опиши свой идеальный день."
+        ];
+
+        const dares = [
+            "Изобрази своего любимого животного.",
+            "Спой песню без музыки.",
+            "Расскажи анекдот.",
+            "Сделай 10 приседаний.",
+            "Потанцуй как сумасшедший в течение 30 секунд.",
+            "Попробуй лизнуть свой локоть.",
+            "Поговори с акцентом до конца раунда.",
+            "Сделай комплимент человеку, сидящему слева от тебя.",
+            "Изобрази робота, идущего за водой.",
+            "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'"
+        ];
+    </script>
+</body>
+</html>
