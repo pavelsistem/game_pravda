@@ -1043,16 +1043,20 @@
         let musicVolume = 0.7;
         let effectsVolume = 0.7;
         let currentTrackIndex = 0;
-        let audioContext;
 
-        // Звук кнопок
+        // Звуковые эффекты
         const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav?raw=true');
         buttonSound.volume = 0.7;
-
-        // Фоновая музыка
-        const backgroundMusic = new Audio('https://pixabay.com/music/download/?id=63198');
+        
+        const backgroundMusic = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra.wav?raw=true');
         backgroundMusic.loop = true;
         backgroundMusic.volume = musicVolume;
+        
+        const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/vipit.wav?raw=true');
+        drinkSound.volume = effectsVolume;
+        
+        const resultsSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20rezultat.wav?raw=true');
+        resultsSound.volume = musicVolume;
 
         // DOM элементы
         const setupContainer = document.getElementById('setupContainer');
@@ -1101,135 +1105,6 @@
                 buttonSound.play();
             } catch (e) {
                 console.log("Ошибка воспроизведения звука кнопки:", e);
-            }
-        }
-
-        // Инициализация AudioContext
-        function initAudioContext() {
-            if (!audioContext) {
-                audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-        }
-
-        // Воспроизведение звукового эффекта
-        function playSound(type) {
-            if (!soundEnabled) return;
-            
-            initAudioContext();
-            
-            try {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Настройки звуков для разных событий
-                switch(type) {
-                    case 'addPlayer':
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 800;
-                        gainNode.gain.value = effectsVolume * 0.3;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.1);
-                        break;
-                        
-                    case 'startGame':
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 600;
-                        gainNode.gain.value = effectsVolume * 0.5;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.3);
-                        break;
-                        
-                    case 'truth':
-                        oscillator.type = 'triangle';
-                        oscillator.frequency.value = 500;
-                        gainNode.gain.value = effectsVolume * 0.4;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.2);
-                        break;
-                        
-                    case 'dare':
-                        oscillator.type = 'square';
-                        oscillator.frequency.value = 400;
-                        gainNode.gain.value = effectsVolume * 0.4;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.2);
-                        break;
-                        
-                    case 'like':
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 1000;
-                        gainNode.gain.value = effectsVolume * 0.3;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.1);
-                        break;
-                        
-                    case 'dislike':
-                        oscillator.type = 'sawtooth';
-                        oscillator.frequency.value = 300;
-                        gainNode.gain.value = effectsVolume * 0.5;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.3);
-                        break;
-                        
-                    case 'timerTick':
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 1200;
-                        gainNode.gain.value = effectsVolume * 0.2;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.05);
-                        break;
-                        
-                    case 'timerEnd':
-                        oscillator.type = 'square';
-                        oscillator.frequency.value = 200;
-                        gainNode.gain.value = effectsVolume * 0.6;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.5);
-                        break;
-                        
-                    case 'drink':
-                        // Двойной звук для эффекта "выпил"
-                        for (let i = 0; i < 2; i++) {
-                            const osc = audioContext.createOscillator();
-                            const gn = audioContext.createGain();
-                            osc.connect(gn);
-                            gn.connect(audioContext.destination);
-                            osc.type = 'sine';
-                            osc.frequency.value = 400 + (i * 200);
-                            gn.gain.value = effectsVolume * 0.4;
-                            osc.start(audioContext.currentTime + (i * 0.1));
-                            osc.stop(audioContext.currentTime + 0.2 + (i * 0.1));
-                        }
-                        break;
-                        
-                    case 'win':
-                        // Победный звук - восходящая последовательность
-                        for (let i = 0; i < 5; i++) {
-                            const osc = audioContext.createOscillator();
-                            const gn = audioContext.createGain();
-                            osc.connect(gn);
-                            gn.connect(audioContext.destination);
-                            osc.type = 'sine';
-                            osc.frequency.value = 500 + (i * 100);
-                            gn.gain.value = effectsVolume * 0.3;
-                            osc.start(audioContext.currentTime + (i * 0.1));
-                            osc.stop(audioContext.currentTime + 0.1 + (i * 0.1));
-                        }
-                        break;
-                        
-                    case 'closeResults':
-                        oscillator.type = 'sine';
-                        oscillator.frequency.value = 700;
-                        gainNode.gain.value = effectsVolume * 0.3;
-                        oscillator.start();
-                        oscillator.stop(audioContext.currentTime + 0.1);
-                        break;
-                }
-            } catch (e) {
-                console.log("Ошибка воспроизведения звука:", e);
             }
         }
 
@@ -1342,6 +1217,7 @@
             effectsVolume = parseFloat(this.value);
             localStorage.setItem('effectsVolume', effectsVolume);
             buttonSound.volume = effectsVolume;
+            drinkSound.volume = effectsVolume;
         });
 
         // Выбор трека
@@ -1418,6 +1294,7 @@
                 effectsVolume = parseFloat(savedEffectsVolume);
                 effectsVolumeControl.value = effectsVolume;
                 buttonSound.volume = effectsVolume;
+                drinkSound.volume = effectsVolume;
             }
 
             if (savedTrack) {
@@ -1468,7 +1345,7 @@
                     startGameBtn.disabled = false;
                 }
 
-                playSound('addPlayer');
+                playButtonSound();
             }
         }
 
@@ -1500,7 +1377,7 @@
 
             updateTaskDisplayForCurrentPlayer();
 
-            playSound('startGame');
+            playButtonSound();
 
             if (soundEnabled) {
                 try {
@@ -1526,10 +1403,10 @@
             let task;
             if (taskType === 'truth') {
                 task = truths[Math.floor(Math.random() * truths.length)];
-                playSound('truth');
+                playButtonSound();
             } else {
                 task = dares[Math.floor(Math.random() * dares.length)];
-                playSound('dare');
+                playButtonSound();
             }
 
             taskDisplay.textContent = task;
@@ -1570,10 +1447,14 @@
                 taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
                 updatePlayerInfo();
 
-                playSound('like');
+                playButtonSound();
 
                 setTimeout(() => {
-                    if (players.indexOf(currentPlayer) === players.length - 1) {
+                    const currentIndex = players.indexOf(currentPlayer);
+                    const nextIndex = (currentIndex + 1) % players.length;
+                    
+                    // Если это был последний игрок в раунде
+                    if (nextIndex === 0) {
                         roundsPlayed++;
                         roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
                         likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
@@ -1583,10 +1464,16 @@
                             return;
                         }
                     }
-                    nextPlayer();
+                    
+                    // Переходим к следующему игроку
+                    currentPlayer = players[nextIndex];
+                    updatePlayerInfo();
+                    updateTaskDisplayForCurrentPlayer();
+                    truthBtn.disabled = false;
+                    dareBtn.disabled = false;
                 }, 2000);
             } else {
-                playSound('dislike');
+                playButtonSound();
                 showDrinkWindow();
             }
         }
@@ -1598,7 +1485,10 @@
             drinkModal.style.display = 'flex';
             animateGlass();
 
-            playSound('drink');
+            if (soundEnabled) {
+                drinkSound.currentTime = 0;
+                drinkSound.play();
+            }
         }
 
         confirmDrinkBtn.addEventListener('click', function() {
@@ -1627,7 +1517,11 @@
             taskDisplay.textContent = "Игрок выпил! Готовим следующего игрока...";
 
             setTimeout(() => {
-                if (players.indexOf(currentPlayer) === players.length - 1) {
+                const currentIndex = players.indexOf(currentPlayer);
+                const nextIndex = (currentIndex + 1) % players.length;
+                
+                // Если это был последний игрок в раунде
+                if (nextIndex === 0) {
                     roundsPlayed++;
                     roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
                     likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
@@ -1637,26 +1531,17 @@
                         return;
                     }
                 }
-                nextPlayer();
+                
+                // Переходим к следующему игроку
+                currentPlayer = players[nextIndex];
+                updatePlayerInfo();
+                updateTaskDisplayForCurrentPlayer();
+                truthBtn.disabled = false;
+                dareBtn.disabled = false;
             }, 2000);
         }
 
-        // Следующий игрок
-        function nextPlayer() {
-            const currentIndex = players.indexOf(currentPlayer);
-            const nextIndex = (currentIndex + 1) % players.length;
-            currentPlayer = players[nextIndex];
-
-            updatePlayerInfo();
-            updateTaskDisplayForCurrentPlayer();
-
-            truthBtn.disabled = false;
-            dareBtn.disabled = false;
-            likeBtn.disabled = true;
-            dislikeBtn.disabled = true;
-            ratingButtons.style.display = 'none';
-        }
-
+        // Обновление информации о текущем игроке
         function updateTaskDisplayForCurrentPlayer() {
             const playerColor = getPlayerColor(players.indexOf(currentPlayer));
             taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
@@ -1673,7 +1558,10 @@
 
             backgroundMusic.pause();
 
-            playSound('win');
+            if (soundEnabled) {
+                resultsSound.currentTime = 0;
+                resultsSound.play();
+            }
 
             showResults();
 
@@ -1720,7 +1608,7 @@
             handleButtonClick(this, () => {
                 resultsModal.style.display = 'none';
                 setupContainer.style.display = 'block';
-                playSound('closeResults');
+                playButtonSound();
             });
         });
 
@@ -1756,9 +1644,6 @@
 
                 if (timeLeft <= 10) {
                     timerDisplay.classList.add('timer-warning');
-                    if (timeLeft <= 5) {
-                        playSound('timerTick');
-                    }
                 } else {
                     timerDisplay.classList.remove('timer-warning');
                 }
@@ -1768,7 +1653,6 @@
             } else if (timeLeft === 0) {
                 timerDisplay.textContent = "0:00";
                 timerDisplay.classList.remove('timer-warning');
-                playSound('timerEnd');
                 rateTask(false);
             }
         }
