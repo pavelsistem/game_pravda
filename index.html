@@ -35,760 +35,996 @@
             height: 100%;
             background-image: radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 1000;
+            flex-direction: column;
+            z-index: 999;
             transition: opacity 0.5s ease-out;
+            opacity: 1;
         }
 
         #preloader.fade-out {
             opacity: 0;
-            visibility: hidden;
+            pointer-events: none;
         }
 
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 8px solid rgba(255, 255, 255, 0.3);
-            border-top: 8px solid #ff4d4d;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+        #preloader-title {
+            font-family: 'Merriweather', serif;
+            color: #e0e0e0;
+            font-size: clamp(2.5em, 6vw, 4em);
+            text-align: center;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+            margin-bottom: 50px;
+            animation: pulseText 2s infinite alternate;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes pulseText {
+            from { text-shadow: 0 0 10px rgba(255, 0, 255, 0.6), 0 0 20px rgba(138, 43, 226, 0.6); }
+            to { text-shadow: 0 0 20px rgba(255, 0, 255, 1), 0 0 30px rgba(138, 43, 226, 1); }
         }
 
-        .progress-bar-container {
+        /* Стили для прогресс-бара */
+        #progress-bar-container {
             width: 80%;
-            max-width: 300px;
-            height: 20px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            margin-top: 20px;
+            max-width: 400px;
+            height: 25px;
+            background-color: rgba(30, 30, 60, 0.8);
+            border-radius: 15px;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
             overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), 0 0 15px rgba(0, 255, 255, 0.5);
         }
 
         #progress-bar-fill {
             height: 100%;
             width: 0%;
-            background-color: #ff4d4d;
-            border-radius: 10px;
+            background-image: linear-gradient(to right, #8a2be2, #ff00ff, #00ffff);
+            border-radius: 15px;
             transition: width 0.1s linear;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
         }
 
         #progress-percentage {
-            margin-top: 10px;
-            font-size: 1.2em;
-            color: #ff4d4d;
-            text-shadow: 0 0 5px #ff4d4d;
-        }
-
-        /* Общие стили для контейнеров */
-        .container {
-            background-color: #1a1a2e;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
-            border: 1px solid #4a148c;
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1, h2 {
-            font-family: 'Merriweather', serif;
-            color: #ff4d4d;
-            text-align: center;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
-        }
-
-        h2 {
-            font-size: 1.8em;
-            margin-top: 0;
-        }
-
-        /* Формы и инпуты */
-        .input-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        input[type="text"] {
-            flex-grow: 1;
-            padding: 12px;
-            border: 1px solid #6a1b9a;
-            border-radius: 8px;
-            background-color: #2c2c4d;
-            color: #e0e0e0;
-            font-size: 1em;
-            outline: none;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        input[type="text"]:focus {
-            border-color: #ff4d4d;
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
-        }
-
-        /* Кнопки */
-        .btn {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: bold;
-            transition: transform 0.2s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            background-color: #880e4f; /* Темно-пурпурный по умолчанию */
-            color: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn:disabled {
-            background-color: #4a148c;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
-            opacity: 0.7;
-        }
-
-        /* Ripple effect */
-        .btn.ripple {
-            animation: ripple-animation 0.6s ease-out;
-        }
-
-        @keyframes ripple-animation {
-            0% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-            50% { transform: scale(1.02); box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 255, 255, 0.2); }
-            100% { transform: scale(1); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); }
-        }
-
-        .btn-primary {
-            background-color: #ff4d4d;
-        }
-        .btn-primary:hover {
-            background-color: #ff3333;
-        }
-
-        .btn-secondary {
-            background-color: #00bcd4; /* Голубой */
-        }
-        .btn-secondary:hover {
-            background-color: #00acc1;
-        }
-
-        .btn-green {
-            background-color: #4caf50;
-        }
-        .btn-green:hover {
-            background-color: #43a047;
-        }
-
-        .btn-red {
-            background-color: #f44336;
-        }
-        .btn-red:hover {
-            background-color: #d32f2f;
-        }
-
-        /* Списки игроков */
-        #playersList {
-            list-style: none;
-            padding: 0;
-            margin-top: 15px;
-            max-height: 150px;
-            overflow-y: auto;
-            border: 1px solid #6a1b9a;
-            border-radius: 8px;
-            background-color: #2c2c4d;
-            padding: 10px;
-        }
-
-        #playersList li {
-            padding: 8px 0;
-            border-bottom: 1px dashed #4a148c;
-            font-size: 1.1em;
+            position: absolute;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #e0e0e0;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
+        }
+        
+        h1 {
+            font-family: 'Merriweather', serif;
+            color: #e0e0e0;
+            text-align: center;
+            margin: 5px 0 15px 0;
+            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            font-size: clamp(1.8em, 4vw, 2.5em);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            overflow: visible;
+        }
+        
+        .container {
+            background-color: rgba(20, 20, 40, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), 0 0 15px rgba(138, 43, 226, 0.5), 0 0 15px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            gap: 8px;
+        }
+        
+        input {
+            flex-grow: 1;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #8a2be2;
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            min-width: 150px;
+        }
+        
+        input:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+        
+        select {
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #8a2be2;
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            font-size: 16px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            min-width: 150px;
+        }
+        
+        select:focus {
+            border-color: #00ffff;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
+        }
+        
+        button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, box-shadow 0.3s, transform 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+            z-index: 1;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
         }
 
-        #playersList li:last-child {
-            border-bottom: none;
+        button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            transition: width 0.6s ease-out, height 0.6s ease-out, opacity 0.6s ease-out;
+            z-index: -1;
         }
 
-        /* Игровая панель */
-        .game-panel {
+        button.ripple::before {
+            width: 150%;
+            height: 150%;
+            opacity: 1;
+        }
+
+        button.button-reset::before {
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            transition: none !important;
+        }
+        
+        .btn-primary {
+            background-color: #8a2be2;
+            color: white;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            width: 150px;
+            text-align: center;
+        }
+        
+        .btn-primary:hover {
+            background-color: #9932cc;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background-color: #ff00ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+            width: 150px;
+            text-align: center;
+        }
+        
+        .btn-success:hover {
+            background-color: #e600e6;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: #00ffff;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+        }
+        
+        .btn-danger:hover {
+            background-color: #00e6e6;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-purple {
+            background-color: transparent;
+            color: white;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+            margin-top: 10px;
+            width: 100%;
+        }
+        
+        .btn-purple:hover {
+            background-color: rgba(138, 43, 226, 0.2);
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: #ff00ff;
+            color: white;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e600e6;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-sound {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            padding: 6px 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-sound:hover {
+            background-color: rgba(40, 40, 80, 0.8);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-rounds {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+            padding: 6px 10px;
+            font-size: 0.9em;
+        }
+
+        .btn-rounds:hover {
+            background-color: rgba(40, 40, 80, 0.8);
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+        
+        #playersList {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            max-height: 120px;
+            overflow-y: auto;
+            background-color: rgba(20, 20, 40, 0.5);
+            border-radius: 5px;
+            padding: 8px;
+            border: 1px solid #8a2be2;
+        }
+        
+        #playersList li {
+            padding: 6px;
+            margin-bottom: 4px;
+            background-color: rgba(30, 30, 60, 0.7);
+            border-radius: 5px;
+            border-left: 3px solid #ff00ff;
+            font-size: clamp(0.9em, 2vw, 1.1em);
+        }
+
+        #playersList li:nth-child(1) { color: #00ffff; }
+        #playersList li:nth-child(2) { color: #ff00ff; }
+        #playersList li:nth-child(3) { color: #8a2be2; }
+        #playersList li:nth-child(4) { color: #00ff00; }
+        #playersList li:nth-child(5) { color: #ffff00; }
+        #playersList li:nth-child(6) { color: #ff69b4; }
+        #playersList li:nth-child(7) { color: #7fffd4; }
+        #playersList li:nth-child(8) { color: #ffa500; }
+        #playersList li:nth-child(9) { color: #dda0dd; }
+        #playersList li:nth-child(10) { color: #adff2f; }
+
+        
+        #gameContainer {
+            display: none;
+        }
+        
+        .info-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+        
+        .info-box {
+            flex: 1;
+            min-width: 100px;
+            padding: 8px;
+            background-color: rgba(20, 20, 40, 0.6);
+            border-radius: 8px;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
             text-align: center;
         }
 
-        .info-display {
-            background-color: #2c2c4d;
-            border: 1px solid #6a1b9a;
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
+        .info-box div {
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+            margin-bottom: 5px;
+            color: #e0e0e0;
+        }
+
+        .info-box #currentPlayer {
+            font-weight: bold;
+            color: #ff00ff;
+            text-shadow: 0 0 5px rgba(255, 0, 255, 0.7);
+            font-size: clamp(1.1em, 3vw, 1.5em);
+            margin-bottom: 0;
+            text-align: center;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .info-box #timer {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.7);
+            font-size: clamp(1.5em, 4vw, 2.5em);
+            font-weight: bold;
             display: flex;
-            flex-direction: column;
-            gap: 10px;
-            min-height: 100px;
             justify-content: center;
-        }
-
-        #roundInfo {
-            font-size: 1.3em;
-            color: #00bcd4;
-            text-shadow: 0 0 8px #00bcd4;
-            font-weight: bold;
-        }
-
-        #currentPlayer {
-            font-size: 2em;
-            font-weight: bold;
-            margin: 10px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        #scoreInfo {
-            font-family: monospace;
-            font-size: 1.1em;
-            line-height: 1.6;
-            white-space: pre-wrap; /* For new lines */
-        }
-
-        #timer {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #ff4d4d;
-            text-shadow: 0 0 10px rgba(255, 77, 77, 0.6);
-            margin-top: 15px;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
+            align-items: center;
+            height: 100%;
         }
 
         #timer.timer-warning {
-            color: #ff0000;
-            animation: blink 1s infinite;
+            color: #ff00ff;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 1);
+            animation: pulseTimer 0.8s infinite alternate;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
+        @keyframes pulseTimer {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
-
+        
         #taskDisplay {
-            min-height: 150px;
+            background-color: rgba(10, 10, 20, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            font-size: 1.6em;
+            font-size: clamp(1em, 3vw, 1.2em);
             font-weight: bold;
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #3e2753;
-            border: 2px solid #9c27b0;
-            border-radius: 15px;
-            box-shadow: inset 0 0 15px rgba(156, 39, 176, 0.5);
-            transition: background-color 0.3s ease;
-            line-height: 1.4;
+            color: #e0e0e0;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            animation: borderGlow 3s infinite alternate;
         }
 
-        .actions-group {
+        @keyframes borderGlow {
+            0% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            }
+            33% { 
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            }
+            66% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 25px rgba(138, 43, 226, 0.6), 
+                            0 0 20px rgba(0, 255, 255, 0.4);
+                border-image: linear-gradient(90deg, #8a2be2, #00ffff, #ff00ff) 1;
+            }
+            100% { 
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                            0 0 20px rgba(138, 43, 226, 0.4), 
+                            0 0 25px rgba(0, 255, 255, 0.6);
+                border-image: linear-gradient(90deg, #00ffff, #ff00ff, #8a2be2) 1;
+            }
+        }
+        
+        .choice-buttons, .rating-buttons {
             display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 20px;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        /* Новые стили для кнопок Правда/Действие */
+        .choice-buttons button {
+            background-color: transparent !important;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            animation: borderGlow 3s infinite alternate;
+            font-weight: bold;
+            min-width: 100px;
+            padding: 10px 15px;
+            transition: all 0.3s;
         }
 
-        .actions-group .btn {
-            flex: 1 1 45%; /* Allow wrapping for smaller screens */
-            max-width: 200px;
+        .choice-buttons button:hover {
+            background-color: rgba(30, 30, 60, 0.3) !important;
+            transform: translateY(-3px);
         }
 
-        /* Модальные окна */
+        .choice-buttons button:active {
+            transform: translateY(1px);
+        }
+        
+        /* Стили для кнопок рейтинга (лайк/дизлайк) */
+        .rating-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .rating-buttons button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            width: 70px;
+            height: 70px;
+            padding: 0;
+            font-size: 1.8em;
+            background-color: transparent;
+            border: 2px solid;
+            border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
+            animation: borderGlow 3s infinite alternate;
+            transition: all 0.3s;
+        }
+        
+        .rating-buttons button:hover {
+            background-color: rgba(30, 30, 60, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .rating-buttons button:active {
+            transform: translateY(1px);
+        }
+
+        #likeBtn {
+            color: #00ff00;
+        }
+
+        #dislikeBtn {
+            color: #ff0000;
+        }
+        
         .modal {
             display: none;
             position: fixed;
-            z-index: 1001;
-            left: 0;
             top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            overflow: auto;
             background-color: rgba(0, 0, 0, 0.7);
+            z-index: 100;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(5px);
+            padding: 10px;
         }
 
         .modal-content {
-            background-color: #1a1a2e;
-            margin: auto;
-            padding: 30px;
-            border: 1px solid #4a148c;
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 20px;
             border-radius: 15px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
             text-align: center;
-            animation: modalPopIn 0.4s ease-out;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.6);
+            backdrop-filter: blur(10px);
+        }
+        
+        .trophy-icon {
+            font-size: clamp(3em, 8vw, 5em);
+            text-align: center;
+            color: #ffd700;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 30px rgba(255, 215, 0, 0.6);
+            margin-bottom: 15px;
+            animation: pulseTrophy 1.5s infinite alternate;
         }
 
-        @keyframes modalPopIn {
-            from { transform: scale(0.8); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-
-        .modal-content h2 {
-            color: #ff4d4d;
-            margin-bottom: 25px;
-        }
-
-        #playerToDrink {
-            font-size: 2.5em;
-            font-weight: bold;
-            margin: 15px 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            animation: pulse-drink 1.5s infinite;
-        }
-
-        @keyframes pulse-drink {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
-        .glass-container {
-            margin: 20px auto;
-            width: 100px;
-            height: 150px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass {
-            width: 80px;
-            height: 120px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border: 3px solid #e0e0e0;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 40px;
-            border-bottom-right-radius: 40px;
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            overflow: hidden;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            transition: transform 0.1s ease-out; /* For animation */
-        }
-
-        .liquid {
-            width: 90%;
-            height: 70%;
-            background-color: #ff4d4d;
-            border-top-left-radius: 5px;
-            border-top-right-radius: 5px;
-            border-bottom-left-radius: 35px;
-            border-bottom-right-radius: 35px;
-            animation: fill-liquid 2s ease-out forwards;
-        }
-
-        @keyframes fill-liquid {
-            0% { height: 0; }
-            100% { height: 70%; }
-        }
-
-        #resultsList {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
+        @keyframes pulseTrophy {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(1.1); opacity: 0.9; }
         }
 
         .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #4a148c;
-            font-size: 1.2em;
-        }
-
-        .result-item:last-child {
-            border-bottom: none;
-        }
-
-        .result-item span:first-child {
-            font-weight: bold;
-        }
-
-        #winnerInfo {
-            font-size: 1.8em;
-            font-weight: bold;
-            margin-top: 25px;
-            color: #00ff00;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
-            animation: winnerBounce 0.8s ease-out;
-        }
-
-        @keyframes winnerBounce {
-            0% { transform: translateY(-20px); opacity: 0; }
-            60% { transform: translateY(5px); opacity: 1; }
-            100% { transform: translateY(0); }
-        }
-
-        /* Настройки */
-        .settings-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .settings-btn {
-            background-color: #6a1b9a;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .settings-btn:hover {
-            background-color: #7b1fa2;
-        }
-
-        .settings-panel {
-            background-color: #2c2c4d;
-            border: 1px solid #4a148c;
-            border-radius: 10px;
-            padding: 20px;
-            margin-top: 15px;
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease-out, padding 0.5s ease-out;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .settings-panel.active {
-            max-height: 300px; /* Adjust as needed based on content */
-            padding: 20px;
-        }
-
-        .setting-item {
-            margin-bottom: 15px;
-        }
-
-        .setting-item label {
-            display: block;
             margin-bottom: 8px;
-            font-weight: bold;
-            color: #00bcd4;
-        }
-
-        .setting-item input[type="range"] {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 10px;
-            background: #6a1b9a;
-            border-radius: 5px;
-            outline: none;
-            opacity: 0.7;
-            transition: opacity .2s;
-        }
-
-        .setting-item input[type="range"]:hover {
-            opacity: 1;
-        }
-
-        .setting-item input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ff4d4d;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(255, 77, 77, 0.7);
-        }
-
-        .setting-item input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #ff4d4d;
-            cursor: pointer;
-            box-shadow: 0 0 5px rgba(255, 77, 77, 0.7);
-        }
-
-        .setting-item select {
-            width: 100%;
             padding: 10px;
-            border: 1px solid #6a1b9a;
+            background-color: rgba(30, 30, 60, 0.7);
             border-radius: 8px;
-            background-color: #3e2753;
-            color: #e0e0e0;
-            font-size: 1em;
-            outline: none;
-            appearance: none;
-            -webkit-appearance: none;
-            background-image: url('data:image/svg+xml;utf8,<svg fill="%23e0e0e0" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
-            background-repeat: no-repeat;
-            background-position: right 10px top 50%;
-            background-size: 20px;
+            border-left: 4px solid #00ffff;
+            font-size: clamp(0.9em, 2.5vw, 1.1em);
+        }
+        
+        .winner {
+            color: #00ffff;
+            font-weight: bold;
+            margin-top: 15px;
+            font-size: clamp(1em, 3vw, 1.3em);
+            text-shadow: 0 0 8px rgba(0, 255, 255, 0.7);
         }
 
-        .music-selector, .rounds-selector {
+        .glass-container {
+            margin: 15px 0;
+            perspective: 1000px;
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
             justify-content: center;
         }
-
-        .music-selector-btn, .rounds-selector-btn {
-            background-color: #4a148c;
-            padding: 8px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            font-size: 0.9em;
-            color: #fff;
-            border: 1px solid transparent;
+        
+        .glass {
+            width: 70px;
+            height: 100px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: floatGlass 3s infinite ease-in-out;
+        }
+        
+        .glass-body {
+            position: absolute;
+            width: 60px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.1);
+            top: 30px;
+            left: 5px;
+            border-radius: 10px 10px 0 0;
+            border: 1px solid;
+            border-image: linear-gradient(to top, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5), inset 0 0 10px rgba(0, 255, 255, 0.3);
+            transform: translateZ(5px);
+        }
+        
+        .glass-bottom {
+            position: absolute;
+            width: 80px;
+            height: 12px;
+            background: linear-gradient(to right, #8a2be2, #00ffff);
+            border-radius: 50%;
+            top: 95px;
+            left: -5px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            transform: translateZ(5px);
+        }
+        
+        .liquid {
+            position: absolute;
+            width: 50px;
+            height: 35px;
+            background: linear-gradient(to bottom, #ff00ff, #8a2be2);
+            top: 50px;
+            left: 10px;
+            border-radius: 0 0 8px 8px;
+            box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+            animation: fillLiquid 2s ease-out forwards;
+            transform: translateZ(6px);
+        }
+        
+        .bubble {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            opacity: 0;
+            animation: bubbleUp 3s infinite ease-out;
+            transform: translateZ(7px);
         }
 
-        .music-selector-btn:hover, .rounds-selector-btn:hover {
-            background-color: #6a1b9a;
+        .bubble:nth-child(1) { top: 60px; left: 15px; animation-delay: 0s; }
+        .bubble:nth-child(2) { top: 65px; left: 35px; animation-delay: 1s; }
+        .bubble:nth-child(3) { top: 55px; left: 25px; animation-delay: 2s; }
+
+        @keyframes floatGlass {
+            0% { transform: translateY(0) rotateX(0deg); }
+            50% { transform: translateY(-8px) rotateX(5deg); }
+            100% { transform: translateY(0) rotateX(0deg); }
         }
 
-        .music-selector-btn.active, .rounds-selector-btn.active {
-            background-color: #ff4d4d;
-            border-color: #ff4d4d;
-            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        @keyframes fillLiquid {
+            0% { height: 0; top: 85px; }
+            100% { height: 35px; top: 50px; }
+        }
+
+        @keyframes bubbleUp {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-25px) scale(1.2); opacity: 0; }
+        }
+
+        .modal .modal-title.drink-title {
+            font-size: clamp(1.3em, 4vw, 1.8em);
+            margin-bottom: 8px;
+            color: #ff00ff;
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+        }
+
+        .modal .player-to-drink {
+            font-size: clamp(1.5em, 5vw, 2.2em);
             font-weight: bold;
+            color: #00ffff;
+            text-shadow: 0 0 15px rgba(0, 255, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+            margin-top: 8px;
+            margin-bottom: 15px;
+            display: block;
         }
 
-        /* Футер */
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #9e9e9e;
+        .sound-control {
+            position: fixed;
+            bottom: 15px;
+            right: 15px;
+            z-index: 50;
         }
 
-        /* Адаптивность */
+        .rounds-control {
+            position: fixed;
+            bottom: 15px;
+            left: 15px;
+            z-index: 50;
+        }
+
+        .sound-panel {
+            position: fixed;
+            bottom: 50px;
+            right: 15px;
+            z-index: 50;
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #8a2be2;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            width: 180px;
+        }
+
+        .rounds-panel {
+            position: fixed;
+            bottom: 50px;
+            left: 15px;
+            z-index: 50;
+            background-color: rgba(20, 20, 40, 0.9);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            width: 180px;
+        }
+        
+        .sound-panel.active, .rounds-panel.active {
+            display: flex;
+        }
+        
+        .volume-control {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .volume-control label {
+            font-size: 0.8em;
+            color: #e0e0e0;
+        }
+        
+        .volume-control input[type="range"] {
+            width: 100%;
+            accent-color: #8a2be2;
+        }
+        
+        .music-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .music-selector-btn, .rounds-selector-btn {
+            background-color: rgba(30, 30, 60, 0.8);
+            color: white;
+            border: 1px solid #8a2be2;
+            border-radius: 5px;
+            padding: 5px 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.8em;
+            text-align: left;
+        }
+        
+        .music-selector-btn:hover, .rounds-selector-btn:hover {
+            background-color: rgba(50, 50, 90, 0.8);
+            border-color: #ff00ff;
+        }
+        
+        .music-selector-btn.active, .rounds-selector-btn.active {
+            background-color: #8a2be2;
+            border-color: #00ffff;
+            box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+        }
+
+        .rounds-selector {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(138, 43, 226, 0.3);
+        }
+
+        .rounds-selector label {
+            font-size: 0.8em;
+            color: #e0e0e0;
+        }
+
         @media (max-width: 600px) {
-            .container {
-                padding: 15px;
+            body {
+                padding: 10px;
             }
+
             h1 {
-                font-size: 1.8em;
+                font-size: clamp(1.5em, 6vw, 2em);
+                margin: 5px 0 10px 0;
             }
-            h2 {
-                font-size: 1.5em;
+
+            .container {
+                padding: 12px;
+                margin-bottom: 10px;
             }
-            .btn {
-                padding: 10px 15px;
-                font-size: 0.9em;
-            }
+
             .input-group {
                 flex-direction: column;
+                margin-bottom: 8px;
             }
-            #currentPlayer {
+
+            input, button, select {
+                width: 100%;
+                padding: 7px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 8px;
+                margin-bottom: 10px;
+            }
+
+            .info-box {
+                min-width: unset;
+                width: 100%;
+                padding: 7px;
+            }
+
+            #taskDisplay {
+                padding: 12px;
+                min-height: 70px;
+                margin: 10px 0;
+            }
+
+            .choice-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .rating-buttons {
+                flex-direction: row !important;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+
+            .rating-buttons button {
+                width: 60px;
+                height: 60px;
                 font-size: 1.5em;
             }
-            #timer {
-                font-size: 2em;
+
+            .sound-control, .rounds-control {
+                bottom: 10px;
             }
-            #taskDisplay {
-                font-size: 1.2em;
+
+            .sound-control {
+                right: 10px;
             }
-            .actions-group .btn {
-                flex: 1 1 100%;
-                max-width: none;
+
+            .rounds-control {
+                left: 10px;
             }
-            .modal-content {
-                padding: 20px;
+
+            .sound-panel {
+                bottom: 45px;
+                right: 10px;
+                width: 160px;
+                padding: 10px;
             }
-            #playerToDrink {
-                font-size: 1.8em;
-            }
-            .result-item {
-                font-size: 1em;
-            }
-            #winnerInfo {
-                font-size: 1.4em;
-            }
-            .settings-btn {
-                padding: 8px 12px;
-                font-size: 0.85em;
-            }
-            .music-selector-btn, .rounds-selector-btn {
-                padding: 6px 10px;
-                font-size: 0.8em;
+
+            .rounds-panel {
+                bottom: 45px;
+                left: 10px;
+                width: 160px;
+                padding: 10px;
             }
         }
     </style>
 </head>
 <body>
     <div id="preloader">
-        <div class="spinner"></div>
-        <div class="progress-bar-container">
+        <div id="preloader-title">🎲 Правда или Действие 🎲</div>
+        <div id="progress-bar-container">
             <div id="progress-bar-fill"></div>
+            <span id="progress-percentage">0%</span>
         </div>
-        <div id="progress-percentage">0%</div>
     </div>
 
-    <div id="setupContainer" class="container">
-        <h1>🍻 Правда или Действие 🎲</h1>
-        <h2>Добавьте игроков</h2>
+    <h1>🎲 Правда или Действие 🎲</h1>
+    
+    <div class="container" id="setupContainer">
         <div class="input-group">
             <input type="text" id="playerInput" placeholder="Имя игрока">
-            <button id="addPlayerBtn" class="btn btn-primary">Добавить игрока</button>
+            <button class="btn-primary" id="addPlayerBtn">➕ Добавить</button>
+            <button class="btn-warning" id="startGameBtn" disabled>🎮 Начать игру</button>
         </div>
-        <ul id="playersList">
-            </ul>
-        <button id="startGameBtn" class="btn btn-primary" disabled>Начать игру</button>
-
-        <div class="settings-container">
-            <button id="soundToggle" class="settings-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-                Звук
-            </button>
-            <button id="roundsToggle" class="settings-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0z" fill="none"/><path d="M11 15h2v2h-2zm0-8h2v6h-2zm.99-5C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/></svg>
-                Раунды
-            </button>
-        </div>
-
-        <div id="soundPanel" class="settings-panel">
-            <div class="setting-item">
-                <label for="musicVolume">Громкость музыки:</label>
-                <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
-            </div>
-            <div class="setting-item">
-                <label for="effectsVolume">Громкость эффектов:</label>
-                <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
-            </div>
-            <div class="setting-item">
-                <label>Музыкальный трек:</label>
-                <div class="music-selector">
-                    <button class="music-selector-btn active" data-track="0">Трек 1</button>
-                    </div>
-            </div>
-        </div>
-
-        <div id="roundsPanel" class="settings-panel">
-            <div class="setting-item">
-                <label for="roundsSelect">Количество раундов:</label>
-                <select id="roundsSelect">
-                    <option value="5">5 раундов</option>
-                    <option value="10" selected>10 раундов</option>
-                    <option value="15">15 раундов</option>
-                    <option value="20">20 раундов</option>
-                    <option value="0">Без ограничений</option>
-                </select>
-            </div>
-            <div class="setting-item">
-                <label>Быстрый выбор:</label>
-                <div class="rounds-selector">
-                    <button class="rounds-selector-btn" data-rounds="5">5</button>
-                    <button class="rounds-selector-btn active" data-rounds="10">10</button>
-                    <button class="rounds-selector-btn" data-rounds="15">15</button>
-                    <button class="rounds-selector-btn" data-rounds="20">20</button>
-                    <button class="rounds-selector-btn" data-rounds="0">∞</button>
-                </div>
-            </div>
-        </div>
+        <ul id="playersList"></ul>
     </div>
-
-    <div id="gameContainer" class="container" style="display: none;">
-        <div class="game-panel">
-            <div class="info-display">
+    
+    <div class="container" id="gameContainer">
+        <div class="info-row">
+            <div class="info-box">
                 <div id="roundInfo">Раунд: 1/10</div>
-                <div id="currentPlayer">Игрок</div>
-                <div id="timer">5:00</div>
+                <div id="scoreInfo"></div>
             </div>
-            <div id="taskDisplay"></div>
-            <div class="actions-group">
-                <button id="truthBtn" class="btn btn-green">Правда</button>
-                <button id="dareBtn" class="btn btn-red">Действие</button>
+            <div class="info-box" style="text-align: center;">
+                <div id="currentPlayer"></div> 
             </div>
-            <div id="ratingButtons" class="actions-group" style="display: none;">
-                <button id="likeBtn" class="btn btn-green">✅ Выполнено</button>
-                <button id="dislikeBtn" class="btn btn-red">❌ Не выполнено</button>
+            <div class="info-box">
+                <div id="timer">5:00</div> 
             </div>
         </div>
-    </div>
-
-    <div id="endGameContainer" class="container" style="display: none;">
-        <h2>Счет:</h2>
-        <div class="info-display">
-            <div id="scoreInfo"></div>
+        
+        <div id="taskDisplay"></div>
+        
+        <div class="choice-buttons">
+            <button class="btn-primary" id="truthBtn">Правда</button>
+            <button class="btn-success" id="dareBtn">Действие</button>
         </div>
-        <button id="endGameBtn" class="btn btn-secondary">Завершить игру</button>
+        
+        <div class="rating-buttons" id="ratingButtons" style="display: none;">
+            <button class="btn-success" id="likeBtn" disabled>✓</button>
+            <button class="btn-danger" id="dislikeBtn" disabled>✗</button>
+        </div>
     </div>
-
-    <div id="drinkModal" class="modal">
+    
+    <div class="container" id="endGameContainer" style="display: none;">
+        <button class="btn-purple" id="endGameBtn">🏁 Завершить игру</button>
+    </div>
+    
+    <div class="modal" id="drinkModal">
         <div class="modal-content">
-            <h2>Игрок <span id="playerToDrink"></span> пьет!</h2>
+            <div class="modal-title drink-title">Игрок должен выпить!</div>
+            <span id="playerToDrink" class="player-to-drink"></span>
             <div class="glass-container">
                 <div class="glass">
+                    <div class="glass-body"></div>
+                    <div class="glass-bottom"></div>
                     <div class="liquid"></div>
+                    <div class="bubble" style="top: 60px; left: 20px;"></div>
+                    <div class="bubble" style="top: 65px; left: 40px;"></div>
+                    <div class="bubble" style="top: 70px; left: 30px;"></div>
                 </div>
             </div>
-            <button id="confirmDrinkBtn" class="btn btn-primary">Продолжить</button>
+            <button class="btn-success" id="confirmDrinkBtn">Выпил!</button>
         </div>
     </div>
-
-    <div id="resultsModal" class="modal">
+    
+    <div class="modal" id="resultsModal">
         <div class="modal-content">
-            <h2>Результаты игры</h2>
-            <ul id="resultsList">
-                </ul>
-            <div id="winnerInfo"></div>
-            <button id="closeResultsBtn" class="btn btn-primary">Закрыть</button>
+            <div class="trophy-icon">🏆</div> 
+            <div id="resultsList"></div>
+            <div id="winnerInfo" class="winner"></div>
+            <button class="btn-primary" id="closeResultsBtn">Закрыть</button>
+        </div>
+    </div>
+    
+    <!-- Кнопки управления звуком и раундами внизу страницы -->
+    <div class="sound-control">
+        <button id="soundToggle" class="btn-sound">🔊 Звук</button>
+    </div>
+
+    <div class="rounds-control">
+        <button id="roundsToggle" class="btn-rounds">🔢 Раунды</button>
+    </div>
+
+    <div class="sound-panel" id="soundPanel">
+        <div class="volume-control">
+            <label for="musicVolume">Громкость музыки</label>
+            <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="volume-control">
+            <label for="effectsVolume">Громкость эффектов</label>
+            <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Выбор музыки</label>
+            </div>
+            <button class="music-selector-btn active" data-track="0">🎵 Трек 1</button>
+            <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
+            <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
+            <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
         </div>
     </div>
 
-    <div class="footer">
-        Игра "Правда или Действие" v1.0
-    </div>
+    <div class="rounds-panel" id="roundsPanel">
+        <div class="rounds-selector">
+            <label for="roundsSelect">Количество раундов</label>
+            <select id="roundsSelect">
+                <option value="5">5 раундов</option>
+                <option value="10" selected>10 раундов</option>
+                <option value="15">15 раундов</option>
+                <option value="20">20 раундов</option>
+                <option value="50">50 раундов</option>
+                <option value="100">100 раундов</option>
+            </select>
+        </div>
 
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Быстрый выбор</label>
+            </div>
+            <button class="rounds-selector-btn" data-rounds="5">5 раундов</button>
+            <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
+        </div>
+    </div>
+    
     <script>
         // Игровые данные
         const players = [];
@@ -807,16 +1043,16 @@
         let musicVolume = 0.7;
         let effectsVolume = 0.7;
         let currentTrackIndex = 0;
-        let audioContext; 
+        let audioContext;
+
+        // Звук кнопок
+        const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav?raw=true');
+        buttonSound.volume = 0.7;
 
         // Фоновая музыка
         const backgroundMusic = new Audio('https://pixabay.com/music/download/?id=63198');
         backgroundMusic.loop = true;
         backgroundMusic.volume = musicVolume;
-
-        // Новый звук для кнопок
-        const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav'); 
-        buttonSound.volume = effectsVolume;
 
         // DOM элементы
         const setupContainer = document.getElementById('setupContainer');
@@ -855,7 +1091,20 @@
         const effectsVolumeControl = document.getElementById('effectsVolume');
         const ratingButtons = document.getElementById('ratingButtons');
 
-        // Инициализация AudioContext (only if specific programmatic sounds are still needed, e.g., timer ticks)
+        // Воспроизведение звукового эффекта кнопок
+        function playButtonSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                buttonSound.currentTime = 0;
+                buttonSound.volume = effectsVolume;
+                buttonSound.play();
+            } catch (e) {
+                console.log("Ошибка воспроизведения звука кнопки:", e);
+            }
+        }
+
+        // Инициализация AudioContext
         function initAudioContext() {
             if (!audioContext) {
                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -865,21 +1114,9 @@
         // Воспроизведение звукового эффекта
         function playSound(type) {
             if (!soundEnabled) return;
-
-            // Use the new buttonSound for general button clicks
-            if (type === 'addPlayer' || type === 'startGame' || type === 'truth' || type === 'dare' || type === 'like' || type === 'dislike' || type === 'closeResults') {
-                buttonSound.currentTime = 0; // Rewind to the beginning
-                buttonSound.play().catch(e => console.error("Error playing button sound:", e));
-                return; // Exit after playing the button sound
-            }
             
-            // Retain specific programmatic sounds if desired (e.g., timer, drink, win)
-            // If these should also use the new WAV, you can remove this block.
-            // For now, let's assume you still want distinct sounds for these.
-            if (!audioContext) { // Initialize only if not already done
-                 audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            }
-
+            initAudioContext();
+            
             try {
                 const oscillator = audioContext.createOscillator();
                 const gainNode = audioContext.createGain();
@@ -889,6 +1126,54 @@
                 
                 // Настройки звуков для разных событий
                 switch(type) {
+                    case 'addPlayer':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 800;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                        
+                    case 'startGame':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 600;
+                        gainNode.gain.value = effectsVolume * 0.5;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                        
+                    case 'truth':
+                        oscillator.type = 'triangle';
+                        oscillator.frequency.value = 500;
+                        gainNode.gain.value = effectsVolume * 0.4;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                        break;
+                        
+                    case 'dare':
+                        oscillator.type = 'square';
+                        oscillator.frequency.value = 400;
+                        gainNode.gain.value = effectsVolume * 0.4;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.2);
+                        break;
+                        
+                    case 'like':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 1000;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
+                        
+                    case 'dislike':
+                        oscillator.type = 'sawtooth';
+                        oscillator.frequency.value = 300;
+                        gainNode.gain.value = effectsVolume * 0.5;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.3);
+                        break;
+                        
                     case 'timerTick':
                         oscillator.type = 'sine';
                         oscillator.frequency.value = 1200;
@@ -934,13 +1219,21 @@
                             osc.stop(audioContext.currentTime + 0.1 + (i * 0.1));
                         }
                         break;
+                        
+                    case 'closeResults':
+                        oscillator.type = 'sine';
+                        oscillator.frequency.value = 700;
+                        gainNode.gain.value = effectsVolume * 0.3;
+                        oscillator.start();
+                        oscillator.stop(audioContext.currentTime + 0.1);
+                        break;
                 }
             } catch (e) {
                 console.log("Ошибка воспроизведения звука:", e);
             }
         }
 
-        // Function to format time in MM:SS
+        // Функция для форматирования времени в MM:SS
         function formatTime(seconds) {
             const mins = Math.floor(seconds / 60);
             const secs = seconds % 60;
@@ -966,13 +1259,6 @@
 
         // Function to handle button click animation
         function handleButtonClick(button, callback) {
-            // Play the new button sound
-            if (soundEnabled) {
-                buttonSound.currentTime = 0; // Rewind to the beginning
-                buttonSound.volume = effectsVolume; // Ensure volume is correct
-                buttonSound.play().catch(e => console.error("Error playing button sound:", e));
-            }
-
             // Добавляем класс для анимации
             button.classList.add('ripple');
             
@@ -980,6 +1266,9 @@
             setTimeout(() => {
                 button.classList.remove('ripple');
             }, 600);
+            
+            // Воспроизводим звук кнопки
+            playButtonSound();
             
             // Вызываем callback функцию
             if (callback) {
@@ -1051,8 +1340,8 @@
         // Изменение громкости эффектов
         effectsVolumeControl.addEventListener('input', function() {
             effectsVolume = parseFloat(this.value);
-            buttonSound.volume = effectsVolume; // Update button sound volume
             localStorage.setItem('effectsVolume', effectsVolume);
+            buttonSound.volume = effectsVolume;
         });
 
         // Выбор трека
@@ -1128,7 +1417,7 @@
             if (savedEffectsVolume) {
                 effectsVolume = parseFloat(savedEffectsVolume);
                 effectsVolumeControl.value = effectsVolume;
-                buttonSound.volume = effectsVolume; // Load volume for button sound
+                buttonSound.volume = effectsVolume;
             }
 
             if (savedTrack) {
@@ -1179,7 +1468,7 @@
                     startGameBtn.disabled = false;
                 }
 
-                playSound('addPlayer'); // This will now play the new button sound
+                playSound('addPlayer');
             }
         }
 
@@ -1211,7 +1500,7 @@
 
             updateTaskDisplayForCurrentPlayer();
 
-            playSound('startGame'); // This will now play the new button sound
+            playSound('startGame');
 
             if (soundEnabled) {
                 try {
@@ -1237,10 +1526,10 @@
             let task;
             if (taskType === 'truth') {
                 task = truths[Math.floor(Math.random() * truths.length)];
-                playSound('truth'); // This will now play the new button sound
+                playSound('truth');
             } else {
                 task = dares[Math.floor(Math.random() * dares.length)];
-                playSound('dare'); // This will now play the new button sound
+                playSound('dare');
             }
 
             taskDisplay.textContent = task;
@@ -1281,7 +1570,7 @@
                 taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
                 updatePlayerInfo();
 
-                playSound('like'); // This will now play the new button sound
+                playSound('like');
 
                 setTimeout(() => {
                     if (players.indexOf(currentPlayer) === players.length - 1) {
@@ -1297,7 +1586,7 @@
                     nextPlayer();
                 }, 2000);
             } else {
-                playSound('dislike'); // This will now play the new button sound
+                playSound('dislike');
                 showDrinkWindow();
             }
         }
@@ -1309,7 +1598,7 @@
             drinkModal.style.display = 'flex';
             animateGlass();
 
-            playSound('drink'); // This sound effect still uses the programmatic sound (or replace it if needed)
+            playSound('drink');
         }
 
         confirmDrinkBtn.addEventListener('click', function() {
@@ -1384,7 +1673,7 @@
 
             backgroundMusic.pause();
 
-            playSound('win'); // This sound effect still uses the programmatic sound (or replace it if needed)
+            playSound('win');
 
             showResults();
 
@@ -1431,7 +1720,7 @@
             handleButtonClick(this, () => {
                 resultsModal.style.display = 'none';
                 setupContainer.style.display = 'block';
-                playSound('closeResults'); // This will now play the new button sound
+                playSound('closeResults');
             });
         });
 
@@ -1468,7 +1757,7 @@
                 if (timeLeft <= 10) {
                     timerDisplay.classList.add('timer-warning');
                     if (timeLeft <= 5) {
-                        playSound('timerTick'); // This sound effect still uses the programmatic sound (or replace it if needed)
+                        playSound('timerTick');
                     }
                 } else {
                     timerDisplay.classList.remove('timer-warning');
@@ -1479,7 +1768,7 @@
             } else if (timeLeft === 0) {
                 timerDisplay.textContent = "0:00";
                 timerDisplay.classList.remove('timer-warning');
-                playSound('timerEnd'); // This sound effect still uses the programmatic sound (or replace it if needed)
+                playSound('timerEnd');
                 rateTask(false);
             }
         }
