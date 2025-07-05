@@ -415,6 +415,8 @@
             border-radius: 10px;
             margin: 15px 0;
             min-height: 80px;
+            max-height: 200px;
+            overflow-y: auto;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -427,6 +429,33 @@
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
             backdrop-filter: blur(8px);
             animation: borderGlow 3s infinite alternate;
+            transform-style: preserve-3d;
+            transition: all 0.6s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            transform-origin: center center;
+            backface-visibility: hidden;
+        }
+
+        /* Анимации для карты с заданием */
+        #taskDisplay.card-flip {
+            animation: cardFlip 0.6s ease-in-out forwards;
+        }
+
+        #taskDisplay.card-unflip {
+            animation: cardUnflip 0.6s ease-in-out forwards;
+        }
+
+        @keyframes cardFlip {
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) translateY(-30px) scale(1.1); }
+        }
+
+        @keyframes cardUnflip {
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(-30px) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
         }
 
         @keyframes borderGlow {
@@ -548,12 +577,39 @@
             padding: 20px;
             border-radius: 15px;
             width: 90%;
-            max-width: 500px;
+            max-width: 400px;
             text-align: center;
             border: 2px solid;
             border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
             box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.6);
             backdrop-filter: blur(10px);
+            transform-style: preserve-3d;
+            transition: all 0.6s ease-in-out;
+            position: relative;
+            overflow: hidden;
+            transform-origin: center center;
+            backface-visibility: hidden;
+        }
+
+        /* Анимации для модального окна с рюмкой */
+        .modal-content.card-flip {
+            animation: modalFlip 0.6s ease-in-out forwards;
+        }
+
+        .modal-content.card-unflip {
+            animation: modalUnflip 0.6s ease-in-out forwards;
+        }
+
+        @keyframes modalFlip {
+            0% { transform: perspective(1000px) rotateY(0deg) scale(1); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
+        }
+
+        @keyframes modalUnflip {
+            0% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) scale(1); }
         }
         
         .trophy-icon {
@@ -928,14 +984,14 @@
         
         <div id="taskDisplay"></div>
         
-        <div class="choice-buttons">
+        <div class="choice-buttons" id="choiceButtons">
             <button class="btn-primary" id="truthBtn">Правда</button>
             <button class="btn-success" id="dareBtn">Действие</button>
         </div>
         
         <div class="rating-buttons" id="ratingButtons" style="display: none;">
-            <button class="btn-success" id="likeBtn" disabled>✓</button>
-            <button class="btn-danger" id="dislikeBtn" disabled>✗</button>
+            <button class="btn-success" id="likeBtn">✓</button>
+            <button class="btn-danger" id="dislikeBtn">✗</button>
         </div>
     </div>
     
@@ -1093,7 +1149,9 @@
         const roundsPanel = document.getElementById('roundsPanel');
         const musicVolumeControl = document.getElementById('musicVolume');
         const effectsVolumeControl = document.getElementById('effectsVolume');
+        const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
+        const drinkModalContent = document.querySelector('#drinkModal .modal-content');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
@@ -1148,6 +1206,52 @@
             // Вызываем callback функцию
             if (callback) {
                 callback();
+            }
+        }
+
+        // Анимация карты с заданием
+        function animateTaskCard(show, callback) {
+            if (show) {
+                // Показываем карту с анимацией
+                taskDisplay.classList.remove('card-unflip');
+                taskDisplay.classList.add('card-flip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            } else {
+                // Скрываем карту с анимацией
+                taskDisplay.classList.remove('card-flip');
+                taskDisplay.classList.add('card-unflip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            }
+        }
+
+        // Анимация модального окна с рюмкой
+        function animateDrinkModal(show, callback) {
+            if (show) {
+                // Показываем модальное окно с анимацией
+                drinkModalContent.classList.remove('card-unflip');
+                drinkModalContent.classList.add('card-flip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            } else {
+                // Скрываем модальное окно с анимацией
+                drinkModalContent.classList.remove('card-flip');
+                drinkModalContent.classList.add('card-unflip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
             }
         }
 
@@ -1400,6 +1504,10 @@
         function getTask(taskType) {
             if (!gameActive) return;
 
+            // Скрываем кнопки выбора и показываем кнопки оценки
+            choiceButtons.style.display = 'none';
+            ratingButtons.style.display = 'none';
+
             let task;
             if (taskType === 'truth') {
                 task = truths[Math.floor(Math.random() * truths.length)];
@@ -1409,21 +1517,18 @@
                 playButtonSound();
             }
 
-            taskDisplay.textContent = task;
-            startTimer();
+            // Анимируем появление карты с заданием
+            animateTaskCard(true, () => {
+                taskDisplay.textContent = task;
+                startTimer();
 
-            truthBtn.disabled = true;
-            dareBtn.disabled = true;
-            likeBtn.disabled = true;
-            dislikeBtn.disabled = true;
-            ratingButtons.style.display = 'none';
-
-            // Показываем кнопки оценки через 5 секунд
-            setTimeout(() => {
-                ratingButtons.style.display = 'flex';
-                likeBtn.disabled = likeUsedInRound; // Блокируем лайк, если он уже использован
-                dislikeBtn.disabled = false;
-            }, 5000);
+                // Показываем кнопки оценки через 5 секунд
+                setTimeout(() => {
+                    ratingButtons.style.display = 'flex';
+                    likeBtn.disabled = likeUsedInRound; // Блокируем лайк, если он уже использован
+                    dislikeBtn.disabled = false;
+                }, 5000);
+            });
         }
 
         // Оценка задания (Лайк/Дизлайк)
@@ -1440,42 +1545,34 @@
             stopTimer();
             ratingButtons.style.display = 'none';
 
-            if (liked) {
-                scores[currentPlayer] += 10;
-                likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
-                likeBtn.disabled = true; // Блокируем кнопку лайка
-                taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
-                updatePlayerInfo();
-
-                playButtonSound();
-
-                setTimeout(() => {
-                    const currentIndex = players.indexOf(currentPlayer);
-                    const nextIndex = (currentIndex + 1) % players.length;
-                    
-                    // Если это был последний игрок в раунде
-                    if (nextIndex === 0) {
-                        roundsPlayed++;
-                        roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-                        likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
-
-                        if (roundsPlayed >= maxRounds) {
-                            endGame();
-                            return;
-                        }
-                    }
-                    
-                    // Переходим к следующему игроку
-                    currentPlayer = players[nextIndex];
+            // Анимируем скрытие карты с заданием
+            animateTaskCard(false, () => {
+                if (liked) {
+                    scores[currentPlayer] += 10;
+                    likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
+                    taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
                     updatePlayerInfo();
-                    updateTaskDisplayForCurrentPlayer();
-                    truthBtn.disabled = false;
-                    dareBtn.disabled = false;
-                }, 2000);
-            } else {
-                playButtonSound();
-                showDrinkWindow();
-            }
+
+                    playButtonSound();
+
+                    setTimeout(() => {
+                        if (players.indexOf(currentPlayer) === players.length - 1) {
+                            roundsPlayed++;
+                            roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+                            likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+
+                            if (roundsPlayed >= maxRounds) {
+                                endGame();
+                                return;
+                            }
+                        }
+                        nextPlayer();
+                    }, 2000);
+                } else {
+                    playButtonSound();
+                    showDrinkWindow();
+                }
+            });
         }
 
         // Окно с рюмкой
@@ -1484,6 +1581,7 @@
             playerToDrink.style.color = getPlayerColor(players.indexOf(currentPlayer));
             drinkModal.style.display = 'flex';
             animateGlass();
+            animateDrinkModal(true);
 
             if (soundEnabled) {
                 drinkSound.currentTime = 0;
@@ -1493,8 +1591,10 @@
 
         confirmDrinkBtn.addEventListener('click', function() {
             handleButtonClick(this, () => {
-                drinkModal.style.display = 'none';
-                continueGameAfterDrink();
+                animateDrinkModal(false, () => {
+                    drinkModal.style.display = 'none';
+                    continueGameAfterDrink();
+                });
             });
         });
 
@@ -1517,11 +1617,7 @@
             taskDisplay.textContent = "Игрок выпил! Готовим следующего игрока...";
 
             setTimeout(() => {
-                const currentIndex = players.indexOf(currentPlayer);
-                const nextIndex = (currentIndex + 1) % players.length;
-                
-                // Если это был последний игрок в раунде
-                if (nextIndex === 0) {
+                if (players.indexOf(currentPlayer) === players.length - 1) {
                     roundsPlayed++;
                     roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
                     likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
@@ -1531,17 +1627,27 @@
                         return;
                     }
                 }
-                
-                // Переходим к следующему игроку
-                currentPlayer = players[nextIndex];
-                updatePlayerInfo();
-                updateTaskDisplayForCurrentPlayer();
-                truthBtn.disabled = false;
-                dareBtn.disabled = false;
+                nextPlayer();
             }, 2000);
         }
 
-        // Обновление информации о текущем игроке
+        // Следующий игрок
+        function nextPlayer() {
+            const currentIndex = players.indexOf(currentPlayer);
+            const nextIndex = (currentIndex + 1) % players.length;
+            currentPlayer = players[nextIndex];
+            likeUsedInRound = false; // Сбрасываем флаг при переходе к следующему игроку
+
+            updatePlayerInfo();
+            updateTaskDisplayForCurrentPlayer();
+
+            // Показываем кнопки выбора и скрываем кнопки оценки
+            choiceButtons.style.display = 'flex';
+            ratingButtons.style.display = 'none';
+            truthBtn.disabled = false;
+            dareBtn.disabled = false;
+        }
+
         function updateTaskDisplayForCurrentPlayer() {
             const playerColor = getPlayerColor(players.indexOf(currentPlayer));
             taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
@@ -1576,6 +1682,7 @@
             taskDisplay.textContent = '';
             likeUsedInRound = false; // Сбрасываем флаг
             ratingButtons.style.display = 'none';
+            choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
         }
 
         // Показ результатов
