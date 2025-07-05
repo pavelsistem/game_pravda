@@ -1097,6 +1097,8 @@
             <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
             <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
             <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
+            <button class="music-selector-btn" data-track="4">🎵 Трек 5</button>
+            <button class="music-selector-btn" data-track="5">🎵 Трек 6</button>
         </div>
     </div>
 
@@ -1121,8 +1123,8 @@
             <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
             <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
             <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
+        </div>
     </div>
-</div>
 
 <script>
     // Игровые данные
@@ -1147,9 +1149,19 @@
     const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav?raw=true');
     buttonSound.volume = 0.7;
     
-    const backgroundMusic = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra.wav?raw=true');
-    backgroundMusic.loop = true;
-    backgroundMusic.volume = musicVolume;
+    const backgroundMusic = [
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra.wav?raw=true'),
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra2.wav?raw=true'),
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra3.wav?raw=true'),
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra4.wav?raw=true'),
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra5.wav?raw=true'),
+        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra6.wav?raw=true')
+    ];
+    
+    backgroundMusic.forEach(track => {
+        track.loop = true;
+        track.volume = musicVolume;
+    });
     
     const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/vipit.wav?raw=true');
     drinkSound.volume = effectsVolume;
@@ -1355,7 +1367,9 @@
     // Изменение громкости музыки
     musicVolumeControl.addEventListener('input', function() {
         musicVolume = parseFloat(this.value);
-        backgroundMusic.volume = musicVolume;
+        backgroundMusic.forEach(track => {
+            track.volume = musicVolume;
+        });
         localStorage.setItem('musicVolume', musicVolume);
     });
 
@@ -1376,16 +1390,25 @@
                     currentTrackIndex = trackIndex;
                     localStorage.setItem('currentTrack', currentTrackIndex);
 
-                    if (soundEnabled && !backgroundMusic.paused) {
-                        backgroundMusic.pause();
-                        backgroundMusic.currentTime = 0;
-                        backgroundMusic.play();
+                    // Останавливаем все треки
+                    backgroundMusic.forEach(track => {
+                        track.pause();
+                        track.currentTime = 0;
+                    });
+
+                    // Включаем выбранный трек, если звук включен
+                    if (soundEnabled && !backgroundMusic[currentTrackIndex].paused) {
+                        backgroundMusic[currentTrackIndex].play();
                     }
 
+                    // Обновляем активные кнопки
                     document.querySelectorAll('.music-selector-btn').forEach(b => {
                         b.classList.remove('active');
                     });
                     this.classList.add('active');
+                    
+                    // Сворачиваем панель звука
+                    soundPanel.classList.remove('active');
                 }
             });
         });
@@ -1403,6 +1426,9 @@
                 btn.classList.add('active');
             }
         });
+        
+        // Сворачиваем панель раундов
+        roundsPanel.classList.remove('active');
     });
 
     // Быстрый выбор количества раундов
@@ -1419,6 +1445,9 @@
                         b.classList.remove('active');
                     });
                     this.classList.add('active');
+                    
+                    // Сворачиваем панель раундов
+                    roundsPanel.classList.remove('active');
                 }
             });
         });
@@ -1434,7 +1463,9 @@
         if (savedMusicVolume) {
             musicVolume = parseFloat(savedMusicVolume);
             musicVolumeControl.value = musicVolume;
-            backgroundMusic.volume = musicVolume;
+            backgroundMusic.forEach(track => {
+                track.volume = musicVolume;
+            });
         }
 
         if (savedEffectsVolume) {
@@ -1528,8 +1559,8 @@
 
         if (soundEnabled) {
             try {
-                backgroundMusic.currentTime = 0;
-                backgroundMusic.play();
+                backgroundMusic[currentTrackIndex].currentTime = 0;
+                backgroundMusic[currentTrackIndex].play();
             } catch (e) {
                 console.log("Автовоспроизведение музыки заблокировано браузером");
             }
@@ -1705,7 +1736,7 @@
         gameActive = false;
         stopTimer();
 
-        backgroundMusic.pause();
+        backgroundMusic[currentTrackIndex].pause();
 
         if (soundEnabled) {
             resultsSound.currentTime = 0;
