@@ -24,7 +24,6 @@
             background-image: radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
             min-height: 100vh;
             overflow-x: hidden;
-            -webkit-tap-highlight-color: transparent;
         }
 
         /* Стили для прелоадера */
@@ -436,87 +435,27 @@
             overflow: hidden;
             transform-origin: center center;
             backface-visibility: hidden;
-            will-change: transform, box-shadow, border-image;
         }
 
-        /* Новая анимация карты в стиле Hearthstone */
+        /* Анимации для карты с заданием */
         #taskDisplay.card-flip {
-            animation: hearthstoneCardFlip 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            animation: cardFlip 0.6s ease-in-out forwards;
         }
 
         #taskDisplay.card-unflip {
-            animation: hearthstoneCardUnflip 0.6s ease-in-out forwards;
+            animation: cardUnflip 0.6s ease-in-out forwards;
         }
 
-        @keyframes hearthstoneCardFlip {
-            0% {
-                transform: scale(0.1) rotateY(0deg);
-                opacity: 0;
-                box-shadow: 0 0 0 rgba(255, 215, 0, 0);
-            }
-            30% {
-                transform: scale(0.5) rotateY(90deg);
-                opacity: 0.5;
-                box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            }
-            60% {
-                transform: scale(0.8) rotateY(180deg);
-                opacity: 0.8;
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-            }
-            100% {
-                transform: scale(1) rotateY(360deg);
-                opacity: 1;
-                box-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 
-                            0 0 80px rgba(255, 0, 255, 0.6),
-                            0 0 100px rgba(0, 255, 255, 0.4);
-            }
+        @keyframes cardFlip {
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) translateY(-30px) scale(1.1); }
         }
 
-        @keyframes hearthstoneCardUnflip {
-            0% {
-                transform: scale(1) rotateY(0deg);
-                opacity: 1;
-                box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
-            }
-            50% {
-                transform: scale(0.8) rotateY(180deg);
-                opacity: 0.8;
-                box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
-            }
-            100% {
-                transform: scale(0.1) rotateY(360deg);
-                opacity: 0;
-                box-shadow: 0 0 0 rgba(255, 215, 0, 0);
-            }
-        }
-
-        /* Эффект свечения при появлении карты */
-        .card-glow {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-            background: radial-gradient(circle at center, rgba(255, 215, 0, 0.8) 0%, transparent 70%);
-            opacity: 0;
-            animation: cardGlow 1.5s ease-out forwards;
-        }
-
-        @keyframes cardGlow {
-            0% {
-                transform: scale(0.5);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.5);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(2);
-                opacity: 0;
-            }
+        @keyframes cardUnflip {
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(-30px) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
         }
 
         @keyframes borderGlow {
@@ -650,28 +589,27 @@
             overflow: hidden;
             transform-origin: center center;
             backface-visibility: hidden;
-            will-change: transform, box-shadow, border-image;
         }
 
-        /* Упрощенные анимации для модального окна с рюмкой */
+        /* Анимации для модального окна с рюмкой */
         .modal-content.card-flip {
-            animation: modalFlipMobile 0.6s ease-in-out forwards;
+            animation: modalFlip 0.6s ease-in-out forwards;
         }
 
         .modal-content.card-unflip {
-            animation: modalUnflipMobile 0.6s ease-in-out forwards;
+            animation: modalUnflip 0.6s ease-in-out forwards;
         }
 
-        @keyframes modalFlipMobile {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1.1); }
+        @keyframes modalFlip {
+            0% { transform: perspective(1000px) rotateY(0deg) scale(1); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
         }
 
-        @keyframes modalUnflipMobile {
-            0% { transform: scale(1.1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        @keyframes modalUnflip {
+            0% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) scale(1); }
         }
         
         .trophy-icon {
@@ -720,7 +658,6 @@
             position: relative;
             transform-style: preserve-3d;
             animation: floatGlass 3s infinite ease-in-out;
-            will-change: transform;
         }
         
         .glass-body {
@@ -760,7 +697,6 @@
             box-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
             animation: fillLiquid 2s ease-out forwards;
             transform: translateZ(6px);
-            will-change: height, top;
         }
         
         .bubble {
@@ -772,7 +708,6 @@
             opacity: 0;
             animation: bubbleUp 3s infinite ease-out;
             transform: translateZ(7px);
-            will-change: transform, opacity;
         }
 
         .bubble:nth-child(1) { top: 60px; left: 15px; animation-delay: 0s; }
@@ -1010,76 +945,6 @@
                 width: 160px;
                 padding: 10px;
             }
-
-            /* Упрощенные анимации для мобильных устройств */
-            #taskDisplay.card-flip {
-                animation: hearthstoneCardFlipMobile 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            }
-
-            #taskDisplay.card-unflip {
-                animation: hearthstoneCardUnflipMobile 0.6s ease-in-out forwards;
-            }
-
-            @keyframes hearthstoneCardFlipMobile {
-                0% {
-                    transform: scale(0.1) rotateY(0deg);
-                    opacity: 0;
-                    box-shadow: 0 0 0 rgba(255, 215, 0, 0);
-                }
-                30% {
-                    transform: scale(0.5) rotateY(90deg);
-                    opacity: 0.5;
-                    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-                }
-                60% {
-                    transform: scale(0.8) rotateY(180deg);
-                    opacity: 0.8;
-                    box-shadow: 0 0 40px rgba(255, 215, 0, 0.8);
-                }
-                100% {
-                    transform: scale(1) rotateY(360deg);
-                    opacity: 1;
-                    box-shadow: 0 0 60px rgba(255, 215, 0, 0.8), 
-                                0 0 80px rgba(255, 0, 255, 0.6),
-                                0 0 100px rgba(0, 255, 255, 0.4);
-                }
-            }
-
-            @keyframes hearthstoneCardUnflipMobile {
-                0% {
-                    transform: scale(1) rotateY(0deg);
-                    opacity: 1;
-                    box-shadow: 0 0 60px rgba(255, 215, 0, 0.8);
-                }
-                50% {
-                    transform: scale(0.8) rotateY(180deg);
-                    opacity: 0.8;
-                    box-shadow: 0 0 40px rgba(255, 215, 0, 0.5);
-                }
-                100% {
-                    transform: scale(0.1) rotateY(360deg);
-                    opacity: 0;
-                    box-shadow: 0 0 0 rgba(255, 215, 0, 0);
-                }
-            }
-
-            .modal-content.card-flip {
-                animation: modalFlipMobileSimple 0.6s ease-in-out forwards;
-            }
-
-            .modal-content.card-unflip {
-                animation: modalUnflipMobileSimple 0.6s ease-in-out forwards;
-            }
-
-            @keyframes modalFlipMobileSimple {
-                0% { transform: scale(1); }
-                100% { transform: scale(1.1); }
-            }
-
-            @keyframes modalUnflipMobileSimple {
-                0% { transform: scale(1.1); }
-                100% { transform: scale(1); }
-            }
         }
     </style>
 </head>
@@ -1189,8 +1054,6 @@
             <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
             <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
             <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
-            <button class="music-selector-btn" data-track="4">🎵 Трек 5</button>
-            <button class="music-selector-btn" data-track="5">🎵 Трек 6</button>
         </div>
     </div>
 
@@ -1217,761 +1080,721 @@
             <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
         </div>
     </div>
-
-<script>
-    // Игровые данные
-    const players = [];
-    let currentPlayer = "";
-    const scores = {};
-    let gameActive = false;
-    let timerRunning = false;
-    let timeLeft = 300; // 5 минут в секундах
-    let roundsPlayed = 0;
-    let maxRounds = 10; // По умолчанию 10 раундов
-    let timerInterval;
-    let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
-
-    // Настройки звука
-    let soundEnabled = true;
-    let musicVolume = 0.7;
-    let effectsVolume = 0.7;
-    let currentTrackIndex = 0;
-
-    // Звуковые эффекты
-    const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav?raw=true');
-    buttonSound.volume = 0.7;
     
-    const backgroundMusic = [
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra.wav?raw=true'),
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra2.wav?raw=true'),
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra3.wav?raw=true'),
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra4.wav?raw=true'),
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra5.wav?raw=true'),
-        new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra6.wav?raw=true')
-    ];
-    
-    backgroundMusic.forEach(track => {
-        track.loop = true;
-        track.volume = musicVolume;
-    });
-    
-    const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/vipit.wav?raw=true');
-    drinkSound.volume = effectsVolume;
-    
-    const resultsSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20rezultat.wav?raw=true');
-    resultsSound.volume = musicVolume;
+    <script>
+        // Игровые данные
+        const players = [];
+        let currentPlayer = "";
+        const scores = {};
+        let gameActive = false;
+        let timerRunning = false;
+        let timeLeft = 300; // 5 минут в секундах
+        let roundsPlayed = 0;
+        let maxRounds = 10; // По умолчанию 10 раундов
+        let timerInterval;
+        let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
 
-    // DOM элементы
-    const setupContainer = document.getElementById('setupContainer');
-    const gameContainer = document.getElementById('gameContainer');
-    const endGameContainer = document.getElementById('endGameContainer');
-    const playerInput = document.getElementById('playerInput');
-    const addPlayerBtn = document.getElementById('addPlayerBtn');
-    const startGameBtn = document.getElementById('startGameBtn');
-    const playersList = document.getElementById('playersList');
-    const roundInfo = document.getElementById('roundInfo');
-    const scoreInfo = document.getElementById('scoreInfo');
-    const currentPlayerDisplay = document.getElementById('currentPlayer');
-    const timerDisplay = document.getElementById('timer');
-    const taskDisplay = document.getElementById('taskDisplay');
-    const truthBtn = document.getElementById('truthBtn');
-    const dareBtn = document.getElementById('dareBtn');
-    const likeBtn = document.getElementById('likeBtn');
-    const dislikeBtn = document.getElementById('dislikeBtn');
-    const endGameBtn = document.getElementById('endGameBtn');
-    const drinkModal = document.getElementById('drinkModal');
-    const playerToDrink = document.getElementById('playerToDrink');
-    const confirmDrinkBtn = document.getElementById('confirmDrinkBtn');
-    const resultsModal = document.getElementById('resultsModal');
-    const resultsList = document.getElementById('resultsList');
-    const winnerInfo = document.getElementById('winnerInfo');
-    const closeResultsBtn = document.getElementById('closeResultsBtn');
-    const preloader = document.getElementById('preloader');
-    const progressBarFill = document.getElementById('progress-bar-fill');
-    const progressPercentage = document.getElementById('progress-percentage');
-    const roundsSelect = document.getElementById('roundsSelect');
-    const soundToggle = document.getElementById('soundToggle');
-    const soundPanel = document.getElementById('soundPanel');
-    const roundsToggle = document.getElementById('roundsToggle');
-    const roundsPanel = document.getElementById('roundsPanel');
-    const musicVolumeControl = document.getElementById('musicVolume');
-    const effectsVolumeControl = document.getElementById('effectsVolume');
-    const choiceButtons = document.getElementById('choiceButtons');
-    const ratingButtons = document.getElementById('ratingButtons');
-    const drinkModalContent = document.querySelector('#drinkModal .modal-content');
+        // Настройки звука
+        let soundEnabled = true;
+        let musicVolume = 0.7;
+        let effectsVolume = 0.7;
+        let currentTrackIndex = 0;
 
-    // Воспроизведение звукового эффекта кнопок
-    function playButtonSound() {
-        if (!soundEnabled) return;
+        // Звуковые эффекты
+        const buttonSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/zvuk%20knopok.wav?raw=true');
+        buttonSound.volume = 0.7;
         
-        try {
-            buttonSound.currentTime = 0;
-            buttonSound.volume = effectsVolume;
-            buttonSound.play();
-        } catch (e) {
-            console.log("Ошибка воспроизведения звука кнопки:", e);
-        }
-    }
-
-    // Функция для форматирования времени в MM:SS
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-    }
-
-    // Function to get player color based on their index
-    function getPlayerColor(playerIndex) {
-        const colors = [
-            '#00ffff', // Голубой
-            '#ff00ff', // Розовый
-            '#8a2be2', // Индиго
-            '#00ff00', // Зеленый
-            '#ffff00', // Желтый
-            '#ff69b4', // Горячий розовый
-            '#7fffd4', // Аквамарин
-            '#ffa500', // Оранжевый
-            '#dda0dd', // Слива
-            '#adff2f'  // Салатовый
-        ];
-        return colors[playerIndex % colors.length];
-    }
-
-    // Function to handle button click animation
-    function handleButtonClick(button, callback) {
-        // Добавляем класс для анимации
-        button.classList.add('ripple');
+        const backgroundMusic = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20igra.wav?raw=true');
+        backgroundMusic.loop = true;
+        backgroundMusic.volume = musicVolume;
         
-        // Удаляем класс после завершения анимации
-        setTimeout(() => {
-            button.classList.remove('ripple');
-        }, 600);
-        
-        // Воспроизводим звук кнопки
-        playButtonSound();
-        
-        // Вызываем callback функцию
-        if (callback) {
-            callback();
-        }
-    }
-
-    // Анимация карты с заданием в стиле Hearthstone
-    function animateTaskCard(show, callback) {
-        if (show) {
-            // Создаем эффект свечения
-            const glow = document.createElement('div');
-            glow.className = 'card-glow';
-            taskDisplay.appendChild(glow);
-            
-            // Удаляем эффект свечения после завершения анимации
-            setTimeout(() => {
-                taskDisplay.removeChild(glow);
-            }, 1500);
-            
-            // Показываем карту с анимацией
-            taskDisplay.classList.remove('card-unflip');
-            taskDisplay.classList.add('card-flip');
-            
-            // После завершения анимации вызываем callback
-            setTimeout(() => {
-                if (callback) callback();
-            }, 800);
-        } else {
-            // Скрываем карту с анимацией
-            taskDisplay.classList.remove('card-flip');
-            taskDisplay.classList.add('card-unflip');
-            
-            // После завершения анимации вызываем callback
-            setTimeout(() => {
-                if (callback) callback();
-            }, 600);
-        }
-    }
-
-    // Анимация модального окна с рюмкой
-    function animateDrinkModal(show, callback) {
-        if (show) {
-            // Показываем модальное окно с анимацией
-            drinkModalContent.classList.remove('card-unflip');
-            drinkModalContent.classList.add('card-flip');
-            
-            // После завершения анимации вызываем callback
-            setTimeout(() => {
-                if (callback) callback();
-            }, 600);
-        } else {
-            // Скрываем модальное окно с анимацией
-            drinkModalContent.classList.remove('card-flip');
-            drinkModalContent.classList.add('card-unflip');
-            
-            // После завершения анимации вызываем callback
-            setTimeout(() => {
-                if (callback) callback();
-            }, 600);
-        }
-    }
-
-    // Инициализация - показ прелоадера, скрытие игрового контента
-    document.addEventListener('DOMContentLoaded', () => {
-        loadAudioSettings();
-
-        setupContainer.style.display = 'none';
-        gameContainer.style.display = 'none';
-        endGameContainer.style.display = 'none';
-        preloader.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
-
-        let currentProgress = 0;
-        const totalDuration = 3000;
-        const updateInterval = 50;
-        const steps = totalDuration / updateInterval;
-        const increment = 100 / steps;
-
-        const loadingInterval = setInterval(() => {
-            currentProgress += increment;
-            if (currentProgress >= 100) {
-                currentProgress = 100;
-                clearInterval(loadingInterval);
-            }
-            progressBarFill.style.width = `${currentProgress}%`;
-            progressPercentage.textContent = `${Math.floor(currentProgress)}%`;
-
-            if (currentProgress === 100) {
-                setTimeout(() => {
-                    preloader.classList.add('fade-out');
-                    setTimeout(() => {
-                        preloader.style.display = 'none';
-                        setupContainer.style.display = 'block';
-                        document.body.style.overflow = 'auto';
-                    }, 500);
-                }, 200);
-            }
-        }, updateInterval);
-    });
-
-    // Переключение панели звука
-    soundToggle.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            soundPanel.classList.toggle('active');
-            roundsPanel.classList.remove('active');
-        });
-    });
-
-    // Переключение панели раундов
-    roundsToggle.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            roundsPanel.classList.toggle('active');
-            soundPanel.classList.remove('active');
-        });
-    });
-
-    // Изменение громкости музыки
-    musicVolumeControl.addEventListener('input', function() {
-        musicVolume = parseFloat(this.value);
-        backgroundMusic.forEach(track => {
-            track.volume = musicVolume;
-        });
-        localStorage.setItem('musicVolume', musicVolume);
-    });
-
-    // Изменение громкости эффектов
-    effectsVolumeControl.addEventListener('input', function() {
-        effectsVolume = parseFloat(this.value);
-        localStorage.setItem('effectsVolume', effectsVolume);
-        buttonSound.volume = effectsVolume;
+        const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/vipit.wav?raw=true');
         drinkSound.volume = effectsVolume;
-    });
-
-    // Выбор трека
-    document.querySelectorAll('.music-selector-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            handleButtonClick(this, () => {
-                const trackIndex = parseInt(this.dataset.track);
-                if (trackIndex !== currentTrackIndex) {
-                    currentTrackIndex = trackIndex;
-                    localStorage.setItem('currentTrack', currentTrackIndex);
-
-                    // Останавливаем все треки
-                    backgroundMusic.forEach(track => {
-                        track.pause();
-                        track.currentTime = 0;
-                    });
-
-                    // Включаем выбранный трек, если звук включен
-                    if (soundEnabled && !backgroundMusic[currentTrackIndex].paused) {
-                        backgroundMusic[currentTrackIndex].play();
-                    }
-
-                    // Обновляем активные кнопки
-                    document.querySelectorAll('.music-selector-btn').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // Сворачиваем панель звука
-                    soundPanel.classList.remove('active');
-                }
-            });
-        });
-    });
-
-    // Выбор количества раундов через select
-    roundsSelect.addEventListener('change', function() {
-        maxRounds = parseInt(this.value);
-        localStorage.setItem('maxRounds', maxRounds);
         
-        // Обновляем активную кнопку быстрого выбора
-        document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (parseInt(btn.dataset.rounds) === maxRounds) {
-                btn.classList.add('active');
+        const resultsSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/fon%20rezultat.wav?raw=true');
+        resultsSound.volume = musicVolume;
+
+        // DOM элементы
+        const setupContainer = document.getElementById('setupContainer');
+        const gameContainer = document.getElementById('gameContainer');
+        const endGameContainer = document.getElementById('endGameContainer');
+        const playerInput = document.getElementById('playerInput');
+        const addPlayerBtn = document.getElementById('addPlayerBtn');
+        const startGameBtn = document.getElementById('startGameBtn');
+        const playersList = document.getElementById('playersList');
+        const roundInfo = document.getElementById('roundInfo');
+        const scoreInfo = document.getElementById('scoreInfo');
+        const currentPlayerDisplay = document.getElementById('currentPlayer');
+        const timerDisplay = document.getElementById('timer');
+        const taskDisplay = document.getElementById('taskDisplay');
+        const truthBtn = document.getElementById('truthBtn');
+        const dareBtn = document.getElementById('dareBtn');
+        const likeBtn = document.getElementById('likeBtn');
+        const dislikeBtn = document.getElementById('dislikeBtn');
+        const endGameBtn = document.getElementById('endGameBtn');
+        const drinkModal = document.getElementById('drinkModal');
+        const playerToDrink = document.getElementById('playerToDrink');
+        const confirmDrinkBtn = document.getElementById('confirmDrinkBtn');
+        const resultsModal = document.getElementById('resultsModal');
+        const resultsList = document.getElementById('resultsList');
+        const winnerInfo = document.getElementById('winnerInfo');
+        const closeResultsBtn = document.getElementById('closeResultsBtn');
+        const preloader = document.getElementById('preloader');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const roundsSelect = document.getElementById('roundsSelect');
+        const soundToggle = document.getElementById('soundToggle');
+        const soundPanel = document.getElementById('soundPanel');
+        const roundsToggle = document.getElementById('roundsToggle');
+        const roundsPanel = document.getElementById('roundsPanel');
+        const musicVolumeControl = document.getElementById('musicVolume');
+        const effectsVolumeControl = document.getElementById('effectsVolume');
+        const choiceButtons = document.getElementById('choiceButtons');
+        const ratingButtons = document.getElementById('ratingButtons');
+        const drinkModalContent = document.querySelector('#drinkModal .modal-content');
+
+        // Воспроизведение звукового эффекта кнопок
+        function playButtonSound() {
+            if (!soundEnabled) return;
+            
+            try {
+                buttonSound.currentTime = 0;
+                buttonSound.volume = effectsVolume;
+                buttonSound.play();
+            } catch (e) {
+                console.log("Ошибка воспроизведения звука кнопки:", e);
             }
-        });
-        
-        // Сворачиваем панель раундов
-        roundsPanel.classList.remove('active');
-    });
-
-    // Быстрый выбор количества раундов
-    document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            handleButtonClick(this, () => {
-                const rounds = parseInt(this.dataset.rounds);
-                if (rounds !== maxRounds) {
-                    maxRounds = rounds;
-                    roundsSelect.value = rounds;
-                    localStorage.setItem('maxRounds', rounds);
-
-                    document.querySelectorAll('.rounds-selector-btn').forEach(b => {
-                        b.classList.remove('active');
-                    });
-                    this.classList.add('active');
-                    
-                    // Сворачиваем панель раундов
-                    roundsPanel.classList.remove('active');
-                }
-            });
-        });
-    });
-
-    // Загрузка сохраненных настроек
-    function loadAudioSettings() {
-        const savedMusicVolume = localStorage.getItem('musicVolume');
-        const savedEffectsVolume = localStorage.getItem('effectsVolume');
-        const savedTrack = localStorage.getItem('currentTrack');
-        const savedRounds = localStorage.getItem('maxRounds');
-
-        if (savedMusicVolume) {
-            musicVolume = parseFloat(savedMusicVolume);
-            musicVolumeControl.value = musicVolume;
-            backgroundMusic.forEach(track => {
-                track.volume = musicVolume;
-            });
         }
 
-        if (savedEffectsVolume) {
-            effectsVolume = parseFloat(savedEffectsVolume);
-            effectsVolumeControl.value = effectsVolume;
+        // Функция для форматирования времени в MM:SS
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Function to get player color based on their index
+        function getPlayerColor(playerIndex) {
+            const colors = [
+                '#00ffff', // Голубой
+                '#ff00ff', // Розовый
+                '#8a2be2', // Индиго
+                '#00ff00', // Зеленый
+                '#ffff00', // Желтый
+                '#ff69b4', // Горячий розовый
+                '#7fffd4', // Аквамарин
+                '#ffa500', // Оранжевый
+                '#dda0dd', // Слива
+                '#adff2f'  // Салатовый
+            ];
+            return colors[playerIndex % colors.length];
+        }
+
+        // Function to handle button click animation
+        function handleButtonClick(button, callback) {
+            // Добавляем класс для анимации
+            button.classList.add('ripple');
+            
+            // Удаляем класс после завершения анимации
+            setTimeout(() => {
+                button.classList.remove('ripple');
+            }, 600);
+            
+            // Воспроизводим звук кнопки
+            playButtonSound();
+            
+            // Вызываем callback функцию
+            if (callback) {
+                callback();
+            }
+        }
+
+        // Анимация карты с заданием
+        function animateTaskCard(show, callback) {
+            if (show) {
+                // Показываем карту с анимацией
+                taskDisplay.classList.remove('card-unflip');
+                taskDisplay.classList.add('card-flip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            } else {
+                // Скрываем карту с анимацией
+                taskDisplay.classList.remove('card-flip');
+                taskDisplay.classList.add('card-unflip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            }
+        }
+
+        // Анимация модального окна с рюмкой
+        function animateDrinkModal(show, callback) {
+            if (show) {
+                // Показываем модальное окно с анимацией
+                drinkModalContent.classList.remove('card-unflip');
+                drinkModalContent.classList.add('card-flip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            } else {
+                // Скрываем модальное окно с анимацией
+                drinkModalContent.classList.remove('card-flip');
+                drinkModalContent.classList.add('card-unflip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            }
+        }
+
+        // Инициализация - показ прелоадера, скрытие игрового контента
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAudioSettings();
+
+            setupContainer.style.display = 'none';
+            gameContainer.style.display = 'none';
+            endGameContainer.style.display = 'none';
+            preloader.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+
+            let currentProgress = 0;
+            const totalDuration = 3000;
+            const updateInterval = 50;
+            const steps = totalDuration / updateInterval;
+            const increment = 100 / steps;
+
+            const loadingInterval = setInterval(() => {
+                currentProgress += increment;
+                if (currentProgress >= 100) {
+                    currentProgress = 100;
+                    clearInterval(loadingInterval);
+                }
+                progressBarFill.style.width = `${currentProgress}%`;
+                progressPercentage.textContent = `${Math.floor(currentProgress)}%`;
+
+                if (currentProgress === 100) {
+                    setTimeout(() => {
+                        preloader.classList.add('fade-out');
+                        setTimeout(() => {
+                            preloader.style.display = 'none';
+                            setupContainer.style.display = 'block';
+                            document.body.style.overflow = 'auto';
+                        }, 500);
+                    }, 200);
+                }
+            }, updateInterval);
+        });
+
+        // Переключение панели звука
+        soundToggle.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                soundPanel.classList.toggle('active');
+                roundsPanel.classList.remove('active');
+            });
+        });
+
+        // Переключение панели раундов
+        roundsToggle.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                roundsPanel.classList.toggle('active');
+                soundPanel.classList.remove('active');
+            });
+        });
+
+        // Изменение громкости музыки
+        musicVolumeControl.addEventListener('input', function() {
+            musicVolume = parseFloat(this.value);
+            backgroundMusic.volume = musicVolume;
+            localStorage.setItem('musicVolume', musicVolume);
+        });
+
+        // Изменение громкости эффектов
+        effectsVolumeControl.addEventListener('input', function() {
+            effectsVolume = parseFloat(this.value);
+            localStorage.setItem('effectsVolume', effectsVolume);
             buttonSound.volume = effectsVolume;
             drinkSound.volume = effectsVolume;
-        }
+        });
 
-        if (savedTrack) {
-            currentTrackIndex = parseInt(savedTrack);
-            document.querySelector(`.music-selector-btn[data-track="${currentTrackIndex}"]`).classList.add('active');
-        }
+        // Выбор трека
+        document.querySelectorAll('.music-selector-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                handleButtonClick(this, () => {
+                    const trackIndex = parseInt(this.dataset.track);
+                    if (trackIndex !== currentTrackIndex) {
+                        currentTrackIndex = trackIndex;
+                        localStorage.setItem('currentTrack', currentTrackIndex);
 
-        if (savedRounds) {
-            maxRounds = parseInt(savedRounds);
-            roundsSelect.value = maxRounds;
+                        if (soundEnabled && !backgroundMusic.paused) {
+                            backgroundMusic.pause();
+                            backgroundMusic.currentTime = 0;
+                            backgroundMusic.play();
+                        }
+
+                        document.querySelectorAll('.music-selector-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        this.classList.add('active');
+                    }
+                });
+            });
+        });
+
+        // Выбор количества раундов через select
+        roundsSelect.addEventListener('change', function() {
+            maxRounds = parseInt(this.value);
+            localStorage.setItem('maxRounds', maxRounds);
             
-            // Активируем соответствующую кнопку быстрого выбора
+            // Обновляем активную кнопку быстрого выбора
             document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
                 btn.classList.remove('active');
                 if (parseInt(btn.dataset.rounds) === maxRounds) {
                     btn.classList.add('active');
                 }
             });
-        }
-    }
-
-    // Добавление игрока
-    addPlayerBtn.addEventListener('click', function() {
-        handleButtonClick(this, addPlayer);
-    });
-    playerInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            handleButtonClick(addPlayerBtn, addPlayer);
-        }
-    });
-
-    function addPlayer() {
-        const playerName = playerInput.value.trim();
-        if (playerName && !players.includes(playerName)) {
-            players.push(playerName);
-            scores[playerName] = 0;
-
-            const li = document.createElement('li');
-            li.textContent = playerName;
-            const playerIndex = players.length - 1;
-            li.style.color = getPlayerColor(playerIndex);
-
-            playersList.appendChild(li);
-
-            playerInput.value = '';
-
-            if (players.length >= 2) {
-                startGameBtn.disabled = false;
-            }
-
-            playButtonSound();
-        }
-    }
-
-    // Начало игры
-    startGameBtn.addEventListener('click', function() {
-        handleButtonClick(this, startGame);
-    });
-
-    function startGame() {
-        if (players.length < 2) {
-            alert("Нужно как минимум 2 игрока!");
-            return;
-        }
-
-        gameActive = true;
-        roundsPlayed = 0;
-        likeUsedInRound = false; // Сброс флага использования лайка
-        currentPlayer = players[Math.floor(Math.random() * players.length)];
-        updatePlayerInfo();
-        roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-
-        setupContainer.style.display = 'none';
-        gameContainer.style.display = 'block';
-        endGameContainer.style.display = 'block';
-
-        truthBtn.disabled = false;
-        dareBtn.disabled = false;
-        endGameBtn.disabled = false;
-
-        updateTaskDisplayForCurrentPlayer();
-
-        playButtonSound();
-
-        if (soundEnabled) {
-            try {
-                backgroundMusic[currentTrackIndex].currentTime = 0;
-                backgroundMusic[currentTrackIndex].play();
-            } catch (e) {
-                console.log("Автовоспроизведение музыки заблокировано браузером");
-            }
-        }
-    }
-
-    // Получение задания (Правда/Действие)
-    truthBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => getTask('truth'));
-    });
-    dareBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => getTask('dare'));
-    });
-
-    function getTask(taskType) {
-        if (!gameActive) return;
-
-        // Скрываем кнопки выбора и показываем кнопки оценки
-        choiceButtons.style.display = 'none';
-        ratingButtons.style.display = 'none';
-
-        let task;
-        if (taskType === 'truth') {
-            task = truths[Math.floor(Math.random() * truths.length)];
-            playButtonSound();
-        } else {
-            task = dares[Math.floor(Math.random() * dares.length)];
-            playButtonSound();
-        }
-
-        // Анимируем появление карты с заданием в стиле Hearthstone
-        animateTaskCard(true, () => {
-            taskDisplay.textContent = task;
-            startTimer();
-
-            // Показываем кнопки оценки через 5 секунд
-            setTimeout(() => {
-                ratingButtons.style.display = 'flex';
-                likeBtn.disabled = likeUsedInRound; // Блокируем лайк, если он уже использован
-                dislikeBtn.disabled = false;
-            }, 5000);
         });
-    }
 
-    // Оценка задания (Лайк/Дизлайк)
-    likeBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => rateTask(true));
-    });
-    dislikeBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => rateTask(false));
-    });
+        // Быстрый выбор количества раундов
+        document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                handleButtonClick(this, () => {
+                    const rounds = parseInt(this.dataset.rounds);
+                    if (rounds !== maxRounds) {
+                        maxRounds = rounds;
+                        roundsSelect.value = rounds;
+                        localStorage.setItem('maxRounds', maxRounds);
 
-    function rateTask(liked) {
-        if (!gameActive) return;
-
-        stopTimer();
-        ratingButtons.style.display = 'none';
-
-        // Анимируем скрытие карты с заданием
-        animateTaskCard(false, () => {
-            if (liked) {
-                scores[currentPlayer] += 10;
-                likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
-                taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
-                updatePlayerInfo();
-
-                playButtonSound();
-
-                setTimeout(() => {
-                    if (players.indexOf(currentPlayer) === players.length - 1) {
-                        roundsPlayed++;
-                        roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-                        likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
-
-                        if (roundsPlayed >= maxRounds) {
-                            endGame();
-                            return;
-                        }
+                        document.querySelectorAll('.rounds-selector-btn').forEach(b => {
+                            b.classList.remove('active');
+                        });
+                        this.classList.add('active');
                     }
-                    nextPlayer();
-                }, 2000);
-            } else {
-                playButtonSound();
-                showDrinkWindow();
-            }
-        });
-    }
-
-    // Окно с рюмкой
-    function showDrinkWindow() {
-        playerToDrink.textContent = currentPlayer;
-        playerToDrink.style.color = getPlayerColor(players.indexOf(currentPlayer));
-        drinkModal.style.display = 'flex';
-        animateGlass();
-        animateDrinkModal(true);
-
-        if (soundEnabled) {
-            drinkSound.currentTime = 0;
-            drinkSound.play();
-        }
-    }
-
-    confirmDrinkBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            animateDrinkModal(false, () => {
-                drinkModal.style.display = 'none';
-                continueGameAfterDrink();
+                });
             });
         });
-    });
 
-    function animateGlass(step = 0, direction = 1) {
-        if (step < 5) {
-            const glass = document.querySelector('.glass');
-            glass.style.transform = `translateY(${direction * 5}px)`;
+        // Загрузка сохраненных настроек
+        function loadAudioSettings() {
+            const savedMusicVolume = localStorage.getItem('musicVolume');
+            const savedEffectsVolume = localStorage.getItem('effectsVolume');
+            const savedTrack = localStorage.getItem('currentTrack');
+            const savedRounds = localStorage.getItem('maxRounds');
 
-            setTimeout(() => {
-                animateGlass(step + 1, direction * -1);
-            }, 100);
-        } else {
-            const glass = document.querySelector('.glass');
-            glass.style.transform = 'translateY(0)';
+            if (savedMusicVolume) {
+                musicVolume = parseFloat(savedMusicVolume);
+                musicVolumeControl.value = musicVolume;
+                backgroundMusic.volume = musicVolume;
+            }
+
+            if (savedEffectsVolume) {
+                effectsVolume = parseFloat(savedEffectsVolume);
+                effectsVolumeControl.value = effectsVolume;
+                buttonSound.volume = effectsVolume;
+                drinkSound.volume = effectsVolume;
+            }
+
+            if (savedTrack) {
+                currentTrackIndex = parseInt(savedTrack);
+                document.querySelector(`.music-selector-btn[data-track="${currentTrackIndex}"]`).classList.add('active');
+            }
+
+            if (savedRounds) {
+                maxRounds = parseInt(savedRounds);
+                roundsSelect.value = maxRounds;
+                
+                // Активируем соответствующую кнопку быстрого выбора
+                document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (parseInt(btn.dataset.rounds) === maxRounds) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
         }
-    }
 
-    function continueGameAfterDrink() {
-        updatePlayerInfo();
-        taskDisplay.textContent = "Игрок выпил! Готовим следующего игрока...";
+        // Добавление игрока
+        addPlayerBtn.addEventListener('click', function() {
+            handleButtonClick(this, addPlayer);
+        });
+        playerInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleButtonClick(addPlayerBtn, addPlayer);
+            }
+        });
 
-        setTimeout(() => {
-            if (players.indexOf(currentPlayer) === players.length - 1) {
-                roundsPlayed++;
-                roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-                likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+        function addPlayer() {
+            const playerName = playerInput.value.trim();
+            if (playerName && !players.includes(playerName)) {
+                players.push(playerName);
+                scores[playerName] = 0;
 
-                if (roundsPlayed >= maxRounds) {
-                    endGame();
-                    return;
+                const li = document.createElement('li');
+                li.textContent = playerName;
+                const playerIndex = players.length - 1;
+                li.style.color = getPlayerColor(playerIndex);
+
+                playersList.appendChild(li);
+
+                playerInput.value = '';
+
+                if (players.length >= 2) {
+                    startGameBtn.disabled = false;
+                }
+
+                playButtonSound();
+            }
+        }
+
+        // Начало игры
+        startGameBtn.addEventListener('click', function() {
+            handleButtonClick(this, startGame);
+        });
+
+        function startGame() {
+            if (players.length < 2) {
+                alert("Нужно как минимум 2 игрока!");
+                return;
+            }
+
+            gameActive = true;
+            roundsPlayed = 0;
+            likeUsedInRound = false; // Сброс флага использования лайка
+            currentPlayer = players[Math.floor(Math.random() * players.length)];
+            updatePlayerInfo();
+            roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+
+            setupContainer.style.display = 'none';
+            gameContainer.style.display = 'block';
+            endGameContainer.style.display = 'block';
+
+            truthBtn.disabled = false;
+            dareBtn.disabled = false;
+            endGameBtn.disabled = false;
+
+            updateTaskDisplayForCurrentPlayer();
+
+            playButtonSound();
+
+            if (soundEnabled) {
+                try {
+                    backgroundMusic.currentTime = 0;
+                    backgroundMusic.play();
+                } catch (e) {
+                    console.log("Автовоспроизведение музыки заблокировано браузером");
                 }
             }
-            nextPlayer();
-        }, 2000);
-    }
-
-    // Следующий игрок
-    function nextPlayer() {
-        const currentIndex = players.indexOf(currentPlayer);
-        const nextIndex = (currentIndex + 1) % players.length;
-        currentPlayer = players[nextIndex];
-        likeUsedInRound = false; // Сбрасываем флаг при переходе к следующему игроку
-
-        updatePlayerInfo();
-        updateTaskDisplayForCurrentPlayer();
-
-        // Показываем кнопки выбора и скрываем кнопки оценки
-        choiceButtons.style.display = 'flex';
-        ratingButtons.style.display = 'none';
-        truthBtn.disabled = false;
-        dareBtn.disabled = false;
-    }
-
-    function updateTaskDisplayForCurrentPlayer() {
-        const playerColor = getPlayerColor(players.indexOf(currentPlayer));
-        taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
-    }
-
-    // Завершение игры
-    endGameBtn.addEventListener('click', function() {
-        handleButtonClick(this, endGame);
-    });
-
-    function endGame() {
-        gameActive = false;
-        stopTimer();
-
-        backgroundMusic[currentTrackIndex].pause();
-
-        if (soundEnabled) {
-            resultsSound.currentTime = 0;
-            resultsSound.play();
         }
 
-        showResults();
-
-        // Сброс игры
-        gameContainer.style.display = 'none';
-        endGameContainer.style.display = 'none';
-        players.length = 0;
-        for (const key in scores) delete scores[key];
-        playersList.innerHTML = '';
-        startGameBtn.disabled = true;
-        playerInput.value = '';
-        taskDisplay.textContent = '';
-        likeUsedInRound = false; // Сбрасываем флаг
-        ratingButtons.style.display = 'none';
-        choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
-    }
-
-    // Показ результатов
-    function showResults() {
-        resultsList.innerHTML = '';
-
-        const sortedPlayers = Object.entries(scores).sort((a, b) => b[1] - a[1]);
-
-        sortedPlayers.forEach(([player, score], index) => {
-            const div = document.createElement('div');
-            div.className = 'result-item';
-            const playerColor = getPlayerColor(players.indexOf(player));
-            div.innerHTML = `
-                <span style="color: ${playerColor};">${index + 1}. ${player}</span>
-                <span>${score} очков</span>
-            `;
-            resultsList.appendChild(div);
+        // Получение задания (Правда/Действие)
+        truthBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => getTask('truth'));
+        });
+        dareBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => getTask('dare'));
         });
 
-        if (sortedPlayers.length > 0) {
-            const winner = sortedPlayers[0];
-            const winnerColor = getPlayerColor(players.indexOf(winner[0]));
-            winnerInfo.innerHTML = `Победитель: <span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${winner[0]}</span> с ${winner[1]} очками!`;
-        }
+        function getTask(taskType) {
+            if (!gameActive) return;
 
-        resultsModal.style.display = 'flex';
-    }
+            // Скрываем кнопки выбора и показываем кнопки оценки
+            choiceButtons.style.display = 'none';
+            ratingButtons.style.display = 'none';
 
-    closeResultsBtn.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            resultsModal.style.display = 'none';
-            setupContainer.style.display = 'block';
-            playButtonSound();
-        });
-    });
-
-    // Обновление информации об игроке
-    function updatePlayerInfo() {
-        const currentPlayerIndex = players.indexOf(currentPlayer);
-        const playerColor = getPlayerColor(currentPlayerIndex);
-
-        currentPlayerDisplay.style.color = playerColor;
-        currentPlayerDisplay.style.textShadow = `0 0 5px ${playerColor}`;
-        currentPlayerDisplay.textContent = currentPlayer;
-
-        let scoresText = "";
-        for (const [player, score] of Object.entries(scores)) {
-            const index = players.indexOf(player);
-            const color = getPlayerColor(index);
-            scoresText += `<span style="color: ${color};">${player}</span>: ${score}\n`;
-        }
-        scoreInfo.innerHTML = scoresText;
-    }
-
-    // Таймер
-    function startTimer() {
-        timeLeft = 300;
-        timerRunning = true;
-        updateTimer();
-        timerDisplay.classList.remove('timer-warning');
-    }
-
-    function updateTimer() {
-        if (timerRunning && timeLeft > 0) {
-            timerDisplay.textContent = formatTime(timeLeft);
-
-            if (timeLeft <= 10) {
-                timerDisplay.classList.add('timer-warning');
+            let task;
+            if (taskType === 'truth') {
+                task = truths[Math.floor(Math.random() * truths.length)];
+                playButtonSound();
             } else {
-                timerDisplay.classList.remove('timer-warning');
+                task = dares[Math.floor(Math.random() * dares.length)];
+                playButtonSound();
             }
 
-            timeLeft--;
-            timerInterval = setTimeout(updateTimer, 1000);
-        } else if (timeLeft === 0) {
-            timerDisplay.textContent = "0:00";
-            timerDisplay.classList.remove('timer-warning');
-            rateTask(false);
+            // Анимируем появление карты с заданием
+            animateTaskCard(true, () => {
+                taskDisplay.textContent = task;
+                startTimer();
+
+                // Показываем кнопки оценки через 5 секунд
+                setTimeout(() => {
+                    ratingButtons.style.display = 'flex';
+                    likeBtn.disabled = likeUsedInRound; // Блокируем лайк, если он уже использован
+                    dislikeBtn.disabled = false;
+                }, 5000);
+            });
         }
-    }
 
-    function stopTimer() {
-        timerRunning = false;
-        clearTimeout(timerInterval);
-        timerDisplay.classList.remove('timer-warning');
-    }
+        // Оценка задания (Лайк/Дизлайк)
+        likeBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => rateTask(true));
+        });
+        dislikeBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => rateTask(false));
+        });
 
-    // Списки заданий (Правда и Действие)
-    const truths = [
-        "Назови свой самый постыдный момент.",
-        "Какое самое странное блюдо ты когда-либо ел?",
-        "Если бы ты мог поменяться жизнью с кем-то на один день, кто бы это был и почему?",
-        "Какая твоя самая большая несбыточная мечта?",
-        "Что бы ты сделал, если бы выиграл в лотерею 1 миллион долларов?",
-        "Какое твое самое раннее воспоминание?",
-        "Что тебя больше всего раздражает в других людях?",
-        "Какое одно из твоих тайных удовольствий?",
-        "Назови то, что ты делаешь, когда никто не видит.",
-        "Опиши свой идеальный день."
-    ];
+        function rateTask(liked) {
+            if (!gameActive) return;
 
-    const dares = [
-        "Изобрази своего любимого животного.",
-        "Спой песню без музыки.",
-        "Расскажи анекдот.",
-        "Сделай 10 приседаний.",
-        "Потанцуй как сумасшедший в течение 30 секунд.",
-        "Попробуй лизнуть свой локоть.",
-        "Поговори с акцентом до конца раунда.",
-        "Сделай комплимент человеку, сидящему слева от тебя.",
-        "Изобрази робота, идущего за водой.",
-        "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'"
-    ];
-</script>
+            stopTimer();
+            ratingButtons.style.display = 'none';
+
+            // Анимируем скрытие карты с заданием
+            animateTaskCard(false, () => {
+                if (liked) {
+                    scores[currentPlayer] += 10;
+                    likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
+                    taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
+                    updatePlayerInfo();
+
+                    playButtonSound();
+
+                    setTimeout(() => {
+                        if (players.indexOf(currentPlayer) === players.length - 1) {
+                            roundsPlayed++;
+                            roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+                            likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+
+                            if (roundsPlayed >= maxRounds) {
+                                endGame();
+                                return;
+                            }
+                        }
+                        nextPlayer();
+                    }, 2000);
+                } else {
+                    playButtonSound();
+                    showDrinkWindow();
+                }
+            });
+        }
+
+        // Окно с рюмкой
+        function showDrinkWindow() {
+            playerToDrink.textContent = currentPlayer;
+            playerToDrink.style.color = getPlayerColor(players.indexOf(currentPlayer));
+            drinkModal.style.display = 'flex';
+            animateGlass();
+            animateDrinkModal(true);
+
+            if (soundEnabled) {
+                drinkSound.currentTime = 0;
+                drinkSound.play();
+            }
+        }
+
+        confirmDrinkBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                animateDrinkModal(false, () => {
+                    drinkModal.style.display = 'none';
+                    continueGameAfterDrink();
+                });
+            });
+        });
+
+        function animateGlass(step = 0, direction = 1) {
+            if (step < 5) {
+                const glass = document.querySelector('.glass');
+                glass.style.transform = `translateY(${direction * 5}px)`;
+
+                setTimeout(() => {
+                    animateGlass(step + 1, direction * -1);
+                }, 100);
+            } else {
+                const glass = document.querySelector('.glass');
+                glass.style.transform = 'translateY(0)';
+            }
+        }
+
+        function continueGameAfterDrink() {
+            updatePlayerInfo();
+            taskDisplay.textContent = "Игрок выпил! Готовим следующего игрока...";
+
+            setTimeout(() => {
+                if (players.indexOf(currentPlayer) === players.length - 1) {
+                    roundsPlayed++;
+                    roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
+                    likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+
+                    if (roundsPlayed >= maxRounds) {
+                        endGame();
+                        return;
+                    }
+                }
+                nextPlayer();
+            }, 2000);
+        }
+
+        // Следующий игрок
+        function nextPlayer() {
+            const currentIndex = players.indexOf(currentPlayer);
+            const nextIndex = (currentIndex + 1) % players.length;
+            currentPlayer = players[nextIndex];
+
+            updatePlayerInfo();
+            updateTaskDisplayForCurrentPlayer();
+
+            // Показываем кнопки выбора и скрываем кнопки оценки
+            choiceButtons.style.display = 'flex';
+            ratingButtons.style.display = 'none';
+            truthBtn.disabled = false;
+            dareBtn.disabled = false;
+        }
+
+        function updateTaskDisplayForCurrentPlayer() {
+            const playerColor = getPlayerColor(players.indexOf(currentPlayer));
+            taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
+        }
+
+        // Завершение игры
+        endGameBtn.addEventListener('click', function() {
+            handleButtonClick(this, endGame);
+        });
+
+        function endGame() {
+            gameActive = false;
+            stopTimer();
+
+            backgroundMusic.pause();
+
+            if (soundEnabled) {
+                resultsSound.currentTime = 0;
+                resultsSound.play();
+            }
+
+            showResults();
+
+            // Сброс игры
+            gameContainer.style.display = 'none';
+            endGameContainer.style.display = 'none';
+            players.length = 0;
+            for (const key in scores) delete scores[key];
+            playersList.innerHTML = '';
+            startGameBtn.disabled = true;
+            playerInput.value = '';
+            taskDisplay.textContent = '';
+            likeUsedInRound = false; // Сбрасываем флаг
+            ratingButtons.style.display = 'none';
+            choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
+        }
+
+        // Показ результатов
+        function showResults() {
+            resultsList.innerHTML = '';
+
+            const sortedPlayers = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+
+            sortedPlayers.forEach(([player, score], index) => {
+                const div = document.createElement('div');
+                div.className = 'result-item';
+                const playerColor = getPlayerColor(players.indexOf(player));
+                div.innerHTML = `
+                    <span style="color: ${playerColor};">${index + 1}. ${player}</span>
+                    <span>${score} очков</span>
+                `;
+                resultsList.appendChild(div);
+            });
+
+            if (sortedPlayers.length > 0) {
+                const winner = sortedPlayers[0];
+                const winnerColor = getPlayerColor(players.indexOf(winner[0]));
+                winnerInfo.innerHTML = `Победитель: <span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${winner[0]}</span> с ${winner[1]} очками!`;
+            }
+
+            resultsModal.style.display = 'flex';
+        }
+
+        closeResultsBtn.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                resultsModal.style.display = 'none';
+                setupContainer.style.display = 'block';
+                playButtonSound();
+            });
+        });
+
+        // Обновление информации об игроке
+        function updatePlayerInfo() {
+            const currentPlayerIndex = players.indexOf(currentPlayer);
+            const playerColor = getPlayerColor(currentPlayerIndex);
+
+            currentPlayerDisplay.style.color = playerColor;
+            currentPlayerDisplay.style.textShadow = `0 0 5px ${playerColor}`;
+            currentPlayerDisplay.textContent = currentPlayer;
+
+            let scoresText = "";
+            for (const [player, score] of Object.entries(scores)) {
+                const index = players.indexOf(player);
+                const color = getPlayerColor(index);
+                scoresText += `<span style="color: ${color};">${player}</span>: ${score}\n`;
+            }
+            scoreInfo.innerHTML = scoresText;
+        }
+
+        // Таймер
+        function startTimer() {
+            timeLeft = 300;
+            timerRunning = true;
+            updateTimer();
+            timerDisplay.classList.remove('timer-warning');
+        }
+
+        function updateTimer() {
+            if (timerRunning && timeLeft > 0) {
+                timerDisplay.textContent = formatTime(timeLeft);
+
+                if (timeLeft <= 10) {
+                    timerDisplay.classList.add('timer-warning');
+                } else {
+                    timerDisplay.classList.remove('timer-warning');
+                }
+
+                timeLeft--;
+                timerInterval = setTimeout(updateTimer, 1000);
+            } else if (timeLeft === 0) {
+                timerDisplay.textContent = "0:00";
+                timerDisplay.classList.remove('timer-warning');
+                rateTask(false);
+            }
+        }
+
+        function stopTimer() {
+            timerRunning = false;
+            clearTimeout(timerInterval);
+            timerDisplay.classList.remove('timer-warning');
+        }
+
+        // Списки заданий (Правда и Действие)
+        const truths = [
+            "Назови свой самый постыдный момент.",
+            "Какое самое странное блюдо ты когда-либо ел?",
+            "Если бы ты мог поменяться жизнью с кем-то на один день, кто бы это был и почему?",
+            "Какая твоя самая большая несбыточная мечта?",
+            "Что бы ты сделал, если бы выиграл в лотерею 1 миллион долларов?",
+            "Какое твое самое раннее воспоминание?",
+            "Что тебя больше всего раздражает в других людях?",
+            "Какое одно из твоих тайных удовольствий?",
+            "Назови то, что ты делаешь, когда никто не видит.",
+            "Опиши свой идеальный день."
+        ];
+
+        const dares = [
+            "Изобрази своего любимого животного.",
+            "Спой песню без музыки.",
+            "Расскажи анекдот.",
+            "Сделай 10 приседаний.",
+            "Потанцуй как сумасшедший в течение 30 секунд.",
+            "Попробуй лизнуть свой локоть.",
+            "Поговори с акцентом до конца раунда.",
+            "Сделай комплимент человеку, сидящему слева от тебя.",
+            "Изобрази робота, идущего за водой.",
+            "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'"
+        ];
+    </script>
 </body>
 </html>
