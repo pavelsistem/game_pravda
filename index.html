@@ -11,7 +11,6 @@
         * {
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Noto Sans', sans-serif;
             background-color: #0d0d1a;
@@ -1007,9 +1006,174 @@
                 font-size: 0.8em;
             }
         }
+         /* Стили для возрастной проверки */
+        #ageVerificationPreloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/pavelsistem/game_pravda/blob/main/mob_kart2.png?raw=true'), radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .age-verification-content {
+            background-color: rgba(13, 13, 26, 0.9);
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+            box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.6);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .age-title {
+            font-family: 'Merriweather', serif;
+            color: #e0e0e0;
+            font-size: clamp(1.8em, 5vw, 2.5em);
+            text-shadow: 0 0 15px rgba(255, 0, 255, 0.8), 0 0 25px rgba(138, 43, 226, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .age-question {
+            font-family: 'Noto Sans', sans-serif;
+            color: #e0e0e0;
+            font-size: clamp(1.1em, 3vw, 1.3em);
+            margin-bottom: 30px;
+        }
+
+        .age-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-age {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1em;
+            min-width: 150px;
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #8a2be2, #00ffff);
+            color: white;
+            box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+        }
+
+        .btn-yes:hover {
+            background: linear-gradient(45deg, #9932cc, #00e6e6);
+            box-shadow: 0 0 20px rgba(138, 43, 226, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .btn-no {
+            background: linear-gradient(45deg, #ff00ff, #ff4444);
+            color: white;
+            box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+        }
+
+        .btn-no:hover {
+            background: linear-gradient(45deg, #e600e6, #ff2222);
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        /* Стили для экрана отказа */
+        #ageRejectedScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1a0d2a 0%, #0d0d1a 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+        }
+
+        .rejected-content {
+            text-align: center;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+
+        .rejected-title {
+            font-family: 'Merriweather', serif;
+            font-size: clamp(2em, 6vw, 3em);
+            color: #ff4444;
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .rejected-message {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: clamp(1.1em, 3vw, 1.3em);
+            margin-bottom: 30px;
+        }
+
+        .rejected-image {
+            max-width: 300px;
+            width: 80%;
+            border-radius: 15px;
+            border: 2px solid #ff4444;
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+        }
+
+        @media (max-width: 600px) {
+            .age-verification-content {
+                padding: 20px;
+            }
+            
+            .age-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn-age {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- ВОЗРАСТНАЯ ПРОВЕРКА -->
+    <div id="ageVerificationPreloader">
+        <div class="age-verification-content">
+            <div class="age-title">🎲 Правда или Действие 🎲</div>
+            <div class="age-question">Подтвердите, что вам есть 18 лет</div>
+            <div class="age-buttons">
+                <button class="btn-age btn-yes" id="ageYes">Да, мне есть 18</button>
+                <button class="btn-age btn-no" id="ageNo">Нет, мне нет 18</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ageRejectedScreen" style="display: none;">
+        <div class="rejected-content">
+            <div class="rejected-title">Доступ запрещен</div>
+            <div class="rejected-message">Игра предназначена для лиц старше 18 лет</div>
+            <img src="https://github.com/pavelsistem/game_pravda/blob/main/mob_kart2.png?raw=true" alt="Access Denied" class="rejected-image">
+        </div>
+    </div>
+    <!-- КОНЕЦ ВОЗРАСТНОЙ ПРОВЕРКИ -->
     <!-- Кнопка донатов -->
     <button class="donate-btn" id="donateBtn">💝 Поддержать</button>
 
@@ -1942,6 +2106,44 @@
             "Изобрази известного человека, пока другие не угадают.",
             "Расскажи анекдот самым страшным голосом."
         ];
+        // ==================== ВОЗРАСТНАЯ ПРОВЕРКА ====================
+        const ageVerificationPreloader = document.getElementById('ageVerificationPreloader');
+        const ageRejectedScreen = document.getElementById('ageRejectedScreen');
+        const ageYesBtn = document.getElementById('ageYes');
+        const ageNoBtn = document.getElementById('ageNo');
+
+        // Проверяем, проходил ли пользователь возрастную проверку ранее
+        const ageVerified = localStorage.getItem('ageVerified');
+
+        if (ageVerified === 'true') {
+            // Если уже подтвердил возраст, скрываем проверку
+            ageVerificationPreloader.style.display = 'none';
+        } else {
+            // Показываем проверку и скрываем основной прелоадер
+            ageVerificationPreloader.style.display = 'flex';
+            document.getElementById('preloader').style.display = 'none';
+        }
+
+        // Обработчик кнопки "Да"
+        ageYesBtn.addEventListener('click', function() {
+            // Сохраняем подтверждение в localStorage
+            localStorage.setItem('ageVerified', 'true');
+            
+            // Скрываем возрастную проверку
+            ageVerificationPreloader.style.display = 'none';
+            // Показываем основной прелоадер
+            document.getElementById('preloader').style.display = 'flex';
+        });
+
+        // Обработчик кнопки "Нет"
+        ageNoBtn.addEventListener('click', function() {
+            // Показываем экран отказа
+            ageVerificationPreloader.style.display = 'none';
+            ageRejectedScreen.style.display = 'flex';
+            
+            // Блокируем дальнейшие действия
+            document.body.style.overflow = 'hidden';
+        });
     </script>
 </body>
 </html>
