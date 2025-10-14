@@ -1003,11 +1003,13 @@
             .donate-btn {
     position: fixed;
     bottom: 15px;
-    right: 50%;
-    transform: translateX(50%);
+    left: 50%;                   /* Измени right на left */
+    transform: translateX(-50%); /* И -50% вместо 50% */
     padding: 5px 10px;
     font-size: 0.8em;
     z-index: 50;
+    width: auto;                 /* Добавь это */
+    white-space: nowrap;         /* И это */
 }
         }
     </style>
