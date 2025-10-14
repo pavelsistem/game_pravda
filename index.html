@@ -1000,17 +1000,12 @@
                 padding: 10px;
             }
 
-            .donate-btn {
-    position: fixed;
-    bottom: 10px;           /* Оставить внизу */
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 3px 8px;       /* Уменьшить отступы */
-    font-size: 0.7em;       /* Уменьшить текст */
-    border-radius: 12px;    /* Уменьшить скругление */
-    z-index: 50;
-    width: auto;
-    white-space: nowrap;
+      @media (max-width: 600px) {
+    .donate-btn {
+        bottom: 8px;        /* Еще ближе к краю */
+        padding: 2px 6px;   /* Еще меньше */
+        font-size: 0.6em;   /* Еще мельче */
+    }
 }
     </style>
 </head>
