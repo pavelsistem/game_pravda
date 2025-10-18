@@ -905,59 +905,6 @@
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
         }
-        /* Стили для выбора сложности */
-.difficulty-container {
-    background-color: rgba(30, 30, 60, 0.5);
-    padding: 12px;
-    border-radius: 8px;
-    border: 1px solid #8a2be2;
-    margin-top: 10px;
-}
-
-.difficulty-buttons {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.difficulty-btn {
-    flex: 1;
-    min-width: 80px;
-    padding: 8px 5px;
-    border: 1px solid #8a2be2;
-    background-color: rgba(40, 40, 80, 0.7);
-    color: white;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-size: 0.85em;
-    text-align: center;
-}
-
-.difficulty-btn:hover {
-    background-color: rgba(60, 60, 100, 0.8);
-    transform: translateY(-2px);
-}
-
-.difficulty-btn.active {
-    background-color: #8a2be2;
-    border-color: #00ffff;
-    box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
-}
-
-.hot-option {
-    padding: 8px;
-    background-color: rgba(255, 0, 0, 0.1);
-    border-radius: 5px;
-    border: 1px solid #ff00ff;
-    animation: pulseHot 2s infinite;
-}
-
-@keyframes pulseHot {
-    0% { border-color: #ff00ff; box-shadow: 0 0 5px rgba(255, 0, 255, 0.3); }
-    50% { border-color: #ff4444; box-shadow: 0 0 10px rgba(255, 68, 68, 0.5); }
-    100% { border-color: #ff00ff; box-shadow: 0 0 5px rgba(255, 0, 255, 0.3); }
-}
 
         @media (max-width: 600px) {
             body {
@@ -1058,14 +1005,6 @@
                 padding: 6px 12px;
                 font-size: 0.8em;
             }
-            .difficulty-buttons {
-        flex-direction: column;
-    }
-    
-    .difficulty-btn {
-        min-width: unset;
-        width: 100%;
-    }
         }
          /* Стили для возрастной проверки */
         #ageVerificationPreloader {
@@ -1297,21 +1236,6 @@
             <button class="btn-primary" id="addPlayerBtn">➕ Добавить</button>
             <button class="btn-warning" id="startGameBtn" disabled>🎮 Начать игру</button>
         </div>
-        <!-- ВЫБОР УРОВНЯ СЛОЖНОСТИ -->
-<div class="difficulty-container" style="margin-top: 15px;">
-    <div style="margin-bottom: 8px; color: #e0e0e0; font-size: 0.9em;">Уровень сложности:</div>
-    <div class="difficulty-buttons">
-        <button class="difficulty-btn active" data-difficulty="easy">🟢 Легкий</button>
-        <button class="difficulty-btn" data-difficulty="medium">🟡 Средний</button>
-        <button class="difficulty-btn" data-difficulty="hard">🔴 Сложный</button>
-    </div>
-    <div class="hot-option" style="margin-top: 10px; display: none;">
-        <label style="color: #e0e0e0; font-size: 0.9em; cursor: pointer;">
-            <input type="checkbox" id="hotCheckbox" style="margin-right: 8px;">
-            🔥 Жарко! (18+ задания)
-        </label>
-    </div>
-</div>
         <ul id="playersList"></ul>
     </div>
     
@@ -1429,66 +1353,6 @@
     </div>
     
     <script>
-        // ... ваш существующий код Telegram Web App Integration ...
-
-            // Показываем информацию о пользователе (опционально)
-
-// --- НАЧАЛО НОВОГО КОДА ДЛЯ ОГРАНИЧЕНИЯ ВЫБОРА ---
-
-// 1. Объявление переменных (Селекторов)
-// Используем ID, которые мы предполагали на основе стандартной структуры
-const ratingSelect = document.getElementById('ratingSelect'); 
-const hotCheckbox = document.querySelector('input[value="hot"]'); 
-// Примечание: В оригинальном файле index(9).html для hotCheckbox использовался querySelector по value
-
-// Проверка на случай, если элементы не найдены
-if (ratingSelect && hotCheckbox) {
-    
-    // 2. Функция, обновляющая состояние чекбокса "Жарко!"
-    function updateHotCheckboxState() {
-        const hotLabel = hotCheckbox.closest('label'); 
-
-        if (ratingSelect.value !== 'hard') {
-            // Если выбран НЕ "Сложный"
-            
-            // А) Блокируем чекбокс и визульно отключаем
-            hotCheckbox.disabled = true; 
-            if (hotLabel) {
-                hotLabel.style.opacity = '0.5';
-                hotLabel.style.pointerEvents = 'none'; 
-            }
-            
-            // Б) Снимаем отметку, если она была установлена
-            if (hotCheckbox.checked) {
-                hotCheckbox.checked = false; 
-            }
-
-        } else {
-            // Если выбран "Сложный"
-            
-            // А) Разблокируем чекбокс
-            hotCheckbox.disabled = false; 
-            
-            // Б) Восстанавливаем стили
-            if (hotLabel) {
-                hotLabel.style.opacity = '1';
-                hotLabel.style.pointerEvents = 'auto'; 
-            }
-        }
-    }
-
-    // 3. Обработчик событий
-    // Привязываем функцию к событию изменения выбора сложности
-    ratingSelect.addEventListener('change', updateHotCheckboxState);
-
-    // Вызываем функцию один раз при загрузке страницы, 
-    // чтобы установить правильное начальное состояние
-    document.addEventListener('DOMContentLoaded', updateHotCheckboxState); 
-} else {
-    console.error("Не удалось найти элементы 'ratingSelect' или 'hotCheckbox' для ограничения выбора.");
-}
-
-// --- КОНЕЦ НОВОГО КОДА ДЛЯ ОГРАНИЧЕНИЯ ВЫБОРА ---
         // ==================== TELEGRAM WEB APP INTEGRATION ====================
         // Проверяем, что игра открыта в Telegram
         if (window.Telegram && Telegram.WebApp) {
@@ -1632,14 +1496,6 @@ if (ratingSelect && hotCheckbox) {
         const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
         const drinkModalContent = document.querySelector('#drinkModal .modal-content');
-        // Переменные для сложности
-let currentDifficulty = 'easy';
-let hotModeEnabled = false;
-
-// DOM элементы для сложности
-const difficultyButtons = document.querySelectorAll('.difficulty-btn');
-const hotOption = document.querySelector('.hot-option');
-const hotCheckbox = document.getElementById('hotCheckbox');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
@@ -1746,7 +1602,6 @@ const hotCheckbox = document.getElementById('hotCheckbox');
         // Инициализация - показ прелоадера, скрытие игрового контента
         document.addEventListener('DOMContentLoaded', () => {
             loadAudioSettings();
-             initDifficulty(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
 
             setupContainer.style.display = 'none';
             gameContainer.style.display = 'none';
@@ -1876,166 +1731,6 @@ const hotCheckbox = document.getElementById('hotCheckbox');
             const savedEffectsVolume = localStorage.getItem('effectsVolume');
             const savedTrack = localStorage.getItem('currentTrack');
             const savedRounds = localStorage.getItem('maxRounds');
-            // ==================== ФУНКЦИИ СЛОЖНОСТИ ====================
-
-// Инициализация сложности
-function initDifficulty() {
-    const savedDifficulty = localStorage.getItem('gameDifficulty');
-    const savedHotMode = localStorage.getItem('hotMode');
-    
-    if (savedDifficulty) {
-        currentDifficulty = savedDifficulty;
-        setActiveDifficultyButton(currentDifficulty);
-    }
-    
-    if (savedHotMode === 'true') {
-        hotModeEnabled = true;
-        hotCheckbox.checked = true;
-        updateHotOptionVisibility();
-    }
-}
-
-// Установка активной кнопки сложности
-function setActiveDifficultyButton(difficulty) {
-    difficultyButtons.forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.difficulty === difficulty) {
-            btn.classList.add('active');
-        }
-    });
-    updateHotOptionVisibility();
-}
-
-// Обновление видимости опции "Жарко!"
-function updateHotOptionVisibility() {
-    if (currentDifficulty === 'hard') {
-        hotOption.style.display = 'block';
-    } else {
-        hotOption.style.display = 'none';
-        hotModeEnabled = false;
-        hotCheckbox.checked = false;
-        localStorage.setItem('hotMode', 'false');
-    }
-}
-
-// Обработчики для кнопок сложности
-difficultyButtons.forEach(btn => {
-    btn.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            const difficulty = this.dataset.difficulty;
-            currentDifficulty = difficulty;
-            setActiveDifficultyButton(difficulty);
-            localStorage.setItem('gameDifficulty', difficulty);
-        });
-    });
-});
-
-// Обработчик для чекбокса "Жарко!"
-hotCheckbox.addEventListener('change', function() {
-    hotModeEnabled = this.checked;
-    localStorage.setItem('hotMode', hotModeEnabled.toString());
-});
-
-// Функция для получения задания с учетом сложности
-function getTaskWithDifficulty(taskType) {
-    if (!gameActive) return;
-
-    // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
-    if (taskType === lastTaskType) {
-        consecutiveSameType++;
-        
-        if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
-            console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
-            // Принудительно меняем тип задания
-            taskType = taskType === 'truth' ? 'dare' : 'truth';
-            consecutiveSameType = 1; // сбрасываем счетчик
-            
-            // Показываем сообщение о принудительной смене типа
-            const forcedMessage = taskType === 'truth' ? 
-                "Слишком много действий подряд! Теперь Правда!" : 
-                "Слишком много правд подряд! Теперь Действие!";
-            
-            // Временно показываем сообщение
-            const originalDisplay = taskDisplay.textContent;
-            taskDisplay.textContent = forcedMessage;
-            
-            setTimeout(() => {
-                taskDisplay.textContent = originalDisplay;
-            }, 2000);
-        }
-    } else {
-        // Тип задания изменился, сбрасываем счетчик
-        consecutiveSameType = 1;
-    }
-    
-    // Сохраняем текущий тип задания
-    lastTaskType = taskType;
-
-    // Скрываем кнопки выбора и показываем кнопки оценки
-    choiceButtons.style.display = 'none';
-    ratingButtons.style.display = 'none';
-
-    let task;
-    let taskPool = taskType === 'truth' ? truths : dares;
-    
-    // Фильтруем задания по сложности
-    let filteredTasks = filterTasksByDifficulty(taskPool);
-    
-    if (filteredTasks.length > 0) {
-        task = filteredTasks[Math.floor(Math.random() * filteredTasks.length)];
-    } else {
-        // Если нет заданий для выбранной сложности, используем все
-        task = taskPool[Math.floor(Math.random() * taskPool.length)];
-    }
-    
-    playButtonSound();
-
-    // Анимируем появление карты с заданием
-    animateTaskCard(true, () => {
-        taskDisplay.textContent = task;
-        startTimer();
-
-        // Показываем кнопки оценки через 5 секунд и делаем их активными
-        setTimeout(() => {
-            ratingButtons.style.display = 'flex';
-            likeBtn.classList.add('active');
-            dislikeBtn.classList.add('active');
-            likeBtn.disabled = false;
-            dislikeBtn.disabled = false;
-            likeUsedInRound = false;
-        }, 5000);
-    });
-}
-
-// Фильтрация заданий по сложности
-function filterTasksByDifficulty(taskPool) {
-    // Это упрощенная реализация. В реальном приложении у каждого задания должен быть тег сложности
-    // Сейчас будем использовать длину текста как показатель сложности
-    
-    return taskPool.filter(task => {
-        const length = task.length;
-        
-        switch(currentDifficulty) {
-            case 'easy':
-                return length < 100; // Короткие задания
-            case 'medium':
-                return length >= 100 && length < 200; // Средние задания
-            case 'hard':
-                if (hotModeEnabled) {
-                    return length >= 200 || task.includes('18+') || isHotTask(task);
-                }
-                return length >= 200; // Длинные/сложные задания
-            default:
-                return true;
-        }
-    });
-}
-
-// Проверка на "горячее" задание (упрощенная)
-function isHotTask(task) {
-    const hotKeywords = ['секс', 'постель', 'нижнее белье', 'голый', 'обнаженный', 'интим', 'возбуж', 'оргазм', 'ласка', 'поцелуй'];
-    return hotKeywords.some(keyword => task.toLowerCase().includes(keyword));
-}
 
             if (savedMusicVolume) {
                 musicVolume = parseFloat(savedMusicVolume);
@@ -2112,14 +1807,6 @@ function isHotTask(task) {
                 alert("Нужно как минимум 2 игрока!");
                 return;
             }
-    // Инициализируем сложность при старте игры
-    initDifficulty();
-    
-    gameActive = true;
-    roundsPlayed = 0;
-    likeUsedInRound = false;
-    // ... остальной код
-}
 
             gameActive = true;
             roundsPlayed = 0;
@@ -2169,8 +1856,7 @@ function isHotTask(task) {
         });
 
         function getTask(taskType) {
-    getTaskWithDifficulty(taskType);
-}
+            if (!gameActive) return;
 
             // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
             if (taskType === lastTaskType) {
@@ -2930,43 +2616,43 @@ function isHotTask(task) {
             "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'"
         ];
 // ==================== ВОЗРАСТНАЯ ПРОВЕРКА ====================
-const ageVerificationPreloader = document.getElementById('ageVerificationPreloader');
-const ageRejectedScreen = document.getElementById('ageRejectedScreen');
-const ageYesBtn = document.getElementById('ageYes');
-const ageNoBtn = document.getElementById('ageNo');
+        const ageVerificationPreloader = document.getElementById('ageVerificationPreloader');
+        const ageRejectedScreen = document.getElementById('ageRejectedScreen');
+        const ageYesBtn = document.getElementById('ageYes');
+        const ageNoBtn = document.getElementById('ageNo');
 
-// Проверяем, проходил ли пользователь возрастную проверку ранее
-const ageVerified = localStorage.getItem('ageVerified');
+        // Проверяем, проходил ли пользователь возрастную проверку ранее
+        const ageVerified = localStorage.getItem('ageVerified');
 
-if (ageVerified === 'true') {
-    // Если уже подтвердил возраст, скрываем проверку
-    ageVerificationPreloader.style.display = 'none';
-} else {
-    // Показываем проверку и скрываем основной прелоадер
-    ageVerificationPreloader.style.display = 'flex';
-    document.getElementById('preloader').style.display = 'none';
-}
+        if (ageVerified === 'true') {
+            // Если уже подтвердил возраст, скрываем проверку
+            ageVerificationPreloader.style.display = 'none';
+        } else {
+            // Показываем проверку и скрываем основной прелоадер
+            ageVerificationPreloader.style.display = 'flex';
+            document.getElementById('preloader').style.display = 'none';
+        }
 
-// Обработчик кнопки "Да"
-ageYesBtn.addEventListener('click', function() {
-    // Сохраняем подтверждение в localStorage
-    localStorage.setItem('ageVerified', 'true');
-    
-    // Скрываем возрастную проверку
-    ageVerificationPreloader.style.display = 'none';
-    // Показываем основной прелоадер
-    document.getElementById('preloader').style.display = 'flex';
-});
+        // Обработчик кнопки "Да"
+        ageYesBtn.addEventListener('click', function() {
+            // Сохраняем подтверждение в localStorage
+            localStorage.setItem('ageVerified', 'true');
+            
+            // Скрываем возрастную проверку
+            ageVerificationPreloader.style.display = 'none';
+            // Показываем основной прелоадер
+            document.getElementById('preloader').style.display = 'flex';
+        });
 
-// Обработчик кнопки "Нет"
-ageNoBtn.addEventListener('click', function() {
-    // Показываем экран отказа
-    ageVerificationPreloader.style.display = 'none';
-    ageRejectedScreen.style.display = 'flex';
-    
-    // Блокируем дальнейшие действия
-    document.body.style.overflow = 'hidden';
-});
+        // Обработчик кнопки "Нет"
+        ageNoBtn.addEventListener('click', function() {
+            // Показываем экран отказа
+            ageVerificationPreloader.style.display = 'none';
+            ageRejectedScreen.style.display = 'flex';
+            
+            // Блокируем дальнейшие действия
+            document.body.style.overflow = 'hidden';
+        });
         // Функция создания частиц
 function createParticles() {
     const container = document.getElementById('particlesContainer');
