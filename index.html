@@ -2930,43 +2930,43 @@ function isHotTask(task) {
             "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'"
         ];
 // ==================== ВОЗРАСТНАЯ ПРОВЕРКА ====================
-        const ageVerificationPreloader = document.getElementById('ageVerificationPreloader');
-        const ageRejectedScreen = document.getElementById('ageRejectedScreen');
-        const ageYesBtn = document.getElementById('ageYes');
-        const ageNoBtn = document.getElementById('ageNo');
+const ageVerificationPreloader = document.getElementById('ageVerificationPreloader');
+const ageRejectedScreen = document.getElementById('ageRejectedScreen');
+const ageYesBtn = document.getElementById('ageYes');
+const ageNoBtn = document.getElementById('ageNo');
 
-        // Проверяем, проходил ли пользователь возрастную проверку ранее
-        const ageVerified = localStorage.getItem('ageVerified');
+// Проверяем, проходил ли пользователь возрастную проверку ранее
+const ageVerified = localStorage.getItem('ageVerified');
 
-        if (ageVerified === 'true') {
-            // Если уже подтвердил возраст, скрываем проверку
-            ageVerificationPreloader.style.display = 'none';
-        } else {
-            // Показываем проверку и скрываем основной прелоадер
-            ageVerificationPreloader.style.display = 'flex';
-            document.getElementById('preloader').style.display = 'none';
-        }
+if (ageVerified === 'true') {
+    // Если уже подтвердил возраст, скрываем проверку
+    ageVerificationPreloader.style.display = 'none';
+} else {
+    // Показываем проверку и скрываем основной прелоадер
+    ageVerificationPreloader.style.display = 'flex';
+    document.getElementById('preloader').style.display = 'none';
+}
 
-        // Обработчик кнопки "Да"
-        ageYesBtn.addEventListener('click', function() {
-            // Сохраняем подтверждение в localStorage
-            localStorage.setItem('ageVerified', 'true');
-            
-            // Скрываем возрастную проверку
-            ageVerificationPreloader.style.display = 'none';
-            // Показываем основной прелоадер
-            document.getElementById('preloader').style.display = 'flex';
-        });
+// Обработчик кнопки "Да"
+ageYesBtn.addEventListener('click', function() {
+    // Сохраняем подтверждение в localStorage
+    localStorage.setItem('ageVerified', 'true');
+    
+    // Скрываем возрастную проверку
+    ageVerificationPreloader.style.display = 'none';
+    // Показываем основной прелоадер
+    document.getElementById('preloader').style.display = 'flex';
+});
 
-        // Обработчик кнопки "Нет"
-        ageNoBtn.addEventListener('click', function() {
-            // Показываем экран отказа
-            ageVerificationPreloader.style.display = 'none';
-            ageRejectedScreen.style.display = 'flex';
-            
-            // Блокируем дальнейшие действия
-            document.body.style.overflow = 'hidden';
-        });
+// Обработчик кнопки "Нет"
+ageNoBtn.addEventListener('click', function() {
+    // Показываем экран отказа
+    ageVerificationPreloader.style.display = 'none';
+    ageRejectedScreen.style.display = 'flex';
+    
+    // Блокируем дальнейшие действия
+    document.body.style.overflow = 'hidden';
+});
         // Функция создания частиц
 function createParticles() {
     const container = document.getElementById('particlesContainer');
