@@ -2100,46 +2100,7 @@ function animateCardLanding() {
         }, 5000);
     }, 800);
 }
-            } else {
-                // Тип задания изменился, сбрасываем счетчик
-                consecutiveSameType = 1;
-            }
-            
-            // Сохраняем текущий тип задания
-            lastTaskType = taskType;
-
-            // Скрываем кнопки выбора и показываем кнопки оценки
-            choiceButtons.style.display = 'none';
-            ratingButtons.style.display = 'none';
-
-            let task;
-            if (taskType === 'truth') {
-                task = truths[Math.floor(Math.random() * truths.length)];
-                playButtonSound();
-            } else {
-                task = dares[Math.floor(Math.random() * dares.length)];
-                playButtonSound();
-            }
-
-            // Анимируем появление карты с заданием
-animateTaskCard(true, () => {
-    taskDisplay.textContent = task;
-    startTimer();
-    
-    // Дополнительная анимация приземления с искрами
-    animateCardLanding();
-
-                // Показываем кнопки оценки через 5 секунд и делаем их активными
-                setTimeout(() => {
-                    ratingButtons.style.display = 'flex';
-                    likeBtn.classList.add('active');
-                    dislikeBtn.classList.add('active');
-                    likeBtn.disabled = false;
-                    dislikeBtn.disabled = false;
-                    likeUsedInRound = false;
-                }, 5000);
-            });
-        }
+           
         // Оценка задания (Лайк/Дизлайк)
         likeBtn.addEventListener('click', function() {
             handleButtonClick(this, () => rateTask(true));
