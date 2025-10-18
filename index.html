@@ -481,6 +481,72 @@
             75% { transform: perspective(1000px) rotateY(80deg) translateY(0) scale(1); }
             100% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
         }
+        /* Анимации для искр при приземлении карты */
+.sparks-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes sparkFly {
+    0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translate(var(--spark-x), var(--spark-y)) scale(0);
+        opacity: 0;
+    }
+}
+
+/* Анимация приземления карты */
+@keyframes cardLanding {
+    0% { 
+        transform: perspective(1000px) rotateY(0deg) translateY(-100px) scale(1.2);
+        opacity: 0;
+    }
+    20% {
+        transform: perspective(1000px) rotateY(10deg) translateY(20px) scale(1.1);
+        opacity: 0.8;
+    }
+    40% {
+        transform: perspective(1000px) rotateY(-5deg) translateY(-10px) scale(1.05);
+        opacity: 0.9;
+    }
+    60% {
+        transform: perspective(1000px) rotateY(3deg) translateY(5px) scale(1.02);
+        opacity: 0.95;
+    }
+    80% {
+        transform: perspective(1000px) rotateY(-1deg) translateY(-2px) scale(1.01);
+        opacity: 0.98;
+    }
+    100% { 
+        transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1);
+        opacity: 1;
+    }
+}
+
+.card-landing {
+    animation: cardLanding 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
 
         @keyframes borderGlow {
             0% { 
@@ -1261,7 +1327,9 @@
             </div>
         </div>
         
-        <div id="taskDisplay"></div>
+        <div id="taskDisplay">
+    <div class="sparks-container" id="taskSparks"></div>
+</div>
         
         <div class="choice-buttons" id="choiceButtons">
             <button class="btn-primary" id="truthBtn">Правда</button>
@@ -1561,28 +1629,92 @@
             }
         }
 
-        // Анимация карты с заданием
-        function animateTaskCard(show, callback) {
-            if (show) {
-                // Показываем карту с анимацией
-                taskDisplay.classList.remove('card-unflip');
-                taskDisplay.classList.add('card-flip');
-                
-                // После завершения анимации вызываем callback
-                setTimeout(() => {
-                    if (callback) callback();
-                }, 600);
-            } else {
-                // Скрываем карту с анимацией
-                taskDisplay.classList.remove('card-flip');
-                taskDisplay.classList.add('card-unflip');
-                
-                // После завершения анимации вызываем callback
-                setTimeout(() => {
-                    if (callback) callback();
-                }, 600);
-            }
-        }
+        // Функция создания искр
+function createSparks(container, sparkCount = 15) {
+    // Очищаем предыдущие искры
+    container.innerHTML = '';
+    
+    for (let i = 0; i < sparkCount; i++) {
+        const spark = document.createElement('div');
+        spark.classList.add('spark');
+        
+        // Случайное положение вокруг центра
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 20 + Math.random() * 60;
+        const sparkX = Math.cos(angle) * distance;
+        const sparkY = Math.sin(angle) * distance;
+        
+        // Случайные цвета искр
+        const colors = [
+            'linear-gradient(45deg, #ff00ff, #00ffff)',
+            'linear-gradient(45deg, #00ffff, #ffff00)',
+            'linear-gradient(45deg, #ffff00, #ff00ff)',
+            'linear-gradient(45deg, #ff4444, #ffaa00)'
+        ];
+        const randomColor = colors[Math.floor(Math.random() * colors.length)];
+        
+        spark.style.cssText = `
+            left: 50%;
+            top: 50%;
+            width: ${3 + Math.random() * 5}px;
+            height: ${3 + Math.random() * 5}px;
+            background: ${randomColor};
+            --spark-x: ${sparkX}px;
+            --spark-y: ${sparkY}px;
+            animation: sparkFly ${0.5 + Math.random() * 0.5}s ease-out forwards;
+            animation-delay: ${Math.random() * 0.2}s;
+            box-shadow: 0 0 8px ${randomColor.includes('ff00ff') ? '#ff00ff' : randomColor.includes('00ffff') ? '#00ffff' : '#ffff00'};
+        `;
+        
+        container.appendChild(spark);
+    }
+}
+
+// Анимация карты с заданием
+function animateTaskCard(show, callback) {
+    const sparksContainer = document.getElementById('taskSparks');
+    
+    if (show) {
+        // Показываем карту с анимацией
+        taskDisplay.classList.remove('card-unflip');
+        taskDisplay.classList.add('card-flip');
+        
+        // Создаем искры в середине анимации
+        setTimeout(() => {
+            createSparks(sparksContainer, 20);
+        }, 400);
+        
+        // После завершения анимации вызываем callback
+        setTimeout(() => {
+            if (callback) callback();
+        }, 800);
+    } else {
+        // Скрываем карту с анимацией
+        taskDisplay.classList.remove('card-flip');
+        taskDisplay.classList.add('card-unflip');
+        
+        // После завершения анимации вызываем callback
+        setTimeout(() => {
+            if (callback) callback();
+        }, 600);
+    }
+}
+
+// Функция для анимации приземления (можно использовать при первом показе)
+function animateCardLanding() {
+    taskDisplay.classList.add('card-landing');
+    const sparksContainer = document.getElementById('taskSparks');
+    
+    // Создаем искры в момент "приземления"
+    setTimeout(() => {
+        createSparks(sparksContainer, 25);
+    }, 600);
+    
+    // Убираем класс анимации после завершения
+    setTimeout(() => {
+        taskDisplay.classList.remove('card-landing');
+    }, 1000);
+}
 
         // Анимация модального окна с рюмкой
         function animateDrinkModal(show, callback) {
@@ -1911,9 +2043,12 @@
             }
 
             // Анимируем появление карты с заданием
-            animateTaskCard(true, () => {
-                taskDisplay.textContent = task;
-                startTimer();
+animateTaskCard(true, () => {
+    taskDisplay.textContent = task;
+    startTimer();
+    
+    // Дополнительная анимация приземления с искрами
+    animateCardLanding();
 
                 // Показываем кнопки оценки через 5 секунд и делаем их активными
                 setTimeout(() => {
