@@ -1863,6 +1863,7 @@
                 consecutiveSameType++;
                 
                 if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
+                    console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
                     // Принудительно меняем тип задания
                     taskType = taskType === 'truth' ? 'dare' : 'truth';
                     consecutiveSameType = 1; // сбрасываем счетчик
