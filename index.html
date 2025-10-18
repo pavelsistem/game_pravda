@@ -1176,6 +1176,23 @@
         transform: translateY(100vh);
     }
 }
+     .choice-buttons button.disabled-by-rule {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+    border-image: linear-gradient(90deg, #666, #999) 1;
+    box-shadow: 0 0 10px rgba(102, 102, 102, 0.5);
+}
+
+.choice-buttons button.highlight-next {
+    animation: pulseHighlight 1.5s infinite;
+}
+
+@keyframes pulseHighlight {
+    0% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 30px rgba(138, 43, 226, 0.8), 0 0 30px rgba(0, 255, 255, 0.8); }
+    100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4); }
+}   
     </style>
 </head>
 <body>
@@ -1415,6 +1432,10 @@
         let maxRounds = 10; // По умолчанию 10 раундов
         let timerInterval;
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
+        // Отслеживание типа заданий
+let lastTaskType = null; // 'truth' или 'dare'
+let consecutiveSameType = 0; // счетчик подряд идущих одинаковых заданий
+const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количество одинаковых заданий подряд
 
         // Настройки звука
         let soundEnabled = true;
@@ -1789,6 +1810,9 @@
             gameActive = true;
             roundsPlayed = 0;
             likeUsedInRound = false; // Сброс флага использования лайка
+             // Сбрасываем отслеживание типа заданий
+    lastTaskType = null;
+    consecutiveSameType = 0;
             currentPlayer = players[Math.floor(Math.random() * players.length)];
             updatePlayerInfo();
             roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
@@ -1829,37 +1853,67 @@
         });
 
         function getTask(taskType) {
-            if (!gameActive) return;
+    if (!gameActive) return;
 
-            // Скрываем кнопки выбора и показываем кнопки оценки
-            choiceButtons.style.display = 'none';
-            ratingButtons.style.display = 'none';
-
-            let task;
-            if (taskType === 'truth') {
-                task = truths[Math.floor(Math.random() * truths.length)];
-                playButtonSound();
-            } else {
-                task = dares[Math.floor(Math.random() * dares.length)];
-                playButtonSound();
-            }
-
-            // Анимируем появление карты с заданием
-            animateTaskCard(true, () => {
-                taskDisplay.textContent = task;
-                startTimer();
-
-                // Показываем кнопки оценки через 5 секунд и делаем их активными
-                setTimeout(() => {
-                    ratingButtons.style.display = 'flex';
-                    likeBtn.classList.add('active');
-                    dislikeBtn.classList.add('active');
-                    likeBtn.disabled = false; // Всегда разблокируем кнопку лайка при новом задании
-                    dislikeBtn.disabled = false;
-                    likeUsedInRound = false; // Сбрасываем флаг использования лайка для нового задания
-                }, 5000);
-            });
+    // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
+    if (taskType === lastTaskType) {
+        consecutiveSameType++;
+        
+        if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
+            // Принудительно меняем тип задания
+            taskType = taskType === 'truth' ? 'dare' : 'truth';
+            consecutiveSameType = 1; // сбрасываем счетчик
+            
+            // Показываем сообщение о принудительной смене типа
+            const forcedMessage = taskType === 'truth' ? 
+                "Слишком много действий подряд! Теперь Правда!" : 
+                "Слишком много правд подряд! Теперь Действие!";
+            
+            // Временно показываем сообщение
+            const originalDisplay = taskDisplay.textContent;
+            taskDisplay.textContent = forcedMessage;
+            
+            setTimeout(() => {
+                taskDisplay.textContent = originalDisplay;
+            }, 2000);
         }
+    } else {
+        // Тип задания изменился, сбрасываем счетчик
+        consecutiveSameType = 1;
+    }
+    
+    // Сохраняем текущий тип задания
+    lastTaskType = taskType;
+
+    // Скрываем кнопки выбора и показываем кнопки оценки
+    choiceButtons.style.display = 'none';
+    ratingButtons.style.display = 'none';
+
+    let task;
+    if (taskType === 'truth') {
+        task = truths[Math.floor(Math.random() * truths.length)];
+        playButtonSound();
+    } else {
+        task = dares[Math.floor(Math.random() * dares.length)];
+        playButtonSound();
+    }
+
+    // Анимируем появление карты с заданием
+    animateTaskCard(true, () => {
+        taskDisplay.textContent = task;
+        startTimer();
+
+        // Показываем кнопки оценки через 5 секунд и делаем их активными
+        setTimeout(() => {
+            ratingButtons.style.display = 'flex';
+            likeBtn.classList.add('active');
+            dislikeBtn.classList.add('active');
+            likeBtn.disabled = false;
+            dislikeBtn.disabled = false;
+            likeUsedInRound = false;
+        }, 5000);
+    });
+}
 
         // Оценка задания (Лайк/Дизлайк)
         likeBtn.addEventListener('click', function() {
@@ -1968,6 +2022,9 @@
             const currentIndex = players.indexOf(currentPlayer);
             const nextIndex = (currentIndex + 1) % players.length;
             currentPlayer = players[nextIndex];
+             // Сбрасываем отслеживание типа заданий при смене игрока
+    lastTaskType = null;
+    consecutiveSameType = 0;
 
             updatePlayerInfo();
             updateTaskDisplayForCurrentPlayer();
@@ -1979,10 +2036,27 @@
             dareBtn.disabled = false;
         }
 
-        function updateTaskDisplayForCurrentPlayer() {
-            const playerColor = getPlayerColor(players.indexOf(currentPlayer));
-            taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
-        }
+       function updateTaskDisplayForCurrentPlayer() {
+    const playerColor = getPlayerColor(players.indexOf(currentPlayer));
+    taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
+    
+    // Показываем подсказку о необходимости смены типа задания
+    if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE - 1 && lastTaskType !== null) {
+        const forcedType = lastTaskType === 'truth' ? 'Действие' : 'Правда';
+        taskDisplay.innerHTML += `<br><small style="color: #ff00ff; font-size: 0.8em;">Следующий раз: ${forcedType}</small>`;
+        
+        // Подсвечиваем нужную кнопку
+        const buttonToHighlight = lastTaskType === 'truth' ? dareBtn : truthBtn;
+        const buttonToDisable = lastTaskType === 'truth' ? truthBtn : dareBtn;
+        
+        buttonToHighlight.classList.add('highlight-next');
+        buttonToDisable.classList.add('disabled-by-rule');
+    } else {
+        // Убираем подсветку если ограничения нет
+        truthBtn.classList.remove('highlight-next', 'disabled-by-rule');
+        dareBtn.classList.remove('highlight-next', 'disabled-by-rule');
+    }
+}
 
         // Завершение игры
         endGameBtn.addEventListener('click', function() {
@@ -2017,6 +2091,9 @@
             playerInput.value = '';
             taskDisplay.textContent = '';
             likeUsedInRound = false; // Сбрасываем флаг
+             // Сбрасываем отслеживание типа заданий
+    lastTaskType = null;
+    consecutiveSameType = 0;
             ratingButtons.style.display = 'none';
             choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
         }
