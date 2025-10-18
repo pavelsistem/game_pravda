@@ -1058,6 +1058,14 @@
                 padding: 6px 12px;
                 font-size: 0.8em;
             }
+            .difficulty-buttons {
+        flex-direction: column;
+    }
+    
+    .difficulty-btn {
+        min-width: unset;
+        width: 100%;
+    }
         }
          /* Стили для возрастной проверки */
         #ageVerificationPreloader {
@@ -1738,6 +1746,7 @@ const hotCheckbox = document.getElementById('hotCheckbox');
         // Инициализация - показ прелоадера, скрытие игрового контента
         document.addEventListener('DOMContentLoaded', () => {
             loadAudioSettings();
+             initDifficulty(); // ← ДОБАВИТЬ ЭТУ СТРОКУ
 
             setupContainer.style.display = 'none';
             gameContainer.style.display = 'none';
@@ -2103,12 +2112,6 @@ function isHotTask(task) {
                 alert("Нужно как минимум 2 игрока!");
                 return;
             }
-            function startGame() {
-    if (players.length < 2) {
-        alert("Нужно как минимум 2 игрока!");
-        return;
-    }
-
     // Инициализируем сложность при старте игры
     initDifficulty();
     
