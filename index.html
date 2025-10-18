@@ -1353,6 +1353,66 @@
     </div>
     
     <script>
+        // ... ваш существующий код Telegram Web App Integration ...
+
+            // Показываем информацию о пользователе (опционально)
+
+// --- НАЧАЛО НОВОГО КОДА ДЛЯ ОГРАНИЧЕНИЯ ВЫБОРА ---
+
+// 1. Объявление переменных (Селекторов)
+// Используем ID, которые мы предполагали на основе стандартной структуры
+const ratingSelect = document.getElementById('ratingSelect'); 
+const hotCheckbox = document.querySelector('input[value="hot"]'); 
+// Примечание: В оригинальном файле index(9).html для hotCheckbox использовался querySelector по value
+
+// Проверка на случай, если элементы не найдены
+if (ratingSelect && hotCheckbox) {
+    
+    // 2. Функция, обновляющая состояние чекбокса "Жарко!"
+    function updateHotCheckboxState() {
+        const hotLabel = hotCheckbox.closest('label'); 
+
+        if (ratingSelect.value !== 'hard') {
+            // Если выбран НЕ "Сложный"
+            
+            // А) Блокируем чекбокс и визульно отключаем
+            hotCheckbox.disabled = true; 
+            if (hotLabel) {
+                hotLabel.style.opacity = '0.5';
+                hotLabel.style.pointerEvents = 'none'; 
+            }
+            
+            // Б) Снимаем отметку, если она была установлена
+            if (hotCheckbox.checked) {
+                hotCheckbox.checked = false; 
+            }
+
+        } else {
+            // Если выбран "Сложный"
+            
+            // А) Разблокируем чекбокс
+            hotCheckbox.disabled = false; 
+            
+            // Б) Восстанавливаем стили
+            if (hotLabel) {
+                hotLabel.style.opacity = '1';
+                hotLabel.style.pointerEvents = 'auto'; 
+            }
+        }
+    }
+
+    // 3. Обработчик событий
+    // Привязываем функцию к событию изменения выбора сложности
+    ratingSelect.addEventListener('change', updateHotCheckboxState);
+
+    // Вызываем функцию один раз при загрузке страницы, 
+    // чтобы установить правильное начальное состояние
+    document.addEventListener('DOMContentLoaded', updateHotCheckboxState); 
+} else {
+    console.error("Не удалось найти элементы 'ratingSelect' или 'hotCheckbox' для ограничения выбора.");
+}
+
+// --- КОНЕЦ НОВОГО КОДА ДЛЯ ОГРАНИЧЕНИЯ ВЫБОРА ---
         // ==================== TELEGRAM WEB APP INTEGRATION ====================
         // Проверяем, что игра открыта в Telegram
         if (window.Telegram && Telegram.WebApp) {
