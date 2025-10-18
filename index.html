@@ -1810,9 +1810,11 @@ const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количес�
             gameActive = true;
             roundsPlayed = 0;
             likeUsedInRound = false; // Сброс флага использования лайка
-             // Сбрасываем отслеживание типа заданий
-    lastTaskType = null;
-    consecutiveSameType = 0;
+            
+            // Сбрасываем отслеживание типа заданий
+            lastTaskType = null;
+            consecutiveSameType = 0;
+            
             currentPlayer = players[Math.floor(Math.random() * players.length)];
             updatePlayerInfo();
             roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
@@ -2022,9 +2024,10 @@ const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количес�
             const currentIndex = players.indexOf(currentPlayer);
             const nextIndex = (currentIndex + 1) % players.length;
             currentPlayer = players[nextIndex];
+            
              // Сбрасываем отслеживание типа заданий при смене игрока
-    lastTaskType = null;
-    consecutiveSameType = 0;
+            lastTaskType = null;
+            consecutiveSameType = 0;
 
             updatePlayerInfo();
             updateTaskDisplayForCurrentPlayer();
@@ -2091,9 +2094,11 @@ const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количес�
             playerInput.value = '';
             taskDisplay.textContent = '';
             likeUsedInRound = false; // Сбрасываем флаг
+            
              // Сбрасываем отслеживание типа заданий
-    lastTaskType = null;
-    consecutiveSameType = 0;
+            lastTaskType = null;
+            consecutiveSameType = 0;
+            
             ratingButtons.style.display = 'none';
             choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
         }
