@@ -1199,7 +1199,41 @@
             .donate-container {
                 display: none !important;
             }
+             /* ДОБАВЬ ЭТИ НОВЫЕ СТИЛИ ДЛЯ IFRAME */
+            .donate-mobile-iframe {
+                background: rgba(20, 20, 40, 0.95);
+                padding: 15px;
+                border-radius: 10px;
+                border: 2px solid #ff00ff;
+                box-shadow: 0 0 25px rgba(255, 0, 255, 0.6);
+                margin-top: 15px;
+                width: 100%;
+                backdrop-filter: blur(10px);
+                animation: fadeInUp 0.3s ease-out;
+            }
+            
+            .donate-mobile-iframe iframe {
+                width: 100% !important;
+                margin-bottom: 10px;
+            }
+            
+            .btn-close-donate {
+                background: rgba(255, 0, 255, 0.8);
+                color: white;
+                border: none;
+                border-radius: 5px;
+                padding: 8px 15px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: all 0.3s;
+                width: 100%;
+            }
+            
+            .btn-close-donate:hover {
+                background: rgba(255, 0, 255, 1);
+            }
         }
+
         /* Стили для частиц */
 .particles-container {
     position: fixed;
@@ -1241,6 +1275,16 @@
     0% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4); }
     50% { box-shadow: 0 0 30px rgba(255, 0, 255, 0.8), 0 0 30px rgba(138, 43, 226, 0.8), 0 0 30px rgba(0, 255, 255, 0.8); }
     100% { box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4); }
+}
+     @keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }   
     </style>
 </head>
@@ -1323,6 +1367,10 @@
     <div class="container" id="endGameContainer" style="display: none;">
         <button class="btn-purple" id="endGameBtn">🏁 Завершить игру</button>
         <button class="donate-btn-mobile" id="donateBtnMobile">💝 Поддержать</button>
+        <div class="donate-mobile-iframe" id="donateMobileIframe" style="display: none;">
+            <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019&" width="100%" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+            <button class="btn-close-donate" id="closeDonateBtn">✕ Закрыть</button>
+        </div>
     </div>
     
     <div class="modal" id="drinkModal">
@@ -1461,18 +1509,24 @@
         }
 
          // ==================== DONATION FUNCTIONALITY ====================
+        // Для десктопной кнопки
         document.getElementById('donateBtn').addEventListener('click', function() {
             const iframe = document.getElementById('donateIframe');
             iframe.style.display = iframe.style.display === 'none' ? 'block' : 'block';
         });
 
-        // Обработчик для мобильной кнопки доната
+        // Для мобильной кнопки - показываем iframe в интерфейсе
         document.getElementById('donateBtnMobile').addEventListener('click', function() {
-            // Открываем в том же окне
-            window.location.href = 'https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019';
+            const mobileIframe = document.getElementById('donateMobileIframe');
+            mobileIframe.style.display = mobileIframe.style.display === 'none' ? 'block' : 'none';
         });
 
-        // Закрытие iframe при клике вне его
+        // Закрытие мобильного iframe
+        document.getElementById('closeDonateBtn').addEventListener('click', function() {
+            document.getElementById('donateMobileIframe').style.display = 'none';
+        });
+
+        // Закрытие десктопного iframe при клике вне его
         document.addEventListener('click', function(event) {
             const donateContainer = document.querySelector('.donate-container');
             const donateIframe = document.getElementById('donateIframe');
