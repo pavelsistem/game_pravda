@@ -2056,6 +2056,14 @@ difficultySelect.addEventListener('change', function() {
             gameContainer.style.display = 'block';
             endGameContainer.style.display = 'block';
 
+            // ДОБАВЬТЕ ЭТОТ БЛОК ДЛЯ СКРЫТИЯ НАСТРОЕК
+        if (difficultyPanel) {
+            difficultyPanel.classList.remove('active'); // <--- ДОБАВИТЬ ЭТУ СТРОКУ
+        }
+        roundsPanel.classList.remove('active');
+        soundPanel.classList.remove('active');
+        // Конец блока
+
             truthBtn.disabled = false;
             dareBtn.disabled = false;
             endGameBtn.disabled = false;
