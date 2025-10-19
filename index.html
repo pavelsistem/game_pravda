@@ -1468,7 +1468,8 @@
 
         // Обработчик для мобильной кнопки доната
         document.getElementById('donateBtnMobile').addEventListener('click', function() {
-            window.open('https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019', '_blank');
+            // Открываем в том же окне
+            window.location.href = 'https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019';
         });
 
         // Закрытие iframe при клике вне его
