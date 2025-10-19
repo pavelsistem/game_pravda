@@ -459,109 +459,24 @@
 
         /* Анимации для карты с заданием */
         #taskDisplay.card-flip {
-            animation: cardFlip 0.8s ease-in-out forwards;
+            animation: cardFlip 0.6s ease-in-out forwards;
         }
 
         #taskDisplay.card-unflip {
-            animation: cardUnflip 0.8s ease-in-out forwards;
+            animation: cardUnflip 0.6s ease-in-out forwards;
         }
 
         @keyframes cardFlip {
-    0% { 
-        transform: perspective(1000px) rotateY(0deg) translateY(-50px) scale(0.9);
-        opacity: 0;
-    }
-    25% { 
-        transform: perspective(1000px) rotateY(80deg) translateY(10px) scale(1);
-        opacity: 0.7;
-    }
-    50% { 
-        transform: perspective(900px) rotateY(160deg) translateY(-20px) scale(1.1);
-        opacity: 0.9;
-    }
-    75% { 
-        transform: perspective(1000px) rotateY(80deg) translateY(5px) scale(1.05);
-        opacity: 0.95;
-    }
-    100% { 
-        transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1);
-        opacity: 1;
-    }
-}
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) translateY(15px) scale(1.1); }
+        }
 
         @keyframes cardUnflip {
-            0% { transform: perspective(800px) rotateY(0deg) translateY(20px) scale(1.15); }
-            25% { transform: perspective(1000px) rotateY(80deg) translateY(0) scale(1); }
-            50% { transform: perspective(900px) rotateY(180deg) translateY(-30px) scale(1.2); }
-            75% { transform: perspective(1000px) rotateY(80deg) translateY(0) scale(1); }
+            0% { transform: perspective(1000px) rotateY(0deg) translateY(15px) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) translateY(-20px) scale(1.05); }
             100% { transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1); }
         }
-        /* Анимации для искр при приземлении карты */
-.sparks-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.spark {
-    position: absolute;
-    width: 4px;
-    height: 4px;
-    background: linear-gradient(45deg, #ff00ff, #00ffff, #ffff00);
-    border-radius: 50%;
-    opacity: 0;
-    pointer-events: none;
-}
-
-@keyframes sparkFly {
-    0% {
-        transform: translate(0, 0) scale(1);
-        opacity: 1;
-    }
-    50% {
-        opacity: 0.8;
-    }
-    100% {
-        transform: translate(var(--spark-x), var(--spark-y)) scale(0);
-        opacity: 0;
-    }
-}
-
-/* Анимация приземления карты */
-@keyframes cardLanding {
-    0% { 
-        transform: perspective(1000px) rotateY(0deg) translateY(-100px) scale(1.2);
-        opacity: 0;
-    }
-    20% {
-        transform: perspective(1000px) rotateY(10deg) translateY(20px) scale(1.1);
-        opacity: 0.8;
-    }
-    40% {
-        transform: perspective(1000px) rotateY(-5deg) translateY(-10px) scale(1.05);
-        opacity: 0.9;
-    }
-    60% {
-        transform: perspective(1000px) rotateY(3deg) translateY(5px) scale(1.02);
-        opacity: 0.95;
-    }
-    80% {
-        transform: perspective(1000px) rotateY(-1deg) translateY(-2px) scale(1.01);
-        opacity: 0.98;
-    }
-    100% { 
-        transform: perspective(1000px) rotateY(0deg) translateY(0) scale(1);
-        opacity: 1;
-    }
-}
-
-.card-landing {
-    animation: cardLanding 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
-}
 
         @keyframes borderGlow {
             0% { 
@@ -705,26 +620,22 @@
 
         /* Анимации для модального окна с рюмкой */
         .modal-content.card-flip {
-            animation: modalFlip 0.8s ease-in-out forwards;
+            animation: modalFlip 0.6s ease-in-out forwards;
         }
 
         .modal-content.card-unflip {
-            animation: modalUnflip 0.8s ease-in-out forwards;
+            animation: modalUnflip 0.6s ease-in-out forwards;
         }
 
         @keyframes modalFlip {
             0% { transform: perspective(1000px) rotateY(0deg) scale(1); }
-            25% { transform: perspective(900px) rotateY(0deg) scale(1); }
-            50% { transform: perspective(800px) rotateY(360deg) scale(1.1); }
-            75% { transform: perspective(700px) rotateY(0deg) scale(1); }
-            100% { transform: perspective(600px) rotateY(0deg) scale(1.15); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
+            100% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
         }
 
         @keyframes modalUnflip {
-            0% { transform: perspective(600px) rotateY(0deg) scale(1.15); }
-            25% { transform: perspective(700px) rotateY(0deg) scale(1); }
-            50% { transform: perspective(800px) rotateY(360deg) scale(1.1); }
-            75% { transform: perspective(900px) rotateY(0deg) scale(1); }
+            0% { transform: perspective(1000px) rotateY(0deg) scale(1.1); }
+            50% { transform: perspective(1000px) rotateY(90deg) scale(1.05); }
             100% { transform: perspective(1000px) rotateY(0deg) scale(1); }
         }
         
@@ -996,14 +907,6 @@
         }
 
         @media (max-width: 600px) {
-            .sparks-container {
-        display: block !important;
-    }
-    
-    .spark {
-        display: block !important;
-    }
-}
             body {
                 padding: 10px;
             }
@@ -1350,9 +1253,7 @@
             </div>
         </div>
         
-        <div id="taskDisplay">
-    <div class="sparks-container" id="taskSparks"></div>
-</div>
+        <div id="taskDisplay"></div>
         
         <div class="choice-buttons" id="choiceButtons">
             <button class="btn-primary" id="truthBtn">Правда</button>
@@ -1652,92 +1553,28 @@
             }
         }
 
-        // Функция создания искр
-function createSparks(container, sparkCount = 15) {
-    // Очищаем предыдущие искры
-    container.innerHTML = '';
-    
-    for (let i = 0; i < sparkCount; i++) {
-        const spark = document.createElement('div');
-        spark.classList.add('spark');
-        
-        // Случайное положение вокруг центра
-        const angle = Math.random() * Math.PI * 2;
-        const distance = 20 + Math.random() * 60;
-        const sparkX = Math.cos(angle) * distance;
-        const sparkY = Math.sin(angle) * distance;
-        
-        // Случайные цвета искр
-        const colors = [
-            'linear-gradient(45deg, #ff00ff, #00ffff)',
-            'linear-gradient(45deg, #00ffff, #ffff00)',
-            'linear-gradient(45deg, #ffff00, #ff00ff)',
-            'linear-gradient(45deg, #ff4444, #ffaa00)'
-        ];
-        const randomColor = colors[Math.floor(Math.random() * colors.length)];
-        
-        spark.style.cssText = `
-            left: 50%;
-            top: 50%;
-            width: ${3 + Math.random() * 5}px;
-            height: ${3 + Math.random() * 5}px;
-            background: ${randomColor};
-            --spark-x: ${sparkX}px;
-            --spark-y: ${sparkY}px;
-            animation: sparkFly ${0.5 + Math.random() * 0.5}s ease-out forwards;
-            animation-delay: ${Math.random() * 0.2}s;
-            box-shadow: 0 0 8px ${randomColor.includes('ff00ff') ? '#ff00ff' : randomColor.includes('00ffff') ? '#00ffff' : '#ffff00'};
-        `;
-        
-        container.appendChild(spark);
-    }
-}
-
-// Анимация карты с заданием
-function animateTaskCard(show, callback) {
-    const sparksContainer = document.getElementById('taskSparks');
-    
-    if (show) {
-        // Показываем карту с анимацией
-        taskDisplay.classList.remove('card-unflip');
-        taskDisplay.classList.add('card-flip');
-        
-        // Создаем искры в середине анимации
-        setTimeout(() => {
-            createSparks(sparksContainer, 20);
-        }, 400);
-        
-        // После завершения анимации вызываем callback
-        setTimeout(() => {
-            if (callback) callback();
-        }, 800);
-    } else {
-        // Скрываем карту с анимацией
-        taskDisplay.classList.remove('card-flip');
-        taskDisplay.classList.add('card-unflip');
-        
-        // После завершения анимации вызываем callback
-        setTimeout(() => {
-            if (callback) callback();
-        }, 600);
-    }
-}
-
-// Функция для анимации приземления (можно использовать при первом показе)
-function animateCardLanding() {
-    taskDisplay.classList.add('card-landing');
-    const sparksContainer = document.getElementById('taskSparks');
-    
-    // Создаем искры в момент "приземления"
-    setTimeout(() => {
-        createSparks(sparksContainer, 25);
-    }, 600);
-    
-    // Убираем класс анимации после завершения
-    setTimeout(() => {
-        taskDisplay.classList.remove('card-landing');
-    }, 1000);
-}
+        // Анимация карты с заданием
+        function animateTaskCard(show, callback) {
+            if (show) {
+                // Показываем карту с анимацией
+                taskDisplay.classList.remove('card-unflip');
+                taskDisplay.classList.add('card-flip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            } else {
+                // Скрываем карту с анимацией
+                taskDisplay.classList.remove('card-flip');
+                taskDisplay.classList.add('card-unflip');
+                
+                // После завершения анимации вызываем callback
+                setTimeout(() => {
+                    if (callback) callback();
+                }, 600);
+            }
+        }
 
         // Анимация модального окна с рюмкой
         function animateDrinkModal(show, callback) {
@@ -2019,88 +1856,68 @@ function animateCardLanding() {
         });
 
         function getTask(taskType) {
-    if (!gameActive) return;
+            if (!gameActive) return;
 
-    // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
-    if (taskType === lastTaskType) {
-        consecutiveSameType++;
-        
-        if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
-            console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
-            // Принудительно меняем тип задания
-            taskType = taskType === 'truth' ? 'dare' : 'truth';
-            consecutiveSameType = 1; // сбрасываем счетчик
+            // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
+            if (taskType === lastTaskType) {
+                consecutiveSameType++;
+                
+                if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
+                    console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
+                    // Принудительно меняем тип задания
+                    taskType = taskType === 'truth' ? 'dare' : 'truth';
+                    consecutiveSameType = 1; // сбрасываем счетчик
+                    
+                    // Показываем сообщение о принудительной смене типа
+                    const forcedMessage = taskType === 'truth' ? 
+                        "Слишком много действий подряд! Теперь Правда!" : 
+                        "Слишком много правд подряд! Теперь Действие!";
+                    
+                    // Временно показываем сообщение
+                    const originalDisplay = taskDisplay.textContent;
+                    taskDisplay.textContent = forcedMessage;
+                    
+                    setTimeout(() => {
+                        taskDisplay.textContent = originalDisplay;
+                    }, 2000);
+                }
+            } else {
+                // Тип задания изменился, сбрасываем счетчик
+                consecutiveSameType = 1;
+            }
             
-            // Показываем сообщение о принудительной смене типа
-            const forcedMessage = taskType === 'truth' ? 
-                "Слишком много действий подряд! Теперь Правда!" : 
-                "Слишком много правд подряд! Теперь Действие!";
-            
-            // Временно показываем сообщение
-            const originalDisplay = taskDisplay.textContent;
-            taskDisplay.textContent = forcedMessage;
-            
-            setTimeout(() => {
-                taskDisplay.textContent = originalDisplay;
-            }, 2000);
+            // Сохраняем текущий тип задания
+            lastTaskType = taskType;
+
+            // Скрываем кнопки выбора и показываем кнопки оценки
+            choiceButtons.style.display = 'none';
+            ratingButtons.style.display = 'none';
+
+            let task;
+            if (taskType === 'truth') {
+                task = truths[Math.floor(Math.random() * truths.length)];
+                playButtonSound();
+            } else {
+                task = dares[Math.floor(Math.random() * dares.length)];
+                playButtonSound();
+            }
+
+            // Анимируем появление карты с заданием
+            animateTaskCard(true, () => {
+                taskDisplay.textContent = task;
+                startTimer();
+
+                // Показываем кнопки оценки через 5 секунд и делаем их активными
+                setTimeout(() => {
+                    ratingButtons.style.display = 'flex';
+                    likeBtn.classList.add('active');
+                    dislikeBtn.classList.add('active');
+                    likeBtn.disabled = false;
+                    dislikeBtn.disabled = false;
+                    likeUsedInRound = false;
+                }, 5000);
+            });
         }
-    } else {
-        // Тип задания изменился, сбрасываем счетчик
-        consecutiveSameType = 1;
-    }
-    
-    // Сохраняем текущий тип задания
-    lastTaskType = taskType;
-
-    // Скрываем кнопки выбора и показываем кнопки оценки
-    choiceButtons.style.display = 'none';
-    ratingButtons.style.display = 'none';
-
-    let task;
-    if (taskType === 'truth') {
-        task = truths[Math.floor(Math.random() * truths.length)];
-        playButtonSound();
-    } else {
-        task = dares[Math.floor(Math.random() * dares.length)];
-        playButtonSound();
-    }
-
-    // Сначала показываем карту с анимацией переворота
-    taskDisplay.textContent = task;
-    taskDisplay.classList.remove('card-unflip');
-    taskDisplay.classList.add('card-flip');
-    
-    // Создаем искры в середине анимации
-    setTimeout(() => {
-        const sparksContainer = document.getElementById('taskSparks');
-        createSparks(sparksContainer, 20);
-    }, 400);
-
-    // После завершения анимации переворота запускаем анимацию приземления
-    setTimeout(() => {
-        taskDisplay.classList.remove('card-flip');
-        taskDisplay.classList.add('card-landing');
-        
-        // Дополнительные искры при приземлении
-        setTimeout(() => {
-            const sparksContainer = document.getElementById('taskSparks');
-            createSparks(sparksContainer, 15);
-        }, 300);
-        
-        startTimer();
-
-        // Показываем кнопки оценки через 5 секунд и делаем их активными
-        setTimeout(() => {
-            ratingButtons.style.display = 'flex';
-            likeBtn.classList.add('active');
-            dislikeBtn.classList.add('active');
-            likeBtn.disabled = false;
-            dislikeBtn.disabled = false;
-            likeUsedInRound = false;
-        }, 5000);
-    }, 800);
-}
-           
         // Оценка задания (Лайк/Дизлайк)
         likeBtn.addEventListener('click', function() {
             handleButtonClick(this, () => rateTask(true));
