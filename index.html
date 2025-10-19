@@ -1951,6 +1951,7 @@ difficultySelect.addEventListener('change', function() {
         // НУЖНО ДОБАВИТЬ ЭТО
     if (difficultyPanel) {
         difficultyPanel.classList.remove('active');
+        difficultyPanel.style.display = 'none';    // <--- ДОБАВИТЬ ЭТУ СТРОКУ
     }
 });
 // === КОНЕЦ ДОБАВЛЕНИЯ ===
@@ -2059,6 +2060,7 @@ difficultySelect.addEventListener('change', function() {
             // ДОБАВЬТЕ ЭТОТ БЛОК ДЛЯ СКРЫТИЯ НАСТРОЕК
         if (difficultyPanel) {
             difficultyPanel.classList.remove('active'); // <--- ДОБАВИТЬ ЭТУ СТРОКУ
+            difficultyPanel.style.display = 'none'; // <--- ДОБАВИТЬ ЭТУ СТРОКУ
         }
         roundsPanel.classList.remove('active');
         soundPanel.classList.remove('active');
