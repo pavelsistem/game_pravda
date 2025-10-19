@@ -1621,8 +1621,8 @@
         let roundsPlayed = 0;
         let maxRounds = 10; // По умолчанию 10 раундов
         let timerInterval;
+        let currentDifficulty = 'light';
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
-        let currentDifficulty = 'medium';
         
         // Отслеживание типа заданий
         let lastTaskType = null; // 'truth' или 'dare'
@@ -1687,7 +1687,6 @@
         const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
         const drinkModalContent = document.querySelector('#drinkModal .modal-content');
-        const difficultySelect = document.getElementById('difficultySelect');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
@@ -1991,21 +1990,6 @@ difficultySelect.addEventListener('change', function() {
                 });
             }
         }
-        // === ДОБАВИТЬ СЮДА ===
-    if (savedDifficulty) {
-        currentDifficulty = savedDifficulty;
-        difficultySelect.value = currentDifficulty;
-        
-        // Активируем соответствующую кнопку быстрого выбора
-        document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.difficulty === currentDifficulty) {
-                btn.classList.add('active');
-            }
-        });
-    }
-    // === КОНЕЦ ДОБАВЛЕНИЯ ===
-}
 
         // Добавление игрока
         addPlayerBtn.addEventListener('click', function() {
@@ -2927,104 +2911,6 @@ function createParticles() {
 document.addEventListener('DOMContentLoaded', function() {
     createParticles();
 });
-        // ==================== СИСТЕМА СЛОЖНОСТИ ====================
-
-// Добавить функцию фильтрации заданий по сложности
-function getTasksByDifficulty(tasks) {
-    switch(currentDifficulty) {
-        case 'easy':
-            return tasks.filter(task => !isTaskHard(task));
-        case 'hard':
-            return tasks.filter(task => isTaskHard(task));
-        case 'extreme':
-            return tasks.filter(task => isTaskExtreme(task));
-        default: // medium
-            return tasks;
-    }
-}
-
-// Вспомогательные функции для определения сложности заданий
-function isTaskHard(task) {
-    const hardKeywords = ['секс', 'оргазм', 'интим', 'постель', 'голый', 'раздеть', 'поцелуй', 'обнаженный', 'нижнее белье'];
-    return hardKeywords.some(keyword => task.toLowerCase().includes(keyword));
-}
-
-function isTaskExtreme(task) {
-    const extremeKeywords = ['раздеться', 'голышом', 'поцеловать', 'потрогать', 'снять одежду', 'разреши', 'обнажить'];
-    return extremeKeywords.some(keyword => task.toLowerCase().includes(keyword));
-}
-
-// НАЙТИ СУЩЕСТВУЮЩУЮ ФУНКЦИЮ getTask() И ЗАМЕНИТЬ ЕЁ:
-function getTask(taskType) {
-    if (!gameActive) return;
-
-    // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
-    if (taskType === lastTaskType) {
-        consecutiveSameType++;
-        
-        if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
-            console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
-            // Принудительно меняем тип задания
-            taskType = taskType === 'truth' ? 'dare' : 'truth';
-            consecutiveSameType = 1; // сбрасываем счетчик
-            
-            // Показываем сообщение о принудительной смене типа
-            const forcedMessage = taskType === 'truth' ? 
-                "Слишком много действий подряд! Теперь Правда!" : 
-                "Слишком много правд подряд! Теперь Действие!";
-            
-            // Временно показываем сообщение
-            const originalDisplay = taskDisplay.textContent;
-            taskDisplay.textContent = forcedMessage;
-            
-            setTimeout(() => {
-                taskDisplay.textContent = originalDisplay;
-            }, 2000);
-        }
-    } else {
-        // Тип задания изменился, сбрасываем счетчик
-        consecutiveSameType = 1;
-    }
-    
-    // Сохраняем текущий тип задания
-    lastTaskType = taskType;
-
-    // Скрываем кнопки выбора и показываем кнопки оценки
-    choiceButtons.style.display = 'none';
-    ratingButtons.style.display = 'none';
-
-    let task;
-    let availableTasks;
-    
-    if (taskType === 'truth') {
-        // === ЗАМЕНА: была truths[...] теперь ===
-        availableTasks = getTasksByDifficulty(truths);
-        task = availableTasks[Math.floor(Math.random() * availableTasks.length)];
-        playButtonSound();
-    } else {
-        // === ЗАМЕНА: была dares[...] теперь ===
-        availableTasks = getTasksByDifficulty(dares);
-        task = availableTasks[Math.floor(Math.random() * availableTasks.length)];
-        playButtonSound();
-    }
-
-    // Анимируем появление карты с заданием
-    animateTaskCard(true, () => {
-        taskDisplay.textContent = task;
-        startTimer();
-
-        // Показываем кнопки оценки через 5 секунд и делаем их активными
-        setTimeout(() => {
-            ratingButtons.style.display = 'flex';
-            likeBtn.classList.add('active');
-            dislikeBtn.classList.add('active');
-            likeBtn.disabled = false;
-            dislikeBtn.disabled = false;
-            likeUsedInRound = false;
-        }, 5000);
-    });
-}
-// ==================== КОНЕЦ СИСТЕМЫ СЛОЖНОСТИ ====================
     </script>
 </body>
 </html>
