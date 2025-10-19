@@ -820,6 +820,25 @@
             gap: 8px;
             width: 180px;
         }
+        /* ⬅️ ВСТАВИТЬ СЮДА НОВЫЙ СТИЛЬ: Настройки сложности */
+.difficulty-panel {
+    position: fixed;
+    bottom: 50px;
+    left: 15px; /* Лучше расположить слева, рядом с раундами */
+    z-index: 50;
+    background-color: rgba(20, 20, 40, 0.9);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ff00ff; /* Фиолетовая граница */
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.5);
+    display: none; /* ⬅️ САМОЕ ГЛАВНОЕ: Скрыт по умолчанию */
+    flex-direction: column;
+    gap: 8px;
+    width: 180px;
+}
+        .difficulty-panel.active {
+    display: flex; /* ⬅️ Показывается, когда активен */
+}
         
         .sound-panel.active, .rounds-panel.active {
             display: flex;
@@ -1398,17 +1417,18 @@
     
     <div class="container" id="gameContainer">
         <div class="info-row">
-            <div class="info-box">
-                <div id="roundInfo">Раунд: 1/10</div>
-                <div id="scoreInfo"></div>
-            </div>
-            <div class="info-box" style="text-align: center;">
-                <div id="currentPlayer"></div> 
-            </div>
-            <div class="info-box">
-                <div id="timer">5:00</div> 
-            </div>
-        </div>
+            <div class="info-box">
+                <div id="roundInfo">Раунд: 1/10</div>
+                <div id="scoreInfo"></div>
+                                <div id="difficultyDisplay" style="margin-top: 5px; font-size: 0.9em;"></div> 
+            </div>
+            <div class="info-box" style="text-align: center;">
+                <div id="currentPlayer"></div> 
+            </div>
+            <div class="info-box">
+                <div id="timer">5:00</div> 
+            </div>
+        </div>
         
         <div id="taskDisplay"></div>
         
@@ -1460,79 +1480,83 @@
     
     <!-- Кнопки управления звуком и раундами внизу страницы -->
     <div class="sound-control">
-        <button id="soundToggle" class="btn-sound">🔊 Звук</button>
-    </div>
+        <button id="soundToggle" class="btn-sound">🔊 Звук</button>
+    </div>
 
-    <div class="rounds-control">
-        <button id="roundsToggle" class="btn-rounds">🔢 Раунды</button>
-    </div>
+    <div class="rounds-control">
+        <button id="roundsToggle" class="btn-rounds">🔢 Раунды</button>
+    </div>
 
-    <div class="sound-panel" id="soundPanel">
-        <div class="volume-control">
-            <label for="musicVolume">Громкость музыки</label>
-            <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
-        </div>
-        
-        <div class="volume-control">
-            <label for="effectsVolume">Громкость эффектов</label>
-            <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
-        </div>
-        
-        <div class="music-selector">
-            <div class="volume-control">
-                <label>Выбор музыки</label>
-            </div>
-            <button class="music-selector-btn active" data-track="0">🎵 Трек 1</button>
-            <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
-            <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
-            <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
-        </div>
-    </div>
+        <div class="difficulty-control">
+        <button id="difficultyToggle" class="btn-difficulty">⚔️ Сложность</button>
+    </div>
 
-    <div class="rounds-panel" id="roundsPanel">
-        <div class="rounds-selector">
-            <label for="roundsSelect">Количество раундов</label>
-            <select id="roundsSelect">
-                <option value="5">5 раундов</option>
-                <option value="10" selected>10 раундов</option>
-                <option value="15">15 раундов</option>
-                <option value="20">20 раундов</option>
-                <option value="50">50 раундов</option>
-                <option value="100">100 раундов</option>
-            </select>
-        </div>
-        <!-- ВСТАВИТЬ СЮДА КОД ДЛЯ СЛОЖНОСТИ -->
-    <div class="difficulty-selector">
-        <label for="difficultySelect">Уровень сложности</label>
-        <select id="difficultySelect">
-            <option value="easy">🟢 Легкий</option>
-            <option value="medium" selected>🟡 Средний</option>
-            <option value="hard">🔴 Сложный</option>
-            <option value="extreme">💀 Экстрим</option>
-        </select>
-    </div>
+    <div class="sound-panel" id="soundPanel">
+        <div class="volume-control">
+            <label for="musicVolume">Громкость музыки</label>
+            <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="volume-control">
+            <label for="effectsVolume">Громкость эффектов</label>
+            <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
+        </div>
+        
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Выбор музыки</label>
+            </div>
+            <button class="music-selector-btn active" data-track="0">🎵 Трек 1</button>
+            <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
+            <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
+            <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
+        </div>
+    </div>
 
-        <div class="music-selector">
-            <div class="volume-control">
-                <label>Быстрый выбор</label>
-            </div>
-            <button class="rounds-selector-btn" data-rounds="5">5 раундов</button>
-            <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
-            <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
-            <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
-        </div>
-    </div>
-    <!-- И ЭТОТ БЛОК ТОЖЕ СЮДА -->
-    <div class="music-selector">
-        <div class="volume-control">
-            <label>Уровень сложности</label>
-        </div>
-        <button class="difficulty-selector-btn active" data-difficulty="medium">🟡 Средний</button>
-        <button class="difficulty-selector-btn" data-difficulty="easy">🟢 Легкий</button>
-        <button class="difficulty-selector-btn" data-difficulty="hard">🔴 Сложный</button>
-        <button class="difficulty-selector-btn" data-difficulty="extreme">💀 Экстрим</button>
-    </div>
-</div>
+        <div class="rounds-panel" id="roundsPanel">
+        <div class="rounds-selector">
+            <label for="roundsSelect">Количество раундов</label>
+            <select id="roundsSelect">
+                <option value="5">5 раундов</option>
+                <option value="10" selected>10 раундов</option>
+                <option value="15">15 раундов</option>
+                <option value="20">20 раундов</option>
+                <option value="50">50 раундов</option>
+                <option value="100">100 раундов</option>
+            </select>
+        </div>
+        
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Быстрый выбор</label>
+            </div>
+            <button class="rounds-selector-btn" data-rounds="5">5 раундов</button>
+            <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
+            <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
+        </div>
+    </div>
+
+        <div class="difficulty-panel" id="difficultyPanel">
+        <div class="difficulty-selector">
+            <label for="difficultySelect">Уровень сложности</label>
+            <select id="difficultySelect">
+                <option value="light">🟢 Легкий</option>
+                <option value="medium" selected>🟡 Средний</option>
+                <option value="hard">🔴 Сложный</option>
+                <option value="extreme">💀 Экстрим</option>
+            </select>
+        </div>
+        <div class="music-selector">
+            <div class="volume-control">
+                <label>Быстрый выбор</label>
+            </div>
+            <button class="difficulty-selector-btn active" data-difficulty="medium">🟡 Средний</button>
+            <button class="difficulty-selector-btn" data-difficulty="light">🟢 Легкий</button>
+            <button class="difficulty-selector-btn" data-difficulty="hard">🔴 Сложный</button>
+            <button class="difficulty-selector-btn" data-difficulty="extreme">💀 Экстрим</button>
+        </div>
+    </div>
     
     <script>
         // ==================== TELEGRAM WEB APP INTEGRATION ====================
