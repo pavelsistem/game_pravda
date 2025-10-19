@@ -885,11 +885,19 @@
         }
 
         /* Стили для кнопки донатов */
-        .donate-btn {
+        /* Стили для контейнера доната */
+        .donate-container {
             position: fixed;
             top: 20px;
             right: 15px;
             z-index: 50;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .donate-btn {
             background: linear-gradient(45deg, #ff00ff, #00ffff);
             color: white;
             border: none;
@@ -899,6 +907,15 @@
             box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
             cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .donate-iframe {
+            background: rgba(20, 20, 40, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            backdrop-filter: blur(10px);
         }
 
         .donate-btn:hover {
@@ -999,11 +1016,17 @@
                 padding: 10px;
             }
 
-            .donate-btn {
-                top: 600px;
-                right: 0px;
-                padding: 6px 12px;
-                font-size: 0.8em;
+            .donate-container {
+                top: 10px;
+                right: 10px;
+            }
+            
+            .donate-iframe {
+                padding: 10px;
+            }
+            
+            .donate-iframe iframe {
+                width: 280px !important;
             }
         }
          /* Стили для возрастной проверки */
@@ -1218,7 +1241,12 @@
     </div>
     <!-- КОНЕЦ ВОЗРАСТНОЙ ПРОВЕРКИ -->
     <!-- Кнопка донатов -->
+<div class="donate-container">
     <button class="donate-btn" id="donateBtn">💝 Поддержать</button>
+    <div class="donate-iframe" id="donateIframe" style="display: none;">
+        <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019&" width="330" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
+    </div>
+</div>
 
     <div id="preloader">
         <div id="preloader-title">🎲 Правда или Действие 🎲</div>
@@ -1407,17 +1435,18 @@
 
         // ==================== DONATION FUNCTIONALITY ====================
         document.getElementById('donateBtn').addEventListener('click', function() {
-            // Вариант 1: Ссылка на ЮMoney (простой способ)
-            window.open('https://yoomoney.ru/to/4100119368492206', '_blank');
+            const iframe = document.getElementById('donateIframe');
+            iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Закрытие iframe при клике вне его
+        document.addEventListener('click', function(event) {
+            const donateContainer = document.querySelector('.donate-container');
+            const donateIframe = document.getElementById('donateIframe');
             
-            // Вариант 2: Telegram Payments (требует настройки через BotFather)
-            /*
-            if (window.Telegram && Telegram.WebApp) {
-                Telegram.WebApp.openInvoice('your_invoice_link_here');
-            } else {
-                window.open('https://yoomoney.ru/to/410011800000000', '_blank');
+            if (!donateContainer.contains(event.target) && donateIframe.style.display === 'block') {
+                donateIframe.style.display = 'none';
             }
-            */
         });
 
         // ==================== EXISTING GAME CODE ====================
