@@ -1288,7 +1288,63 @@
         opacity: 1;
         transform: translateY(0);
     }
-}   
+}
+   /* === ДОБАВИТЬ СЮДА СТИЛИ ДЛЯ СЛОЖНОСТИ === */
+.difficulty-selector {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 0, 255, 0.3);
+}
+
+.difficulty-selector label {
+    font-size: 0.8em;
+    color: #e0e0e0;
+}
+
+.difficulty-selector-btn {
+    background-color: rgba(30, 30, 60, 0.8);
+    color: white;
+    border: 1px solid #ff00ff;
+    border-radius: 5px;
+    padding: 5px 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 0.8em;
+    text-align: left;
+}
+
+.difficulty-selector-btn:hover {
+    background-color: rgba(50, 50, 90, 0.8);
+    border-color: #00ffff;
+}
+
+.difficulty-selector-btn.active {
+    background-color: #8a2be2;
+    border-color: #00ffff;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
+}
+
+/* Цвета для уровней сложности */
+.difficulty-selector-btn[data-difficulty="easy"] {
+    border-left: 3px solid #00ff00;
+}
+
+.difficulty-selector-btn[data-difficulty="medium"] {
+    border-left: 3px solid #ffff00;
+}
+
+.difficulty-selector-btn[data-difficulty="hard"] {
+    border-left: 3px solid #ff0000;
+}
+
+.difficulty-selector-btn[data-difficulty="extreme"] {
+    border-left: 3px solid #8b0000;
+}
+/* === КОНЕЦ СТИЛЕЙ ДЛЯ СЛОЖНОСТИ === */
+     
     </style>
 </head>
 <body>
@@ -1445,6 +1501,16 @@
                 <option value="100">100 раундов</option>
             </select>
         </div>
+        <!-- ВСТАВИТЬ СЮДА КОД ДЛЯ СЛОЖНОСТИ -->
+    <div class="difficulty-selector">
+        <label for="difficultySelect">Уровень сложности</label>
+        <select id="difficultySelect">
+            <option value="easy">🟢 Легкий</option>
+            <option value="medium" selected>🟡 Средний</option>
+            <option value="hard">🔴 Сложный</option>
+            <option value="extreme">💀 Экстрим</option>
+        </select>
+    </div>
 
         <div class="music-selector">
             <div class="volume-control">
@@ -1456,6 +1522,17 @@
             <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
         </div>
     </div>
+    <!-- И ЭТОТ БЛОК ТОЖЕ СЮДА -->
+    <div class="music-selector">
+        <div class="volume-control">
+            <label>Уровень сложности</label>
+        </div>
+        <button class="difficulty-selector-btn active" data-difficulty="medium">🟡 Средний</button>
+        <button class="difficulty-selector-btn" data-difficulty="easy">🟢 Легкий</button>
+        <button class="difficulty-selector-btn" data-difficulty="hard">🔴 Сложный</button>
+        <button class="difficulty-selector-btn" data-difficulty="extreme">💀 Экстрим</button>
+    </div>
+</div>
     
     <script>
         // ==================== TELEGRAM WEB APP INTEGRATION ====================
@@ -1837,6 +1914,40 @@
                 });
             });
         });
+        // === ДОБАВИТЬ СЮДА ===
+// Быстрый выбор уровня сложности
+document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        handleButtonClick(this, () => {
+            const difficulty = this.dataset.difficulty;
+            if (difficulty !== currentDifficulty) {
+                currentDifficulty = difficulty;
+                difficultySelect.value = difficulty;
+                localStorage.setItem('currentDifficulty', difficulty);
+
+                document.querySelectorAll('.difficulty-selector-btn').forEach(b => {
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+            }
+        });
+    });
+});
+
+// Обработчик для select сложности
+difficultySelect.addEventListener('change', function() {
+    currentDifficulty = this.value;
+    localStorage.setItem('currentDifficulty', currentDifficulty);
+    
+    // Обновляем активную кнопку быстрого выбора
+    document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.dataset.difficulty === currentDifficulty) {
+            btn.classList.add('active');
+        }
+    });
+});
+// === КОНЕЦ ДОБАВЛЕНИЯ ===
 
         // Загрузка сохраненных настроек
         function loadAudioSettings() {
@@ -1844,6 +1955,8 @@
             const savedEffectsVolume = localStorage.getItem('effectsVolume');
             const savedTrack = localStorage.getItem('currentTrack');
             const savedRounds = localStorage.getItem('maxRounds');
+            // === ДОБАВИТЬ СЮДА ===
+    const savedDifficulty = localStorage.getItem('currentDifficulty');
 
             if (savedMusicVolume) {
                 musicVolume = parseFloat(savedMusicVolume);
