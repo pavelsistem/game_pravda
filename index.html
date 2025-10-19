@@ -1173,6 +1173,32 @@
                 width: 100%;
                 max-width: 250px;
             }
+            
+          /* НОВЫЕ СТИЛИ ДЛЯ МОБИЛЬНОЙ КНОПКИ ДОНАТА */
+            .donate-btn-mobile {
+                background: linear-gradient(45deg, #ff00ff, #00ffff);
+                color: white;
+                border: none;
+                border-radius: 25px;
+                padding: 10px 15px;
+                font-weight: bold;
+                box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+                cursor: pointer;
+                transition: all 0.3s;
+                width: 100%;
+                margin-top: 10px;
+                font-size: 1em;
+            }
+            
+            .donate-btn-mobile:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
+            }
+            
+            /* Скрываем основную кнопку доната на мобильных */
+            .donate-container {
+                display: none !important;
+            }
         }
         /* Стили для частиц */
 .particles-container {
@@ -1296,6 +1322,7 @@
     
     <div class="container" id="endGameContainer" style="display: none;">
         <button class="btn-purple" id="endGameBtn">🏁 Завершить игру</button>
+        <button class="donate-btn-mobile" id="donateBtnMobile">💝 Поддержать</button>
     </div>
     
     <div class="modal" id="drinkModal">
