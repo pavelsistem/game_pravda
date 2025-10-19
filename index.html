@@ -1647,6 +1647,10 @@
         let timerInterval;
         let currentDifficulty = 'light';
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
+        const difficultyToggle = document.getElementById('difficultyToggle');
+        const difficultyPanel = document.getElementById('difficultyPanel');
+        let difficultyPanelVisible = false;
+
         
         // Отслеживание типа заданий
         let lastTaskType = null; // 'truth' или 'dare'
@@ -1852,6 +1856,28 @@
                 }
             }, updateInterval);
         });
+        // Обработчик кнопки сложности
+difficultyToggle.addEventListener('click', function() {
+    // 1. Скрываем все другие панели
+    if (soundPanelVisible) {
+        soundPanel.style.display = 'none';
+        soundPanelVisible = false;
+    }
+    if (roundsPanelVisible) {
+        roundsPanel.style.display = 'none';
+        roundsPanelVisible = false;
+    }
+
+    // 2. Переключаем видимость панели сложности
+    difficultyPanelVisible = !difficultyPanelVisible;
+    difficultyPanel.style.display = difficultyPanelVisible ? 'flex' : 'none'; // Используем 'flex', как в CSS
+
+    // Воспроизводим звук
+    if (soundEnabled) {
+        buttonSound.currentTime = 0;
+        buttonSound.play();
+    }
+});
 
         // Переключение панели звука
         soundToggle.addEventListener('click', function() {
