@@ -1501,12 +1501,6 @@
         <label for="musicVolume">Громкость музыки</label>
         <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
     </div>
-    
-    <div class="volume-control">
-        <label for="effectsVolume">Громкость эффектов</label>
-        <input type="range" id="effectsVolume" min="0" max="1" step="0.1" value="0.7">
-    </div>
-    
     <div class="music-selector">
         <div class="volume-control">
             <label>Выбор музыки</label>
@@ -1648,7 +1642,7 @@
         let roundsPlayed = 0;
         let maxRounds = 10; // По умолчанию 10 раундов
         let timerInterval;
-        let currentDifficulty = 'light';
+        let currentDifficulty = 'easy';
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
         
         // Отслеживание типа заданий
@@ -1714,6 +1708,7 @@
         const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
         const drinkModalContent = document.querySelector('#drinkModal .modal-content');
+        const difficultySelect = document.getElementById('difficultySelect');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
