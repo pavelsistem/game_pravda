@@ -1289,7 +1289,7 @@
         transform: translateY(0);
     }
 }
-   /* === ДОБАВИТЬ СЮДА СТИЛИ ДЛЯ СЛОЖНОСТИ === */
+   /* === СТИЛИ ДЛЯ СЛОЖНОСТИ === */
 .difficulty-selector {
     display: flex;
     flex-direction: column;
@@ -1302,14 +1302,6 @@
 .difficulty-selector label {
     font-size: 0.8em;
     color: #e0e0e0;
-}
-        .difficulty-quick-selector {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    margin-top: 8px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255, 0, 255, 0.3);
 }
 
 .difficulty-selector-btn {
@@ -1334,30 +1326,11 @@
     border-color: #00ffff;
     box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
 }
-
-/* Цвета для уровней сложности */
-.difficulty-selector-btn[data-difficulty="easy"] {
-    border-left: 3px solid #00ff00;
-}
-
-.difficulty-selector-btn[data-difficulty="medium"] {
-    border-left: 3px solid #ffff00;
-}
-
-.difficulty-selector-btn[data-difficulty="hard"] {
-    border-left: 3px solid #ff0000;
-}
-
-.difficulty-selector-btn[data-difficulty="extreme"] {
-    border-left: 3px solid #8b0000;
-}
-/* === КОНЕЦ СТИЛЕЙ ДЛЯ СЛОЖНОСТИ === */
      
     </style>
 </head>
 <body>
     <div class="particles-container" id="particlesContainer"></div>
-    <!-- ВОЗРАСТНАЯ ПРОВЕРКА -->
     <div id="ageVerificationPreloader">
         <div class="age-verification-content">
             <div class="age-title">🎲 Правда или Действие 🎲</div>
@@ -1376,9 +1349,7 @@
             <img src="https://raw.githubusercontent.com/pavelsistem/game_pravda/main/obezyana.png" class="rejected-image">
         </div>
     </div>
-    <!-- КОНЕЦ ВОЗРАСТНОЙ ПРОВЕРКИ -->
-    <!-- Кнопка донатов -->
-<div class="donate-container">
+    <div class="donate-container">
     <button class="donate-btn" id="donateBtn">💝 Поддержать</button>
     <div class="donate-iframe" id="donateIframe" style="display: none;">
         <iframe src="https://yoomoney.ru/quickpay/fundraise/button?billNumber=1DG86EC8RB2.251019&" width="100" height="50" frameborder="0" allowtransparency="true" scrolling="no"></iframe>
@@ -1466,7 +1437,6 @@
         </div>
     </div>
     
-    <!-- Кнопки управления звуком и раундами внизу страницы -->
     <div class="sound-control">
         <button id="soundToggle" class="btn-sound">🔊 Звук</button>
     </div>
@@ -1496,66 +1466,33 @@
             <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
         </div>
     </div>
-<div class="sound-panel" id="soundPanel">
-    <div class="volume-control">
-        <label for="musicVolume">Громкость музыки</label>
-        <input type="range" id="musicVolume" min="0" max="1" step="0.1" value="0.7">
-    </div>
-    <div class="music-selector">
-        <div class="volume-control">
-            <label>Выбор музыки</label>
+
+    <div class="rounds-panel" id="roundsPanel">
+        <div class="rounds-selector">
+            <label for="roundsSelect">Количество раундов</label>
+            <select id="roundsSelect">
+                <option value="5">5 раундов</option>
+                <option value="10" selected>10 раундов</option>
+                <option value="15">15 раундов</option>
+                <option value="20">20 раундов</option>
+                <option value="50">50 раундов</option>
+                <option value="100">100 раундов</option>
+            </select>
         </div>
-        <button class="music-selector-btn active" data-track="0">🎵 Трек 1</button>
-        <button class="music-selector-btn" data-track="1">🎵 Трек 2</button>
-        <button class="music-selector-btn" data-track="2">🎵 Трек 3</button>
-        <button class="music-selector-btn" data-track="3">🎵 Трек 4</button>
-    </div>
-</div> <!-- Закрывающий тег для sound-panel -->
-
-<div class="rounds-panel" id="roundsPanel">
-    <div class="rounds-selector">
-        <label for="roundsSelect">Количество раундов</label>
-        <select id="roundsSelect">
-            <option value="5">5 раундов</option>
-            <option value="10" selected>10 раундов</option>
-            <option value="15">15 раундов</option>
-            <option value="20">20 раундов</option>
-            <option value="50">50 раундов</option>
-            <option value="100">100 раундов</option>
-        </select>
-    </div>
-
-    <div class="difficulty-selector">
-        <label for="difficultySelect">Уровень сложности</label>
-        <select id="difficultySelect">
-            <option value="easy">🟢 Легкий</option>
-            <option value="medium" selected>🟡 Средний</option>
-            <option value="hard">🔴 Сложный</option>
-            <option value="extreme">💀 Экстрим</option>
-        </select>
-    </div>
-
-    <div class="difficulty-quick-selector">
-        <div class="volume-control">
-            <label>Быстрый выбор сложности</label>
+        <div class="difficulty-selector">
+            <div class="volume-control">
+                <label>Уровень сложности</label>
+            </div>
+            <button class="difficulty-selector-btn" data-difficulty="easy">🔷 Легкий</button>
+            <button class="difficulty-selector-btn active" data-difficulty="medium">🍻 Средний</button>
+            <button class="difficulty-selector-btn" data-difficulty="extreme">💀 Экстрим</button>
         </div>
-        <button class="difficulty-selector-btn active" data-difficulty="medium">🟡 Средний</button>
-        <button class="difficulty-selector-btn" data-difficulty="easy">🟢 Легкий</button>
-        <button class="difficulty-selector-btn" data-difficulty="hard">🔴 Сложный</button>
-        <button class="difficulty-selector-btn" data-difficulty="extreme">💀 Экстрим</button>
     </div>
-
-    <div class="music-selector">
-        <div class="volume-control">
-            <label>Быстрый выбор раундов</label>
-        </div>
-        <button class="rounds-selector-btn" data-rounds="5">5 раундов</button>
-        <button class="rounds-selector-btn active" data-rounds="10">10 раундов</button>
-        <button class="rounds-selector-btn" data-rounds="15">15 раундов</button>
-        <button class="rounds-selector-btn" data-rounds="20">20 раундов</button>
-    </div>
-</div>
+    
     <script>
+        const playerChoiceState = {};
+        const MAX_CONSECUTIVE_SAME_TYPE = 2;
+        
         // ==================== TELEGRAM WEB APP INTEGRATION ====================
         // Проверяем, что игра открыта в Telegram
         if (window.Telegram && Telegram.WebApp) {
@@ -1577,6 +1514,7 @@
                 if (!players.includes(playerName)) {
                     players.push(playerName);
                     scores[playerName] = 0;
+                    playerChoiceState[playerName] = { lastTaskType: null, consecutive: 0 };
                     
                     const li = document.createElement('li');
                     li.textContent = playerName;
@@ -1642,114 +1580,8 @@
         let roundsPlayed = 0;
         let maxRounds = 10; // По умолчанию 10 раундов
         let timerInterval;
-        let currentDifficulty = 'medium'; // Исправлено с 'easy' на 'medium'
+        let currentDifficulty = 'medium';
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
-        
-        // Отслеживание типа заданий
-        let lastTaskType = null; // 'truth' или 'dare'
-        let consecutiveSameType = 0; // счетчик подряд идущих одинаковых заданий
-        const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количество одинаковых заданий подряд
-
-        // ==================== СИСТЕМА СЛОЖНОСТИ ====================
-const DIFFICULTY_SYMBOLS = {
-    'easy': '🔷',      // Легкие задания
-    'medium': '🔶',    // Средние задания  
-    'hard': '🍻',      // Сложные задания
-    'extreme': '💀'    // Экстрим задания
-};
-
-const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard', 'extreme'];
-
-        // ========== ДОБАВЬТЕ ВСЕ ФУНКЦИИ СЛОЖНОСТИ ЗДЕСЬ ==========
-// Функции для работы со сложностью заданий
-function filterTasksByDifficulty(tasks, difficulty) {
-    // Если выбран "extreme", показываем только экстрим задания
-    if (difficulty === 'extreme') {
-        return tasks.filter(task => task.startsWith(DIFFICULTY_SYMBOLS.extreme));
-    }
-    
-    // Для других уровней показываем задания этого уровня и всех предыдущих
-    const difficultyIndex = DIFFICULTY_LEVELS.indexOf(difficulty);
-    const allowedSymbols = DIFFICULTY_LEVELS
-        .slice(0, difficultyIndex + 1)
-        .map(level => DIFFICULTY_SYMBOLS[level]);
-    
-    return tasks.filter(task => {
-        const firstChar = task.charAt(0);
-        return allowedSymbols.includes(firstChar) || 
-               !Object.values(DIFFICULTY_SYMBOLS).includes(firstChar);
-    });
-}
-
-function getTaskWithoutDifficultySymbol(task) {
-    // Удаляем символ сложности из начала задания
-    for (const symbol of Object.values(DIFFICULTY_SYMBOLS)) {
-        if (task.startsWith(symbol)) {
-            return task.substring(symbol.length).trim();
-        }
-    }
-    return task; // Если символа нет, возвращаем как есть
-}
-
-function getFilteredTruth() {
-    return filterTasksByDifficulty(truths, currentDifficulty);
-}
-
-function getFilteredDare() {
-    return filterTasksByDifficulty(dares, currentDifficulty);
-}
-
-function updateDifficultyDisplay() {
-    const difficultyDisplay = document.getElementById('currentDifficultyDisplay');
-    if (difficultyDisplay) {
-        const difficultyTexts = {
-            'easy': '🔷 Легкий',
-            'medium': '🔶 Средний', 
-            'hard': '🍻 Сложный',
-            'extreme': '💀 Экстрим'
-        };
-        difficultyDisplay.textContent = difficultyTexts[currentDifficulty];
-        difficultyDisplay.style.color = getDifficultyColor(currentDifficulty);
-    }
-}
-
-function getDifficultyColor(difficulty) {
-    const colors = {
-        'easy': '#00ffff',      // Голубой как 🔷
-        'medium': '#ffff00',    // Желтый как 🔶
-        'hard': '#ff00ff',      // Розовый как 🍻  
-        'extreme': '#8b0000'    // Темно-красный как 💀
-    };
-    return colors[difficulty] || '#ffff00';
-}
-// ========== КОНЕЦ ФУНКЦИЙ СЛОЖНОСТИ ==========
-
-        // ========== ДОБАВЬТЕ ВСЕ ЭТИ ФУНКЦИИ ЗДЕСЬ ==========
-// Функции для работы со сложностью заданий
-function filterTasksByDifficulty(tasks, difficulty) {
-    // Код функции...
-}
-
-function getTaskWithoutDifficultySymbol(task) {
-    // Код функции...
-}
-
-function getFilteredTruth() {
-    return filterTasksByDifficulty(truths, currentDifficulty);
-}
-
-function getFilteredDare() {
-    return filterTasksByDifficulty(dares, currentDifficulty);
-}
-
-function updateDifficultyDisplay() {
-    // Код функции...
-}
-
-function getDifficultyColor(difficulty) {
-    // Код функции...
-}
-// ========== КОНЕЦ ФУНКЦИЙ СЛОЖНОСТИ ==========
 
         // Настройки звука
         let soundEnabled = true;
@@ -1809,7 +1641,6 @@ function getDifficultyColor(difficulty) {
         const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
         const drinkModalContent = document.querySelector('#drinkModal .modal-content');
-        const difficultySelect = document.getElementById('difficultySelect');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
@@ -2010,27 +1841,18 @@ function getDifficultyColor(difficulty) {
         roundsSelect.addEventListener('change', function() {
             maxRounds = parseInt(this.value);
             localStorage.setItem('maxRounds', maxRounds);
-            
-            // Обновляем активную кнопку быстрого выбора
-            document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (parseInt(btn.dataset.rounds) === maxRounds) {
-                    btn.classList.add('active');
-                }
-            });
         });
 
-        // Быстрый выбор количества раундов
-        document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+        // Быстрый выбор уровня сложности
+        document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 handleButtonClick(this, () => {
-                    const rounds = parseInt(this.dataset.rounds);
-                    if (rounds !== maxRounds) {
-                        maxRounds = rounds;
-                        roundsSelect.value = rounds;
-                        localStorage.setItem('maxRounds', maxRounds);
+                    const difficulty = this.dataset.difficulty;
+                    if (difficulty !== currentDifficulty) {
+                        currentDifficulty = difficulty;
+                        localStorage.setItem('currentDifficulty', currentDifficulty);
 
-                        document.querySelectorAll('.rounds-selector-btn').forEach(b => {
+                        document.querySelectorAll('.difficulty-selector-btn').forEach(b => {
                             b.classList.remove('active');
                         });
                         this.classList.add('active');
@@ -2038,38 +1860,6 @@ function getDifficultyColor(difficulty) {
                 });
             });
         });
-// Быстрый выбор уровня сложности
-document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        handleButtonClick(this, () => {
-            const difficulty = this.dataset.difficulty;
-            if (difficulty !== currentDifficulty) {
-                currentDifficulty = difficulty;
-                difficultySelect.value = difficulty;
-                localStorage.setItem('currentDifficulty', difficulty);
-
-                document.querySelectorAll('.difficulty-selector-btn').forEach(b => {
-                    b.classList.remove('active');
-                });
-                this.classList.add('active');
-            }
-        });
-    });
-});
-
-// Обработчик для select сложности
-difficultySelect.addEventListener('change', function() {
-    currentDifficulty = this.value;
-    localStorage.setItem('currentDifficulty', currentDifficulty);
-    
-    // Обновляем активную кнопку быстрого выбора
-    document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
-        btn.classList.remove('active');
-        if (btn.dataset.difficulty === currentDifficulty) {
-            btn.classList.add('active');
-        }
-    });
-});
 
         // Загрузка сохраненных настроек
         function loadAudioSettings() {
@@ -2077,7 +1867,7 @@ difficultySelect.addEventListener('change', function() {
             const savedEffectsVolume = localStorage.getItem('effectsVolume');
             const savedTrack = localStorage.getItem('currentTrack');
             const savedRounds = localStorage.getItem('maxRounds');
-    const savedDifficulty = localStorage.getItem('currentDifficulty');
+            const savedDifficulty = localStorage.getItem('currentDifficulty');
 
             if (savedMusicVolume) {
                 musicVolume = parseFloat(savedMusicVolume);
@@ -2100,27 +1890,17 @@ difficultySelect.addEventListener('change', function() {
             if (savedRounds) {
                 maxRounds = parseInt(savedRounds);
                 roundsSelect.value = maxRounds;
+            }
+             if (savedDifficulty) {
+                currentDifficulty = savedDifficulty;
                 
-                // Активируем соответствующую кнопку быстрого выбора
-                document.querySelectorAll('.rounds-selector-btn').forEach(btn => {
+                document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
                     btn.classList.remove('active');
-                    if (parseInt(btn.dataset.rounds) === maxRounds) {
+                    if (btn.dataset.difficulty === currentDifficulty) {
                         btn.classList.add('active');
                     }
                 });
             }
-             if (savedDifficulty) {
-        currentDifficulty = savedDifficulty;
-        difficultySelect.value = currentDifficulty;
-        
-        // Активируем соответствующую кнопку быстрого выбора
-        document.querySelectorAll('.difficulty-selector-btn').forEach(btn => {
-            btn.classList.remove('active');
-            if (btn.dataset.difficulty === currentDifficulty) {
-                btn.classList.add('active');
-            }
-        });
-    }
         }
 
         // Добавление игрока
@@ -2138,6 +1918,7 @@ difficultySelect.addEventListener('change', function() {
             if (playerName && !players.includes(playerName)) {
                 players.push(playerName);
                 scores[playerName] = 0;
+                playerChoiceState[playerName] = { lastTaskType: null, consecutive: 0 };
 
                 const li = document.createElement('li');
                 li.textContent = playerName;
@@ -2169,11 +1950,7 @@ difficultySelect.addEventListener('change', function() {
 
             gameActive = true;
             roundsPlayed = 0;
-            likeUsedInRound = false; // Сброс флага использования лайка
-            
-            // Сбрасываем отслеживание типа заданий
-            lastTaskType = null;
-            consecutiveSameType = 0;
+            likeUsedInRound = false; 
             
             currentPlayer = players[Math.floor(Math.random() * players.length)];
             updatePlayerInfo();
@@ -2183,6 +1960,10 @@ difficultySelect.addEventListener('change', function() {
             gameContainer.style.display = 'block';
             endGameContainer.style.display = 'block';
 
+            // Скрываем панели настроек
+            roundsPanel.classList.remove('active');
+            soundPanel.classList.remove('active');
+
             truthBtn.disabled = false;
             dareBtn.disabled = false;
             endGameBtn.disabled = false;
@@ -2191,7 +1972,6 @@ difficultySelect.addEventListener('change', function() {
 
             playButtonSound();
 
-            // Показываем кнопку "Назад" в Telegram если игра активна
             if (window.Telegram && Telegram.WebApp) {
                 Telegram.WebApp.BackButton.show();
             }
@@ -2207,71 +1987,65 @@ difficultySelect.addEventListener('change', function() {
         }
 
         // Получение задания (Правда/Действие)
+        function showRestrictionWarning() {
+            const originalText = taskDisplay.innerHTML;
+            const warningHTML = `<div style="animation: pulseHighlight 1.5s infinite; color: #ff4444; font-size: 0.8em; margin-top: 10px;">Нельзя выбирать одно и то же больше 2 раз подряд!</div>`;
+            taskDisplay.innerHTML = originalText + warningHTML;
+
+            if (navigator.vibrate) {
+                navigator.vibrate(200);
+            }
+
+            setTimeout(() => {
+                if (taskDisplay.innerHTML.includes(warningHTML)) {
+                    taskDisplay.innerHTML = originalText;
+                }
+            }, 3000);
+        }
+
         truthBtn.addEventListener('click', function() {
+            if (this.classList.contains('disabled-by-rule')) {
+                showRestrictionWarning();
+                playButtonSound();
+                return;
+            }
             handleButtonClick(this, () => getTask('truth'));
         });
         dareBtn.addEventListener('click', function() {
+            if (this.classList.contains('disabled-by-rule')) {
+                showRestrictionWarning();
+                playButtonSound();
+                return;
+            }
             handleButtonClick(this, () => getTask('dare'));
         });
 
+
         function getTask(taskType) {
             if (!gameActive) return;
-
-            // Проверяем, не выбирает ли игрок одинаковый тип задания слишком много раз подряд
-            if (taskType === lastTaskType) {
-                consecutiveSameType++;
-                
-                if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE) {
-                    console.log("ПРЕВЫШЕНИЕ ЛИМИТА! Меняем тип с", taskType, "на", taskType === 'truth' ? 'dare' : 'truth');
-                    // Принудительно меняем тип задания
-                    taskType = taskType === 'truth' ? 'dare' : 'truth';
-                    consecutiveSameType = 1; // сбрасываем счетчик
-                    
-                    // Показываем сообщение о принудительной смене типа
-                    const forcedMessage = taskType === 'truth' ? 
-                        "Слишком много действий подряд! Теперь Правда!" : 
-                        "Слишком много правд подряд! Теперь Действие!";
-                    
-                    // Временно показываем сообщение
-                    const originalDisplay = taskDisplay.textContent;
-                    taskDisplay.textContent = forcedMessage;
-                    
-                    setTimeout(() => {
-                        taskDisplay.textContent = originalDisplay;
-                    }, 2000);
-                }
-            } else {
-                // Тип задания изменился, сбрасываем счетчик
-                consecutiveSameType = 1;
-            }
             
-            // Сохраняем текущий тип задания
-            lastTaskType = taskType;
+            const state = playerChoiceState[currentPlayer];
+            if (taskType === state.lastTaskType) {
+                state.consecutive++;
+            } else {
+                state.lastTaskType = taskType;
+                state.consecutive = 1;
+            }
 
-            // Скрываем кнопки выбора и показываем кнопки оценки
             choiceButtons.style.display = 'none';
             ratingButtons.style.display = 'none';
 
-           let task;
-if (taskType === 'truth') {
-    const filteredTruths = getFilteredTruth();
-    task = filteredTruths[Math.floor(Math.random() * filteredTruths.length)];
-    playButtonSound();
-} else {
-    const filteredDares = getFilteredDare();
-    task = filteredDares[Math.floor(Math.random() * filteredDares.length)];
-    playButtonSound();
-}
+            let task;
+            if (taskType === 'truth') {
+                task = truths[Math.floor(Math.random() * truths.length)];
+            } else {
+                task = dares[Math.floor(Math.random() * dares.length)];
+            }
 
-// Убираем символ сложности при показе задания
-task = getTaskWithoutDifficultySymbol(task);
-
-            // Анимируем появление карты с заданием
             animateTaskCard(true, () => {
                 taskDisplay.textContent = task;
                 startTimer();
 
-                // Показываем кнопки оценки через 5 секунд и делаем их активными
                 setTimeout(() => {
                     ratingButtons.style.display = 'flex';
                     likeBtn.classList.add('active');
@@ -2282,6 +2056,7 @@ task = getTaskWithoutDifficultySymbol(task);
                 }, 5000);
             });
         }
+        
         // Оценка задания (Лайк/Дизлайк)
         likeBtn.addEventListener('click', function() {
             handleButtonClick(this, () => rateTask(true));
@@ -2298,11 +2073,10 @@ task = getTaskWithoutDifficultySymbol(task);
             likeBtn.classList.remove('active');
             dislikeBtn.classList.remove('active');
 
-            // Анимируем скрытие карты с заданием
             animateTaskCard(false, () => {
                 if (liked) {
                     scores[currentPlayer] += 10;
-                    likeUsedInRound = true; // Устанавливаем флаг, что лайк использован
+                    likeUsedInRound = true; 
                     taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
                     updatePlayerInfo();
 
@@ -2312,7 +2086,7 @@ task = getTaskWithoutDifficultySymbol(task);
                         if (players.indexOf(currentPlayer) === players.length - 1) {
                             roundsPlayed++;
                             roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-                            likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+                            likeUsedInRound = false; 
 
                             if (roundsPlayed >= maxRounds) {
                                 endGame();
@@ -2373,7 +2147,7 @@ task = getTaskWithoutDifficultySymbol(task);
                 if (players.indexOf(currentPlayer) === players.length - 1) {
                     roundsPlayed++;
                     roundInfo.textContent = `Раунд: ${roundsPlayed + 1}/${maxRounds}`;
-                    likeUsedInRound = false; // Сбрасываем флаг при переходе на новый раунд
+                    likeUsedInRound = false; 
 
                     if (roundsPlayed >= maxRounds) {
                         endGame();
@@ -2390,40 +2164,38 @@ task = getTaskWithoutDifficultySymbol(task);
             const nextIndex = (currentIndex + 1) % players.length;
             currentPlayer = players[nextIndex];
             
-             // Сбрасываем отслеживание типа заданий при смене игрока
-            lastTaskType = null;
-            consecutiveSameType = 0;
-
             updatePlayerInfo();
             updateTaskDisplayForCurrentPlayer();
 
-            // Показываем кнопки выбора и скрываем кнопки оценки
             choiceButtons.style.display = 'flex';
             ratingButtons.style.display = 'none';
             truthBtn.disabled = false;
             dareBtn.disabled = false;
         }
 
+       function applyChoiceRestrictions() {
+            truthBtn.classList.remove('disabled-by-rule', 'highlight-next');
+            dareBtn.classList.remove('disabled-by-rule', 'highlight-next');
+
+            const state = playerChoiceState[currentPlayer];
+            if (!state || state.consecutive < MAX_CONSECUTIVE_SAME_TYPE) {
+                return; 
+            }
+
+            if (state.lastTaskType === 'truth') {
+                truthBtn.classList.add('disabled-by-rule');
+                dareBtn.classList.add('highlight-next');
+            } else if (state.lastTaskType === 'dare') {
+                dareBtn.classList.add('disabled-by-rule');
+                truthBtn.classList.add('highlight-next');
+            }
+        }
+
        function updateTaskDisplayForCurrentPlayer() {
             const playerColor = getPlayerColor(players.indexOf(currentPlayer));
             taskDisplay.innerHTML = `Ход игрока&nbsp;<span style="color: ${playerColor}; text-shadow: 0 0 5px ${playerColor};">${currentPlayer}</span>`;
             
-            // Показываем подсказку о необходимости смены типа задания
-            if (consecutiveSameType >= MAX_CONSECUTIVE_SAME_TYPE - 1 && lastTaskType !== null) {
-                const forcedType = lastTaskType === 'truth' ? 'Действие' : 'Правда';
-                taskDisplay.innerHTML += `<br><small style="color: #ff00ff; font-size: 0.8em;">Следующий раз: ${forcedType}</small>`;
-                
-                // Подсвечиваем нужную кнопку
-                const buttonToHighlight = lastTaskType === 'truth' ? dareBtn : truthBtn;
-                const buttonToDisable = lastTaskType === 'truth' ? truthBtn : dareBtn;
-                
-                buttonToHighlight.classList.add('highlight-next');
-                buttonToDisable.classList.add('disabled-by-rule');
-            } else {
-                // Убираем подсветку если ограничения нет
-                truthBtn.classList.remove('highlight-next', 'disabled-by-rule');
-                dareBtn.classList.remove('highlight-next', 'disabled-by-rule');
-            }
+            applyChoiceRestrictions();
         }
 
         // Завершение игры
@@ -2434,10 +2206,8 @@ task = getTaskWithoutDifficultySymbol(task);
         function endGame() {
             gameActive = false;
             stopTimer();
-
             backgroundMusic.pause();
 
-            // Скрываем кнопку "Назад" в Telegram
             if (window.Telegram && Telegram.WebApp) {
                 Telegram.WebApp.BackButton.hide();
             }
@@ -2449,23 +2219,19 @@ task = getTaskWithoutDifficultySymbol(task);
 
             showResults();
 
-            // Сброс игры
             gameContainer.style.display = 'none';
             endGameContainer.style.display = 'none';
             players.length = 0;
             for (const key in scores) delete scores[key];
+            for (const key in playerChoiceState) delete playerChoiceState[key];
             playersList.innerHTML = '';
             startGameBtn.disabled = true;
             playerInput.value = '';
             taskDisplay.textContent = '';
-            likeUsedInRound = false; // Сбрасываем флаг
-            
-             // Сбрасываем отслеживание типа заданий
-            lastTaskType = null;
-            consecutiveSameType = 0;
+            likeUsedInRound = false; 
             
             ratingButtons.style.display = 'none';
-            choiceButtons.style.display = 'flex'; // Показываем кнопки выбора
+            choiceButtons.style.display = 'flex'; 
         }
 
         // Показ результатов
