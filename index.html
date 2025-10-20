@@ -1326,6 +1326,85 @@
     border-color: #00ffff;
     box-shadow: 0 0 10px rgba(138, 43, 226, 0.7);
 }
+
+/* Стили для модального окна подтверждения */
+.confirmation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+
+.confirmation-content {
+    background-color: rgba(20, 20, 40, 0.9);
+    padding: 25px;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    border: 2px solid;
+    border-image: linear-gradient(45deg, #ff00ff, #00ffff) 1;
+    box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 0 0 25px rgba(0, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+}
+
+.confirmation-title {
+    font-family: 'Merriweather', serif;
+    color: #e0e0e0;
+    font-size: clamp(1.3em, 4vw, 1.6em);
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
+}
+
+.confirmation-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.confirm-yes {
+    background: linear-gradient(45deg, #8a2be2, #00ffff);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 80px;
+}
+
+.confirm-yes:hover {
+    background: linear-gradient(45deg, #9932cc, #00e6e6);
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.7);
+    transform: translateY(-2px);
+}
+
+.confirm-no {
+    background: linear-gradient(45deg, #ff00ff, #ff4444);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 80px;
+}
+
+.confirm-no:hover {
+    background: linear-gradient(45deg, #e600e6, #ff2222);
+    box-shadow: 0 0 15px rgba(255, 0, 255, 0.7);
+    transform: translateY(-2px);
+}
      
     </style>
 </head>
@@ -1434,6 +1513,17 @@
             <div id="resultsList"></div>
             <div id="winnerInfo" class="winner"></div>
             <button class="btn-primary" id="closeResultsBtn">Закрыть</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно подтверждения завершения игры -->
+    <div class="confirmation-modal" id="endGameConfirmationModal">
+        <div class="confirmation-content">
+            <div class="confirmation-title">Вы уверены, что хотите завершить игру?</div>
+            <div class="confirmation-buttons">
+                <button class="confirm-yes" id="confirmEndGameYes">Да</button>
+                <button class="confirm-no" id="confirmEndGameNo">Нет</button>
+            </div>
         </div>
     </div>
     
@@ -1641,6 +1731,11 @@
         const choiceButtons = document.getElementById('choiceButtons');
         const ratingButtons = document.getElementById('ratingButtons');
         const drinkModalContent = document.querySelector('#drinkModal .modal-content');
+
+        // Новые элементы для подтверждения завершения игры
+        const endGameConfirmationModal = document.getElementById('endGameConfirmationModal');
+        const confirmEndGameYes = document.getElementById('confirmEndGameYes');
+        const confirmEndGameNo = document.getElementById('confirmEndGameNo');
 
         // Воспроизведение звукового эффекта кнопок
         function playButtonSound() {
@@ -2198,9 +2293,27 @@
             applyChoiceRestrictions();
         }
 
-        // Завершение игры
+        // Завершение игры с подтверждением
         endGameBtn.addEventListener('click', function() {
-            handleButtonClick(this, endGame);
+            handleButtonClick(this, showEndGameConfirmation);
+        });
+
+        function showEndGameConfirmation() {
+            endGameConfirmationModal.style.display = 'flex';
+        }
+
+        // Обработчики для кнопок подтверждения
+        confirmEndGameYes.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                endGameConfirmationModal.style.display = 'none';
+                endGame();
+            });
+        });
+
+        confirmEndGameNo.addEventListener('click', function() {
+            handleButtonClick(this, () => {
+                endGameConfirmationModal.style.display = 'none';
+            });
         });
 
         function endGame() {
