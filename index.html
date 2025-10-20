@@ -1642,13 +1642,114 @@
         let roundsPlayed = 0;
         let maxRounds = 10; // По умолчанию 10 раундов
         let timerInterval;
-        let currentDifficulty = 'easy';
+        let currentDifficulty = 'medium'; // Исправлено с 'easy' на 'medium'
         let likeUsedInRound = false; // Флаг для отслеживания использования лайка в раунде
         
         // Отслеживание типа заданий
         let lastTaskType = null; // 'truth' или 'dare'
         let consecutiveSameType = 0; // счетчик подряд идущих одинаковых заданий
         const MAX_CONSECUTIVE_SAME_TYPE = 2; // максимальное количество одинаковых заданий подряд
+
+        // ==================== СИСТЕМА СЛОЖНОСТИ ====================
+const DIFFICULTY_SYMBOLS = {
+    'easy': '🔷',      // Легкие задания
+    'medium': '🔶',    // Средние задания  
+    'hard': '🍻',      // Сложные задания
+    'extreme': '💀'    // Экстрим задания
+};
+
+const DIFFICULTY_LEVELS = ['easy', 'medium', 'hard', 'extreme'];
+
+        // ========== ДОБАВЬТЕ ВСЕ ФУНКЦИИ СЛОЖНОСТИ ЗДЕСЬ ==========
+// Функции для работы со сложностью заданий
+function filterTasksByDifficulty(tasks, difficulty) {
+    // Если выбран "extreme", показываем только экстрим задания
+    if (difficulty === 'extreme') {
+        return tasks.filter(task => task.startsWith(DIFFICULTY_SYMBOLS.extreme));
+    }
+    
+    // Для других уровней показываем задания этого уровня и всех предыдущих
+    const difficultyIndex = DIFFICULTY_LEVELS.indexOf(difficulty);
+    const allowedSymbols = DIFFICULTY_LEVELS
+        .slice(0, difficultyIndex + 1)
+        .map(level => DIFFICULTY_SYMBOLS[level]);
+    
+    return tasks.filter(task => {
+        const firstChar = task.charAt(0);
+        return allowedSymbols.includes(firstChar) || 
+               !Object.values(DIFFICULTY_SYMBOLS).includes(firstChar);
+    });
+}
+
+function getTaskWithoutDifficultySymbol(task) {
+    // Удаляем символ сложности из начала задания
+    for (const symbol of Object.values(DIFFICULTY_SYMBOLS)) {
+        if (task.startsWith(symbol)) {
+            return task.substring(symbol.length).trim();
+        }
+    }
+    return task; // Если символа нет, возвращаем как есть
+}
+
+function getFilteredTruth() {
+    return filterTasksByDifficulty(truths, currentDifficulty);
+}
+
+function getFilteredDare() {
+    return filterTasksByDifficulty(dares, currentDifficulty);
+}
+
+function updateDifficultyDisplay() {
+    const difficultyDisplay = document.getElementById('currentDifficultyDisplay');
+    if (difficultyDisplay) {
+        const difficultyTexts = {
+            'easy': '🔷 Легкий',
+            'medium': '🔶 Средний', 
+            'hard': '🍻 Сложный',
+            'extreme': '💀 Экстрим'
+        };
+        difficultyDisplay.textContent = difficultyTexts[currentDifficulty];
+        difficultyDisplay.style.color = getDifficultyColor(currentDifficulty);
+    }
+}
+
+function getDifficultyColor(difficulty) {
+    const colors = {
+        'easy': '#00ffff',      // Голубой как 🔷
+        'medium': '#ffff00',    // Желтый как 🔶
+        'hard': '#ff00ff',      // Розовый как 🍻  
+        'extreme': '#8b0000'    // Темно-красный как 💀
+    };
+    return colors[difficulty] || '#ffff00';
+}
+// ========== КОНЕЦ ФУНКЦИЙ СЛОЖНОСТИ ==========
+
+        // ========== ДОБАВЬТЕ ВСЕ ЭТИ ФУНКЦИИ ЗДЕСЬ ==========
+// Функции для работы со сложностью заданий
+function filterTasksByDifficulty(tasks, difficulty) {
+    // Код функции...
+}
+
+function getTaskWithoutDifficultySymbol(task) {
+    // Код функции...
+}
+
+function getFilteredTruth() {
+    return filterTasksByDifficulty(truths, currentDifficulty);
+}
+
+function getFilteredDare() {
+    return filterTasksByDifficulty(dares, currentDifficulty);
+}
+
+function updateDifficultyDisplay() {
+    // Код функции...
+}
+
+function getDifficultyColor(difficulty) {
+    // Код функции...
+}
+// ========== КОНЕЦ ФУНКЦИЙ СЛОЖНОСТИ ==========
 
         // Настройки звука
         let soundEnabled = true;
@@ -2151,14 +2252,19 @@ difficultySelect.addEventListener('change', function() {
             choiceButtons.style.display = 'none';
             ratingButtons.style.display = 'none';
 
-            let task;
-            if (taskType === 'truth') {
-                task = truths[Math.floor(Math.random() * truths.length)];
-                playButtonSound();
-            } else {
-                task = dares[Math.floor(Math.random() * dares.length)];
-                playButtonSound();
-            }
+           let task;
+if (taskType === 'truth') {
+    const filteredTruths = getFilteredTruth();
+    task = filteredTruths[Math.floor(Math.random() * filteredTruths.length)];
+    playButtonSound();
+} else {
+    const filteredDares = getFilteredDare();
+    task = filteredDares[Math.floor(Math.random() * filteredDares.length)];
+    playButtonSound();
+}
+
+// Убираем символ сложности при показе задания
+task = getTaskWithoutDifficultySymbol(task);
 
             // Анимируем появление карты с заданием
             animateTaskCard(true, () => {
