@@ -1723,6 +1723,9 @@ scoreSound.volume = effectsVolume;
         const resultsSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/final.mp3?raw=true');
         resultsSound.volume = musicVolume;
 
+        const cardFlipSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/short-sharp-page-flipping-sound.mp3?raw=true');
+cardFlipSound.volume = effectsVolume;
+
         // DOM элементы
         const setupContainer = document.getElementById('setupContainer');
         const gameContainer = document.getElementById('gameContainer');
@@ -1838,6 +1841,12 @@ scoreSound.volume = effectsVolume;
 
         // Анимация карты с заданием
         function animateTaskCard(show, callback) {
+
+            if (soundEnabled) {
+        cardFlipSound.currentTime = 0;
+        cardFlipSound.volume = effectsVolume;
+        cardFlipSound.play();
+    }
             if (show) {
                 // Показываем карту с анимацией
                 taskDisplay.classList.remove('card-unflip');
@@ -1861,6 +1870,12 @@ scoreSound.volume = effectsVolume;
 
         // Анимация модального окна с рюмкой
         function animateDrinkModal(show, callback) {
+
+            if (soundEnabled && show) {
+        cardFlipSound.currentTime = 0;
+        cardFlipSound.volume = effectsVolume;
+        cardFlipSound.play();
+    }
             if (show) {
                 // Показываем модальное окно с анимацией
                 drinkModalContent.classList.remove('card-unflip');
@@ -2394,6 +2409,12 @@ scoreSound.volume = effectsVolume;
 
         // Показ результатов
         function showResults() {
+
+            if (soundEnabled) {
+        cardFlipSound.currentTime = 0;
+        cardFlipSound.volume = effectsVolume;
+        cardFlipSound.play();
+    }
             resultsList.innerHTML = '';
 
             const sortedPlayers = Object.entries(scores).sort((a, b) => b[1] - a[1]);
@@ -2989,6 +3010,7 @@ function createParticles() {
 document.addEventListener('DOMContentLoaded', function() {
     createParticles();
 });
+        cardFlipSound.preload = 'auto';
     </script>
 </body>
 </html>
