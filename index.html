@@ -1714,8 +1714,11 @@
         backgroundMusic.loop = true;
         backgroundMusic.volume = musicVolume;
         
-        const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/vipit.wav?raw=true');
+        const drinkSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/and-drink-and-drink.mp3?raw=true');
         drinkSound.volume = effectsVolume;
+        
+        const scoreSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/lost-money-on-the-game-account.mp3?raw=true');
+scoreSound.volume = effectsVolume;
         
         const resultsSound = new Audio('https://github.com/pavelsistem/game_pravda/blob/main/final.mp3?raw=true');
         resultsSound.volume = musicVolume;
@@ -2207,7 +2210,13 @@
             animateTaskCard(false, () => {
                 if (liked) {
                     scores[currentPlayer] += 10;
-                    likeUsedInRound = true; 
+                    likeUsedInRound = true;
+
+                    if (soundEnabled) {
+                scoreSound.currentTime = 0;
+                scoreSound.volume = effectsVolume;
+                scoreSound.play();
+            }
                     taskDisplay.textContent = "✅ Игрок получает 10 очков!\nГотовим следующего игрока...";
                     updatePlayerInfo();
 
