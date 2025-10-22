@@ -936,8 +936,19 @@
             transform: translateY(-2px);
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.9);
         }
+        .game-logo, .preloader-logo, .age-logo {
+    width: 40px;
+    height: 40px;
+    vertical-align: middle;
+    margin: 0 10px;
+}
 
         @media (max-width: 600px) {
+            .game-logo, .preloader-logo, .age-logo {
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+    }
             body {
                 padding: 10px;
             }
@@ -1438,7 +1449,7 @@
     <div class="particles-container" id="particlesContainer"></div>
     <div id="ageVerificationPreloader">
         <div class="age-verification-content">
-            <div class="age-title">🎲 Правда или Действие 🎲</div>
+            <div class="age-title"><img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="age-logo"> Правда или Действие <img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="age-logo"></div>
             <div class="age-question">Подтвердите, что вам есть 18 лет</div>
             <div class="age-buttons">
                 <button class="btn-age btn-yes" id="ageYes">Да, мне есть 18</button>
@@ -1462,14 +1473,14 @@
 </div>
 
     <div id="preloader">
-        <div id="preloader-title">🎲 Правда или Действие 🎲</div>
+        <div id="preloader-title"><img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="age-logo"> Правда или Действие <img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="age-logo"></div>
         <div id="progress-bar-container">
             <div id="progress-bar-fill"></div>
             <span id="progress-percentage">0%</span>
         </div>
     </div>
 
-    <h1>🎲 Правда или Действие 🎲</h1>
+    <h1><img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="game-logo"> Правда или Действие <img src="https://github.com/pavelsistem/game_pravda/blob/main/LOGO%20BEZ%20FONA.png" class="game-logo"></h1>
     
     <div class="container" id="setupContainer">
         <div class="input-group">
