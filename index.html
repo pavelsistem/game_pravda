@@ -565,11 +565,19 @@
             border: 2px solid;
             border-image: linear-gradient(90deg, #ff00ff, #8a2be2, #00ffff) 1;
             box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 0 0 20px rgba(138, 43, 226, 0.4), 0 0 20px rgba(0, 255, 255, 0.4);
-            animation: borderGlow 1s infinite alternate;
+            animation: borderGlow 3s infinite alternate;
             font-weight: bold;
             min-width: 100px;
             padding: 10px 15px;
             transition: all 0.3s;
+            /* Оптимизации для iOS */
+    -webkit-transform: translateZ(0); /* Аппаратное ускорение */
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+    will-change: transform, box-shadow; /* Подсказка браузеру */
         }
 
         .choice-buttons button:hover {
@@ -973,6 +981,32 @@
     height: 40px;
     vertical-align: middle;
     margin: 0 10px;
+}
+        @keyframes borderGlow {
+    0% { 
+        box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                    0 0 20px rgba(138, 43, 226, 0.4), 
+                    0 0 20px rgba(0, 255, 255, 0.4);
+    }
+    100% { 
+        box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 
+                    0 0 25px rgba(138, 43, 226, 0.6), 
+                    0 0 25px rgba(0, 255, 255, 0.6);
+    }
+}
+
+/* Для Safari */
+@-webkit-keyframes borderGlow {
+    0% { 
+        -webkit-box-shadow: 0 0 20px rgba(255, 0, 255, 0.4), 
+                           0 0 20px rgba(138, 43, 226, 0.4), 
+                           0 0 20px rgba(0, 255, 255, 0.4);
+    }
+    100% { 
+        -webkit-box-shadow: 0 0 25px rgba(255, 0, 255, 0.6), 
+                           0 0 25px rgba(138, 43, 226, 0.6), 
+                           0 0 25px rgba(0, 255, 255, 0.6);
+    }
 }
 
         @media (max-width: 600px) {
