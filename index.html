@@ -1982,27 +1982,40 @@
         }
 
          // ==================== DONATION FUNCTIONALITY ====================
-        // Для десктопной кнопки
-        document.getElementById('donateBtn').addEventListener('click', function() {
-            const iframe = document.getElementById('donateIframe');
-            iframe.style.display = iframe.style.display === 'none' ? 'block' : 'block';
-        });
+// Для десктопной кнопки
+document.getElementById('donateBtn').addEventListener('click', function(e) {
+    e.stopPropagation(); // Предотвращаем всплытие
+    const iframe = document.getElementById('donateIframe');
+    iframe.style.display = iframe.style.display === 'none' ? 'block' : 'none';
+});
 
-        // Для мобильной кнопки - показываем/скрываем iframe в интерфейсе
-        document.getElementById('donateBtnMobile').addEventListener('click', function() {
-            const mobileIframe = document.getElementById('donateMobileIframe');
-            mobileIframe.style.display = mobileIframe.style.display === 'none' ? 'block' : 'none';
-        });
+// Для мобильной кнопки
+document.getElementById('donateBtnMobile').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const mobileIframe = document.getElementById('donateMobileIframe');
+    mobileIframe.style.display = mobileIframe.style.display === 'none' ? 'block' : 'none';
+});
 
-        // Закрытие десктопного iframe при клике вне его
-        document.addEventListener('click', function(event) {
-            const donateContainer = document.querySelector('.donate-container');
-            const donateIframe = document.getElementById('donateIframe');
-            
-            if (!donateContainer.contains(event.target) && donateIframe.style.display === 'block') {
-                donateIframe.style.display = 'none';
-            }
-        });
+// Закрытие десктопного iframe при клике вне его
+document.addEventListener('click', function(event) {
+    const donateContainer = document.querySelector('.donate-container');
+    const donateIframe = document.getElementById('donateIframe');
+    
+    if (!donateContainer.contains(event.target) && donateIframe.style.display === 'block') {
+        donateIframe.style.display = 'none';
+    }
+});
+
+// Закрытие мобильного iframe при клике вне его
+document.addEventListener('click', function(event) {
+    const mobileDonateBtn = document.getElementById('donateBtnMobile');
+    const mobileIframe = document.getElementById('donateMobileIframe');
+    const endGameContainer = document.getElementById('endGameContainer');
+    
+    if (!endGameContainer.contains(event.target) && mobileIframe.style.display === 'block') {
+        mobileIframe.style.display = 'none';
+    }
+});
 
         // ==================== EXISTING GAME CODE ====================
         // Игровые данные
