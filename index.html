@@ -7,6 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
     <style>
+        @font-face {
+    font-family: 'FDMedian';
+    src: url('/Original/FDMedian.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
         /* Общие стили */
         * {
             box-sizing: border-box;
@@ -123,21 +129,24 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.7);
         }
         
-        h1 {
-            font-family: 'Merriweather', serif;
-            color: #e0e0e0;
-            text-align: center;
-            margin: 5px 0 15px 0;
-            text-shadow: 0 0 10px rgba(255, 0, 255, 0.7);
-            font-size: clamp(1.8em, 4vw, 2.5em);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: nowrap;
-            white-space: nowrap;
-            overflow: visible;
-        }
+       h1 {
+    font-family: 'FDMedian', 'Merriweather', serif; /* Добавили FDMedian */
+    color: #ffffff; /* Белый вместо светлосерого */
+    text-align: center;
+    margin: 5px 0 15px 0;
+    text-shadow: #8611d4 4px 4px 4px; /* Фиолетовая тень вместо розового свечения */
+    font-size: clamp(1.8em, 4vw, 2.5em);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+    overflow: visible;
+    background-color: rgba(0, 0, 0, 0.7); /* Черный фон как в вашем примере */
+    padding: 15px;
+    border-radius: 10px;
+}
         
         .container {
             background-color: rgba(20, 20, 40, 0.7);
@@ -1664,7 +1673,7 @@
     <div class="particles-container" id="particlesContainer"></div>
     <div id="ageVerificationPreloader">
         <div class="age-verification-content">
-            <div class="age-title">❔ Правда или Действие ❕</div>
+            <div class="age-title"> Правда или Действие </div>
             <div class="age-question">Подтвердите, что вам есть 18 лет</div>
             <div class="age-buttons">
                 <button class="btn-age btn-yes" id="ageYes">Да, мне есть 18</button>
