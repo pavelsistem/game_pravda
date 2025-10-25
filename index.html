@@ -10,10 +10,17 @@
     <style>
         @font-face {
     font-family: 'SVOBODA';
-    src: url('https://raw.githubusercontent.com/pavelsistem/game_pravda/main/shrift/Palette.ttf') format('truetype');
+    src: url('https://raw.githubusercontent.com/pavelsistem/game_pravda/main/shrift/SVOBODA.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
+        @font-face {
+    font-family: 'Palette'; /* Добавлено отдельное объявление */
+    src: url('https://raw.githubusercontent.com/pavelsistem/game_pravda/main/shrift/Palette.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}      
         @font-face {
     font-family: 'FuturaRound';
     src: url('https://raw.githubusercontent.com/pavelsistem/game_pravda/main/shrift/a_FuturaRoundTitulOtl.ttf') format('truetype');
@@ -973,6 +980,13 @@
         width: 30px;
         height: 30px;
         margin: 0 5px;
+}
+    #taskDisplay {
+        font-family: 'Palette', 'FuturaRound', 'Noto Sans', sans-serif;
+        font-size: clamp(1em, 3.5vw, 1.3em);
+        padding: 12px;
+        min-height: 120px;
+    }
 }
             body {
                 padding: 10px;
