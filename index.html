@@ -3128,7 +3128,6 @@ function applyPunishment(targetPlayer, punishmentType) {
                 const winnerColor = getPlayerColor(players.indexOf(winner[0]));
                 winnerInfo.innerHTML = `Победитель: <span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${winner[0]}</span> с ${winner[1]} очками!`;
             }
-            resultsList.scrollTop = 0; // Прокручиваем список к началу
 
             resultsModal.style.display = 'flex';
         }
