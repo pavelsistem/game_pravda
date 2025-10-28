@@ -1008,12 +1008,75 @@
                            0 0 25px rgba(0, 255, 255, 0.6);
     }
 }
+/* Стили для контейнера с результатами */
+#resultsList {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+    padding-right: 10px;
+}
 
+/* Стили для скроллбара в результатах */
+#resultsList::-webkit-scrollbar {
+    width: 6px;
+}
+
+#resultsList::-webkit-scrollbar-track {
+    background: rgba(30, 30, 60, 0.5);
+    border-radius: 3px;
+}
+
+#resultsList::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #ff00ff, #00ffff);
+    border-radius: 3px;
+}
+
+#resultsList::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to bottom, #e600e6, #00e6e6);
+}
+
+/* Убедимся, что модальное окно с результатами достаточно большое */
+.modal-content {
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Уменьшаем отступы для списка результатов при большом количестве игроков */
+.result-item {
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    font-size: clamp(0.85em, 2.5vw, 1em);
+}
+        
         @media (max-width: 600px) {
             .game-logo, .preloader-logo, .age-logo {
         width: 30px;
         height: 30px;
         margin: 0 5px;
+}
+            /* Добавьте это в конец медиа-запроса */
+    #resultsList {
+        max-height: 200px;
+    }
+    
+    .modal-content {
+        max-height: 85vh;
+        padding: 15px;
+    }
+    
+    /* Для очень большого количества игроков на мобильных */
+    @media (max-height: 700px) {
+        .result-item {
+            padding: 6px 8px;
+            margin-bottom: 3px;
+        }
+        
+        #resultsList {
+            max-height: 180px;
+        }
+    }
 }
     #taskDisplay {
         font-family: 'Noto Sans', sans-serif;
@@ -3065,6 +3128,7 @@ function applyPunishment(targetPlayer, punishmentType) {
                 const winnerColor = getPlayerColor(players.indexOf(winner[0]));
                 winnerInfo.innerHTML = `Победитель: <span style="color: ${winnerColor}; text-shadow: 0 0 8px ${winnerColor};">${winner[0]}</span> с ${winner[1]} очками!`;
             }
+            resultsList.scrollTop = 0; // Прокручиваем список к началу
 
             resultsModal.style.display = 'flex';
         }
