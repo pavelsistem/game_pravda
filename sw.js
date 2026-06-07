@@ -1,4 +1,4 @@
-const CACHE_NAME = 'truth-dare-cache-v1';
+const CACHE_NAME = 'truth-dare-cache-v2';
 
 // Укажите здесь имя вашего HTML-файла, если оно отличается, например 'index.html'
 const urlsToCache = [
