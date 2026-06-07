@@ -37,6 +37,7 @@
             overflow: hidden;
             position: relative;
             touch-action: none;
+            transition: background-color 0.5s ease;
         }
 
         #app-container {
@@ -74,6 +75,7 @@
             width: 100%;
             height: 100%;
             z-index: 1;
+            transition: opacity 0.5s ease;
         }
 
         .top-left-controls {
@@ -91,6 +93,14 @@
             display: none;
         }
         .top-left-controls:active { transform: scale(0.9); }
+
+        .top-right-controls {
+            position: absolute; top: 20px; right: 20px; z-index: 100;
+            font-size: 24px; cursor: pointer; background: rgba(0,0,0,0.5);
+            padding: 8px 12px; border-radius: 10px; backdrop-filter: blur(5px);
+            transition: transform 0.1s;
+        }
+        .top-right-controls:active { transform: scale(0.9); }
 
         .screen {
             display: flex;
@@ -114,14 +124,14 @@
 
         h1 { margin-top: 20px; margin-bottom: 20px; text-align: center; font-size: 26px; text-transform: uppercase; letter-spacing: 1px; }
         
-        .glass-box { background: var(--panel-bg); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); }
+        .glass-box { background: var(--panel-bg); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); transition: background-color 0.5s ease; }
 
         .input-group { display: flex; width: 100%; gap: 10px; margin-bottom: 20px; margin-top: 40px; }
         input[type="text"], input[type="number"], select {
             flex: 1; padding: 15px; color: white; font-size: 16px; outline: none; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.2); border-radius: 10px;
         }
         select option { background-color: var(--bg-color); }
-        .add-btn { background-color: var(--blue); color: black; border: none; border-radius: 10px; width: 50px; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .add-btn { background-color: var(--blue); color: black; border: none; border-radius: 10px; width: 50px; font-size: 24px; font-weight: bold; cursor: pointer; transition: background-color 0.5s ease; }
         .add-btn:active { transform: scale(0.95); }
 
         .players-list { display: flex; flex-wrap: wrap; gap: 10px; width: 100%; align-content: flex-start; flex: 1; overflow-y: auto; margin-bottom: 20px;}
@@ -146,7 +156,7 @@
         .anim-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         
         .choice-btn { 
-            flex: 1; border-radius: 20px; border: none; font-size: 22px; font-weight: bold; color: #111; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: transform 0.2s, filter 0.2s; 
+            flex: 1; border-radius: 20px; border: none; font-size: 22px; font-weight: bold; color: #111; cursor: pointer; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 15px; transition: transform 0.2s, filter 0.2s, background-color 0.5s ease; 
             position: relative; z-index: 2; border: 2px solid rgba(0,0,0,0.5);
         }
         .choice-btn:active:not(:disabled) { transform: translate(-2px, 2px); }
@@ -161,7 +171,7 @@
         }
         .deal-btn { opacity: 0; animation: dealFast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         .dummy-wrapper { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; animation: dealFast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; pointer-events: none; }
-        .dummy-card { width: 100%; height: 100%; border-radius: 20px; border: 2px solid rgba(0,0,0,0.5); }
+        .dummy-card { width: 100%; height: 100%; border-radius: 20px; border: 2px solid rgba(0,0,0,0.5); transition: background-color 0.5s ease; }
         .dummy-truth { background-color: var(--blue); }
         .dummy-dare { background-color: var(--pink); }
 
@@ -176,13 +186,13 @@
         .timer { font-size: 36px; color: var(--yellow); margin-top: auto; padding-top: 15px;}
 
         .action-group { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        .action-btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; transition: opacity 0.2s;}
+        .action-btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-size: 18px; font-weight: bold; cursor: pointer; transition: opacity 0.2s, background-color 0.5s ease;}
         .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .btn-success { background-color: var(--green); color: black; }
         .btn-skip { background-color: #555; color: white; display: none; }
         .btn-fail { background-color: transparent; border: 2px solid var(--pink); color: var(--pink); }
 
-        .bottom-btn { margin-top: auto; width: 100%; padding: 20px; border-radius: 15px; border: none; font-size: 20px; font-weight: bold; cursor: pointer; background-color: var(--blue); color: #000; transition: opacity 0.2s; }
+        .bottom-btn { margin-top: auto; width: 100%; padding: 20px; border-radius: 15px; border: none; font-size: 20px; font-weight: bold; cursor: pointer; background-color: var(--blue); color: #000; transition: opacity 0.2s, background-color 0.5s ease; }
         .bottom-btn:disabled { background-color: #333; cursor: not-allowed; color: #666; }
 
         .trophy-icon { font-size: 60px; margin-top: 10px; animation: pulseTrophy 1.5s infinite ease-in-out; will-change: transform, filter; }
@@ -201,6 +211,10 @@
         textarea { width: 100%; height: 100px; background: rgba(0,0,0,0.5); border: 1px solid #444; color: white; padding: 10px; border-radius: 10px; resize: none; margin-bottom: 10px; font-size: 14px;}
         textarea:focus { border-color: var(--blue); outline: none; }
         .settings-label { text-align: left; display: block; margin-bottom: 5px; font-size: 14px; color: #ccc;}
+
+        .theme-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; justify-content: center; }
+        .theme-color-picker { width: 40px; height: 40px; border: none; border-radius: 5px; cursor: pointer; background: none; }
+        .theme-btn { padding: 10px; background: rgba(25,25,35,0.8); border: 1px solid var(--blue); color: white; border-radius: 10px; cursor: pointer; font-size: 14px; flex: 1; min-width: 45%; }
 
         @keyframes flyDownToPlayer {
             0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
@@ -239,21 +253,24 @@
         @keyframes drinkShot { 0% { transform: rotate(0deg) scale(1); } 40% { transform: rotate(-30deg) scale(1.1); } 60% { transform: rotate(-30deg) scale(1.1); } 100% { transform: rotate(0deg) scale(1); } }
         .anim-drink { animation: drinkShot 1.5s ease-in-out infinite; transform-origin: bottom center; will-change: transform; }
 
-        /* Экраны мини-игр */
-        #screen-minigame, #screen-pacman { padding: 0; background: #000; position: absolute; top:0; left:0; width:100%; height:100%; }
+        #screen-minigame, #screen-pacman, #screen-snake, #screen-slingshot { padding: 0; background: #000; position: absolute; top:0; left:0; width:100%; height:100%; }
         #hockey-canvas { width: 100%; height: 100%; display: block; touch-action: none; background: #111; }
         
         .hockey-score { position: absolute; left: 20px; font-size: 40px; font-weight: bold; opacity: 0.3; pointer-events: none; }
         #score-top { top: 20px; color: var(--blue); transform: rotate(180deg); }
         #score-bottom { bottom: 20px; color: var(--pink); }
 
-        /* Пакман UI */
-        .pacman-header { position:absolute; top:20px; width:100%; text-align:center; font-size:24px; color:var(--yellow); font-weight:bold; z-index:10; text-transform: uppercase;}
-        #pacman-canvas { display: block; touch-action: none; background: #111; margin: auto; }
-        #pacman-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); flex-direction:column; justify-content:center; align-items:center; z-index:20; }
+        .pacman-header, .snake-header { position:absolute; top:20px; width:100%; text-align:center; font-size:24px; color:var(--yellow); font-weight:bold; z-index:10; text-transform: uppercase;}
+        #pacman-canvas, #snake-canvas, #slingshot-canvas { display: block; touch-action: none; background: #111; margin: auto; }
+        #pacman-overlay, #snake-overlay { display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); flex-direction:column; justify-content:center; align-items:center; z-index:20; }
         
         #joystick-base { display:none; position:absolute; width:120px; height:120px; background:rgba(255,255,255,0.1); border:2px solid rgba(255,255,255,0.3); border-radius:50%; z-index:15; pointer-events:none; transform:translate(-50%, -50%); }
         #joystick-stick { position:absolute; top:50%; left:50%; width:50px; height:50px; background:var(--blue); border-radius:50%; box-shadow:0 0 15px var(--blue); transform:translate(-50%, -50%); }
+
+        #snake-dpad { display: none; grid-template-areas: ". up ." "left . right" ". down ."; gap: 10px; width: 160px; height: 160px; margin-top: auto; margin-bottom: 30px; position: relative; z-index: 15; }
+        .dpad-btn { background: rgba(255,255,255,0.05); border: 2px solid rgba(255,255,255,0.1); border-radius: 10px; color: rgba(255,255,255,0.8); font-size: 24px; font-weight: bold; display: flex; justify-content: center; align-items: center; cursor: pointer; transition: all 0.1s; }
+        .dpad-btn:active { background: rgba(0, 229, 255, 0.2); border-color: var(--blue); color: white; transform: scale(0.95); }
+        .dpad-up { grid-area: up; } .dpad-down { grid-area: down; } .dpad-left { grid-area: left; } .dpad-right { grid-area: right; }
     </style>
 </head>
 <body>
@@ -276,6 +293,7 @@
     <div id="app-container">
         <div id="screen-players" class="screen active">
             <div class="top-left-controls" id="btn-settings">⚙️</div>
+            <div class="top-right-controls" id="btn-main-menu">☰</div>
             <h1>Кто играет?</h1>
             <div class="input-group">
                 <input type="text" id="player-input" placeholder="Имя..." autocomplete="off">
@@ -373,15 +391,38 @@
             <div class="pacman-header" id="pacman-score-ui">Собери всё!</div>
             <div style="flex:1; width:100%; display:flex; justify-content:center; align-items:center; position:relative;">
                 <canvas id="pacman-canvas"></canvas>
-                
-                <div id="joystick-base">
-                    <div id="joystick-stick"></div>
-                </div>
-
+                <div id="joystick-base"><div id="joystick-stick"></div></div>
                 <div id="pacman-overlay">
                    <div id="pacman-overlay-title" style="color:var(--pink); font-size:40px;">ШТРАФ!</div>
                    <div id="pacman-overlay-sub" style="font-size:20px; color:white; margin-top:20px;">Пей до дна!</div>
                 </div>
+            </div>
+        </div>
+
+        <div id="screen-snake" class="screen">
+            <div class="snake-header" id="snake-score-ui">Собери рюмки!</div>
+            <div style="flex:1; width:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative;">
+                <canvas id="snake-canvas"></canvas>
+                <div id="snake-overlay">
+                   <div id="snake-overlay-title" style="color:var(--pink); font-size:40px; text-align:center;">ШТРАФ!</div>
+                   <div id="snake-overlay-sub1" style="font-size:20px; color:white; margin-top:20px; text-align:center;">Выпей!</div>
+                   <div id="snake-overlay-sub2" style="font-size:20px; color:white; margin-top:10px; text-align:center;"></div>
+                </div>
+                <div id="snake-dpad">
+                    <button class="dpad-btn dpad-up" id="btn-snake-up">↑</button>
+                    <button class="dpad-btn dpad-down" id="btn-snake-down">↓</button>
+                    <button class="dpad-btn dpad-left" id="btn-snake-left">←</button>
+                    <button class="dpad-btn dpad-right" id="btn-snake-right">→</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="screen-slingshot" class="screen">
+            <div class="pacman-header" style="color: var(--blue);">ПОПАДИ В СТАКАН!</div>
+            <canvas id="slingshot-canvas" style="display: block; touch-action: none; background: #111; width: 100%; height: 100%;"></canvas>
+            <div id="slingshot-overlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.85); flex-direction:column; justify-content:center; align-items:center; z-index:20;">
+               <div id="slingshot-overlay-title" style="font-size:40px; text-align:center;"></div>
+               <div id="slingshot-overlay-sub" style="font-size:20px; color:white; margin-top:20px; text-align:center;"></div>
             </div>
         </div>
 
@@ -440,7 +481,15 @@
             </div>
 
             <div id="penalty-pacman-ui" style="display: none;">
-                <button class="modal-btn" id="btn-start-pacman" style="background: var(--yellow); color: black; box-shadow: 0 0 15px var(--yellow);">ИГРАТЬ</button>
+                <button class="modal-btn" id="btn-start-pacman" style="background: var(--yellow); color: black; box-shadow: 0 0 15px var(--yellow);">ИГРАТЬ (БАРМЕН)</button>
+            </div>
+
+            <div id="penalty-snake-ui" style="display: none;">
+                <button class="modal-btn" id="btn-start-snake" style="background: var(--green); color: black; box-shadow: 0 0 15px var(--green);">ИГРАТЬ (ЗМЕЙКА)</button>
+            </div>
+            
+            <div id="penalty-slingshot-ui" style="display: none;">
+                <button class="modal-btn" id="btn-start-slingshot" style="background: var(--blue); color: black; box-shadow: 0 0 15px var(--blue);">ИГРАТЬ (РОГАТКА)</button>
             </div>
         </div>
     </div>
@@ -452,6 +501,44 @@
             <p style="margin-top:10px; color: #ccc; font-size: 14px;">Согласись выпить штраф или сразись в Аэрохоккей (проигравший пьет!).</p>
             <button class="modal-btn" id="btn-target-accept" style="background: var(--yellow); color: black; margin-bottom: 10px;">Сдаться и выпить</button>
             <button class="modal-btn" id="btn-target-duel" style="background: var(--pink); color: white; box-shadow: 0 0 15px var(--pink);">ДУЭЛЬ!</button>
+        </div>
+    </div>
+
+    <div id="modal-main-menu" class="modal-overlay">
+        <div class="modal-content glass-box" style="border-color: var(--blue);">
+            <h2>Глобальные настройки</h2>
+            
+            <h3 style="margin-top: 15px; font-size: 16px; color: #ccc;">Звуковая схема</h3>
+            <select id="sound-theme-select" class="settings-select">
+                <option value="classic">Классическая (Синтез)</option>
+                <option value="glass">Стекло</option>
+                <option value="bass">Бас</option>
+                <option value="arcade">Аркада</option>
+                <option value="retro">Ретро (8-bit)</option>
+                <option value="mute">Без звука</option>
+            </select>
+    
+            <h3 style="margin-top: 15px; font-size: 16px; color: #ccc;">Готовые темы</h3>
+            <div class="theme-group">
+                <button class="theme-btn" data-theme="default">Стандарт</button>
+                <button class="theme-btn" data-theme="neon">Неон</button>
+                <button class="theme-btn" data-theme="blood">Кровь</button>
+                <button class="theme-btn" data-theme="toxic">Токсик</button>
+            </div>
+    
+            <h3 style="margin-top: 10px; font-size: 16px; color: #ccc;">Свой цвет</h3>
+            <div class="theme-group">
+                <label>Фон: <input type="color" id="color-bg" class="theme-color-picker"></label>
+                <label>Панели: <input type="color" id="color-panel" class="theme-color-picker"></label>
+                <label>Правда: <input type="color" id="color-truth" class="theme-color-picker"></label>
+                <label>Действие: <input type="color" id="color-dare" class="theme-color-picker"></label>
+            </div>
+    
+            <h3 style="margin-top: 10px; font-size: 16px; color: #ccc;">Свой фон (Изображение)</h3>
+            <input type="file" id="bg-upload" accept="image/*" style="width: 100%; margin-bottom: 15px; color: white;">
+            <button class="modal-btn" id="btn-clear-bg" style="background: #555; color: white; margin-bottom: 10px; display: none;">Удалить фон</button>
+    
+            <button class="modal-btn" id="btn-close-main-menu" style="background: var(--blue); color: black;">Закрыть</button>
         </div>
     </div>
 
@@ -506,7 +593,7 @@
         initParticles('12');
 
         window.addEventListener('pointerdown', (e) => {
-            if(e.target.id === 'hockey-canvas' || e.target.id === 'pacman-canvas') return;
+            if(e.target.id === 'hockey-canvas' || e.target.id === 'pacman-canvas' || e.target.id === 'snake-canvas' || e.target.id === 'slingshot-canvas') return;
             ripples.push({ x: e.clientX, y: e.clientY, radius: 0, maxRadius: 150, speed: 3, life: 1 });
         });
 
@@ -549,443 +636,7 @@
         const defaultDB = {
             '12': { truth: ['Кого ты боишься?', 'Любимая еда?'], dare: ['Попрыгай 10 раз.', 'Спой песню.'] },
             '16': { truth: ['Твой неловкий момент?', 'Кто тут нравится?'], dare: ['Позвони случайному номеру.', 'Сделай массаж соседу.'] },
-            '18': { truth: ['Странный опыт в постели?',
-            "Какое у тебя было самое безумное свидание?",
-            "Посылаешь ли ты неприличные фотографии и делаешь нюдсы?",
-            "Ты когда-нибудь ходишь без нижнего белья?",
-            "Что странное вызывает у тебя влечение?",
-            "Какую музыку предпочитаешь во время секса?",
-            "В какой одежде ты выглядишь максимально сексуально?",
-            "Расскажи всем, почему ты лучше всех в постели?",
-            "У тебя есть пирсинг или татушки в неприличных местах?",
-            "Какое на тебе сейчас нижнее белье, опиши?",
-            "Какую еду считаешь сексуальной?",
-            "Какая часть твоего тела получает максимальное количество комплиментов?",
-            "Что в противоположном поле тебя заводит больше всего?",
-            "Как опишешь себя в постели?",
-            "Когда-нибудь получалось поприсутствовать на нудистском пляже?",
-            "Что сделаешь, если проснешься в теле противоположного пола?",
-            "Опиши твое самое неприличное нижнее белье?",
-            "Какая часть твоего тела самая горячая?",
-            "Что думаешь про фильм «50 оттенков серого»?",
-            "Тебе предлагали неприличные вещи на улице?",
-            "Какую неприличную историю ты знаешь про своих друзей?",
-            "Приходилось ли возбуждаться в неподходящем месте?",
-            "Самая сумасшедшая неприличная история в жизни?",
-            "Последняя неприличная мысль, что пришла?",
-            "Какая твоя любимая часть тела противоположного пола?",
-            "Какой знаменитости отдашься без сомнений?",
-            "Расскажи свой неприличный эротический сон?",
-            "Какой напиток тебя заводит, что теряешь голову?",
-            "Тебя когда-нибудь заставали за чем-то неприличным?",
-            "Какого размера у тебя части тела?",
-            "За сколько ты согласишься на секс?",
-            "Какого возраста вторая половинка у тебя может быть из молодых или старых?",
-            "Расскажи каков в постели, по твоему мнению, один из игроков?",
-            "Придумай какую-то неприличную историю?",
-            "Ты любишь смотреть на разные части тела других людей на улице?",
-            "Расскажи о своих достоинствах в постели?",
-            "Расскажи, что неприличное было в твоем поиске в последний раз?",
-            "Самое необычное место, где занимались сексом?",
-            "Приходилось ли тебе платить за секс?",
-            "Приходилось посещать стриптиз-клубы?",
-            "Расскажи про последние неприличные мысли?",
-            "Какая неприличная фантазия у тебя есть?",
-            "Ты сильно шумишь в постели?",
-            "Как быстрей всего тебя затащить в постели?",
-            "Расскажи какой-то любовный лайфхак?",
-            "Придумай название своему половому органу.",
-            "Нравится ли тебе неприличные разговоры во время близости?",
-            "Предпочитаешь доминировать или подчиняться?",
-            "Какие самые горячие вещи приходилось слышать?",
-            "Твоя любимая поза?",
-            "Какие пошлые вопросы для игры «Правда или действие» хочешь услышать?",
-            "У тебя есть игрушки для интима?",
-            "Как долго не было у тебя этого?",
-            "Какой псевдоним у тебя будет в фильмах для взрослых?",
-            "Если ты можешь быть невидимым, то что сделаешь?",
-            "У тебя были отношения на одну ночь?",
-            "Любишь смотреть на себя без одежды?",
-            "Что-нибудь неприличное с едой было?",
-            "Скажи, что тебе не нравится в сексе?",
-            "Расскажи какой у тебя будет секс с одним из игроков?",
-            "Кто из актеров взрослого кино тебе нравится?",
-            "Опиши идеальную интимную жизнь?",
-            "Что грязное ты говоришь в постели?",
-            "Хочешь, чтобы тебя связали во время секса?",
-            "Твое любимое место для секса?",
-            "О чем неприличном думаешь, когда идешь на свидание?",
-            "Как у тебя было это в машине?",
-            "У тебя есть какой-то странный фетиш?",
-            "Как часто фоткаешься без одежды?",
-            "Поведай всем, как ты долго продержишься?",
-            "Что думаешь про роман в отпуске?",
-            "Твой любимый жанр неприличных фильмов?",
-            "Приходилось играть в какие-то неприличные игры?",
-            "Какой интимный секрет расскажешь свой?",
-            "Тебе нравится, когда тебя берут за руки?",
-            "Что ты прячешь ото всех неприличного?",
-            "Что тебе нравится во время прелюдии?",
-            "Приходилось ли заниматься этим по телефону или интернету?",
-            "На какие пошлые вопросы для игры «Правда или действие» боишься ответить?",
-            "Самая странная категория для взрослых фильмах, что приходилось искать?",
-            "Когда-нибудь получилось подглядывать за кем-то?",
-            "Кто из супергероев тебя заводит?",
-            "Придумай сценарий неприличного фильма?",
-            "Когда у тебя был первый раз и как именно?",
-            "Кружевное или кожаное белье?",
-            "Твои истории, когда возбуждение пришло не в том месте?",
-            "Расскажи о твоем лучше подкате и съеме?",
-            "Что думаешь о сексе с несколькими людьми?",
-            "Твоя странная интимная привычка?",
-            "Были ли у тебя травмы в постели?",
-            "Тебе хочется, чтобы тебя связали?",
-            "Расскажи то, как ты занимаешься сексом обычно?",
-            "Самая необычная поза в интиме?",
-            "Что тебя пугает в постели?",
-            "К каким странным людям тебя влечет?",
-            "Тебе нравятся ролевые игры?",
-            "Имеет ли размер значение?",
-            "Как часто носишь стринги?",
-            "Получилось ли у тебя сходить на секс вечеринку или еще планируешь?",
-            "Какой мультяшный герой тебя заводит?",
-            "Где в общественном месте хочешь попробовать секс?",
-            "Кто двоих из присутствующих может оказаться в тройке с тобой?",
-            "На что ты никогда не согласишься в постели?",
-            "Как выглядит идеальная прелюдия?",
-            "Сверху или снизу?",
-            "Что есть в твоем списке обязательных сексуальных дел?",
-            "Расскажи, как тебя огорчали в постели?",
-            "Приходилось имитировать удовольствие?",
-            "Какого цвета у тебя соски?",
-            "Какое нижнее белье ты хочешь увидеть на второй половинке?",
-            "Что никогда не повторишь в сексе?",
-            "Кто самый горячий человек в этой комнате?",
-            "Как часто ты играешь с собой наедине?",
-            "Какой сексуальный подарок хочешь получить?",
-            "Что думаешь об интрижках на работе?",
-            "Кого ты сейчас представляешь голым?",
-            "Что новое совсем было узнано о сексе?",
-            "У тебя есть какие-то сексуальные клички?",
-            "Какое извращенное желание у тебя есть?",
-            "Сколько раз можешь подряд?",
-            "Что ты фантазируешь прямо сейчас?",
-            "Когда-нибудь играл в карты на раздевание?",
-            "Сколько нужно выпить перед сексом?",
-            "Язык или пальцы?",
-            "Что у тебя лучше всего получается в постели?",
-            "О ком их присутствующих иногда думаешь неприличные мысли?",
-            "Тебе нравится секстинг?",
-            "Когда ты следующий раз займешься сексом?",
-            "Хочешь, чтобы тебя застали без одежды?",
-            "На каком грязном поступке тебя ловили?",
-            "Какие элементы одежды противоположного пола хочешь примерить?",
-            "О ком думаешь, когда делаешь себе приятно?",
-            "Что самое приятное можно сделать тебе?",
-            "Какую неприличную историю ты знаешь про своих друзей?",
-            "Какой последний фильм для взрослых был?",
-            "Твое любимое воспоминание о сексе?",
-            "Как за минуту тебя завести?",
-            "Какая у тебя самая смелая сексуальная фантазия?",
-            "Если ты снимешь секс-видео, то что это будет?",
-            "Когда-нибудь играл в голый твистер?",
-            "Когда был последний эротический сон и о чем?",
-            "Самая длинная секс в жизни?",
-            "Какая интимная прическа тебе нравится?",
-            "Нравятся громкие или тихие в постели люди?",
-            "Как долго можешь обходиться без этого?",
-            "Самая плохая идея, которая приходила в голову в постели?",
-            "Ты любишь ходить без одежды дома?",
-            "Что еще не было сделано в постели, но хочешь?",
-            "Самая глупая интимная шутка?",
-            "У тебя было влечение к девушке друга?",
-            "Как ты хочешь, чтобы тебя наказали сексуально?",
-            "Сколько неприличных картинок у тебя на телефоне?",
-            "Каков ты в сексе под алкоголем?",
-            "Какую часть тела любишь целовать?",
-            "Тебя привлекают люди взрослей тебя?",
-            "Был ли у тебя секс в воде?",
-            "Сколько раз в неделю для тебя супер?",
-            "Что самое важное нужно знать про твою анатомию?",
-            "Что вызывает наиболее острые ощущения?",
-            "Опиши кого-то из присутствующих как можно грязнее?",
-            "Какие неприличные слухи про тебя могут быть?",
-            "Какой реквизит хочешь использовать в постели?",
-            "Какие пошлые задания и действия для игры «Правда или действие» хочешь сделать?",
-            "Родители твоих друзей тебя не заводят?",
-            "Насколько ты пошлый и испорченный человек, а также чем докажешь?",
-            "В какой сексуальном наряде хочешь видеть одного из игроков?",
-            "Придумай себе сексуальную кличку?",
-            "Что мечтаешь изменить в своем теле?",
-            "Что в тебе самое горячее?",
-            "Какой запах тебя заводит?",
-            "У тебя было искушение изменить кому-то?",
-            "Какой жанр взрослых фильмов тебе не нравится?",
-            "Какие предметы домашнего обихода можно использовать не по назначению?",
-            "Тебя заводят мысли о записи видео интима?",
-            "Куда хочешь, чтобы тебя поцеловали?",
-            "Что тебя смущает и заводит одновременно?",
-            "Красиво опиши свое тело в подробностях?",
-            "Как выглядит идеальное свидание подробно?",
-            "Хочешь зарабатывать вебкам-моделью?",
-            "Какие три неприличные вещи ты обязательно сделаешь?",
-            "С кем в этой комнате хочешь заняться сексом?",
-            "Что тебе нравится во время прелюдии делать?",
-            "Самое странное, что тебе говорили при подкате?",
-            "Приходилось говорить слова любви, чтобы заняться сексом?",
-            "Как ты опишешь чувства во время близости?",
-            "⭐Пропусти ход",
-            "⭐Любой участник должен выполнить следующее задание за тебя",
-            "⭐Просто выпей🍺",
-            "⭐Пьет тот участник на которого ты укажешь",
-            "⭐Ты выполняешь задание за игрока справа",
-            "⭐Игрок слева выполняет задание за тебя",
-            "⭐Игрок справа выполняет задание за тебя",
-            "Что в детстве думал о том, как появляются дети?",
-            "С кем хочешь из присутствующих искупаться голышом?",
-            "Самая безумная и сексуальная вещь по по твоему мнению?",
-            "С какой знаменитостью займешься сексом без вопросов?",
-            "Какая сумасшедшая интимная фантазия будет тобой воплощена?",
-            "Кто был твоей любовью в детстве?",
-            "Предлагали ли тебе секс втроем или оргию?",
-            "Какие неприличные секреты знаешь о своих знакомых?",
-            "Что сделаешь с человеком, если можно использовать только губы?",
-            "Какой интимный наряд тебя больше всего возбуждает?",
-            "Сколько раз можешь за день?",
-            "Что из обычных вещей тебя заводит?",
-            "Что думаешь про быстрый секс?",
-            "Глотать или нет?",
-            "Самое неприличное сообщение, что тебе посылали?",
-            "Что думаешь про сливки в постели?",
-            "Сколько людей видело тебя без одежды?",
-            "Что считаешь недооцененным в постели?",
-            "Есть ли у тебя на телефоне неприличные фото или видео бывших?",
-            "Тебе приходилось сталкиваться с изменами?",
-            "С включенным светом или нет?",
-            "Как ты опишешь скучного человека в постели?",
-            "В какой глупый миф о сексе веришь?",
-            "Опиши свою одежду, в которой спишь?",
-            "Твои бывшие, что про них можно рассказать неприличного?",
-            "Лучшая песня для занятия сексом?",
-            "Самая неловкая интимная вещь в жизни?",
-            "За сколько можно купить твое тело?",
-            "Что никогда не сделаешь в постели?",
-            "Предлагали ли тебе что-то очень неприличное?",
-            "Что из фильмов хочется тебе попробовать в реальности?",
-            "Самое сумасшедшее место, где был секс?",
-            "Какие фетиши тебе кажутся интересными?",
-            "Что думаешь про стриптиз-клубы?",
-            "Что делаешь, если хочешь выглядеть сексуально на свидании?",
-            "У кого из присутствующих тебе нравится тело?",
-            "Назови свой самый постыдный момент.",
-            "Какое самое странное блюдо ты когда-либо ел?",
-            "Если бы ты мог поменяться жизнью с кем-то на один день, кто бы это был и почему?",
-            "Какая твоя самая большая несбыточная мечта?",
-            "Что бы ты сделал, если бы выиграл в лотерею 1 миллион долларов?",
-            "Какое твое самое раннее воспоминание?",
-            "Что тебя больше всего раздражает в других людях?",
-            "Какое одно из твоих тайных удовольствий?",
-            "Назови то, что ты делаешь, когда никто не видит.",
-            "Опиши свой идеальный день.", 'Дикая фантазия?'],
-             dare: ['Поцелуй соседа справа.',
-             "Шепни что-нибудь на ушко другому игроку неприличное.",
-            "Съешь мороженное или банан максимально вызывающе.",
-            "Сделай массаж плеч другому игроку.",
-            "Съешь что-то без помощи рук.",
-            "Разреши шлепнуть тебя по заднице.",
-            "Станцуй стриптиз, пусть не полностью.",
-            "Сядь кому-то на колени на 1 минуту.",
-            "Покажи свой коронный стон в постели.",
-            "Спой матерные частушки.",
-            "Напиши неприличное стихотворение.",
-            "Попробовать сделать сальто.",
-            "Изобрази как занимаешься в тренажерном зале и пытаешься кого-то соблазнить.",
-            "Измени свой статус в социальной сети на что-то неприличное.",
-            "Поцелуй какую-то вещь.",
-            "Облей себя водой верхнюю часть одежды.",
-            "Скажи что-то сексуальным голосом.",
-            "Кинь кубик льда себе в штаны.",
-            "Разреши ущипнуть себя за попу.",
-            "Изобрази модель, которую фотографируют для журнала «Плейбой».",
-            "Надеть какую-то одежду задом наперед.",
-            "Покусывай за мочку уха другого игрока.",
-            "Выпей напитка и напои одного их игроков со своего рта.",
-            "Станцуй грязные танцы с одним из игроков.",
-            "Целуйся со своей рукой 20 секунд.",
-            "Изобрази актрису Шэрон Стоун в фильме «Основной инстинкт».",
-            "Пройдись, словно ты модель нижнего белья.",
-            "Показать все свои наколки или те места, где хочешь их сделать.",
-            "Эротично съешь что-то, глядя кому-то в глаза.",
-            "Найди в интернете эротический рассказ и прочитай вслух.",
-            "Станцуй стриптиз, где в качестве пилона другой игрок.",
-            "Рассуждай со своим воображаемым другом, как ты хочешь с кем-то переспать.",
-            "Рекламируй себя как-то горячо, словно ты товар.",
-            "Показать всем кусочек своего нижнего белья.",
-            "Изобрази самая древнюю профессию.",
-            "Станцевать как гимнастка минуту.",
-            "Накрась губы одному из игроков.",
-            "Станцуй канкан.",
-            "Покажи любую голую часть себя.",
-            "Обними кого-то горячо.",
-            "Сними один элемент одежды с одного из игроков.",
-            "Изобрази себя под действием алкоголя.",
-            "Чмокни кого-то в щечку.",
-            "Станцуй тверк.",
-            "Покажи свою самую эротическую точку тела.",
-            "Сделай взрослую фотографию, а затем пошли ее.",
-            "Используй две руки, чтобы показать, как ты занимаешься сексом.",
-            "Придумай какую-то двусмысленную шутку.",
-            "Танцуй и шлепай себя по попе.",
-            "Найди в интернете грязную вещь, а затем покажи ее всем.",
-            "Изобрази на подушке, как ты обнимаешься и целуешься.",
-            "Подними кого-то на руки или дай поднять.",
-            "Прикажи одному из игроков выполнить какое-то пошлое задания для игры.",
-            "Изобразить животное, которое хочет близости, а другие должны угадать кто.",
-            "Поставь кому-то засос на шее.",
-            "Сочини рэп неприличный.",
-            "Сожми пятую точку любого игрока на пять минут.",
-            "Пошли сообщение кому-то горячее и вызывающее.",
-            "Сделай свой внешний вид более вызывающим любым способом.",
-            "Танцуй с воображаемым партнером неприличный танец.",
-            "Приложи кубики льда к груди.",
-            "Покажи свою самую сексуальную часть тела, но несексуально.",
-            "Разреши положить руку на внутреннюю часть твоего бедра.",
-            "Покажи на каком-то игроке, как ты возбуждаешь.",
-            "Оближи любую часть своего тела.",
-            "Потрогай все попы и скажи, у кого самая аппетитная.",
-            "Изобрази спортсмена бодибилдера.",
-            "Закрой глаза и пусть тебя поцелуют, а ты угадаешь кто.",
-            "Сделай кому-то массаж, не используя руки.",
-            "Веди себя минуту так, словно ты работаешь в эскорте.",
-            "Сделай селфи в сексуальной позе и покажи всем.",
-            "Придумай для себя пошлое задание для игры «Правда или действие» самостоятельно.",
-            "Пошли горячий воздушный поцелуй.",
-            "Изобрази горничную, которая соблазняет хозяина.",
-            "Рассказывай кому-то, как ты хочешь.",
-            "Выключить свет и звуками завести всех окружающих.",
-            "Разреши кому-то гладить твои ноги минуту.",
-            "Спой какую-то неприличную песню.",
-            "Веди 30 секунд диалог со своими половыми органами.",
-            "Изобрази виртуально, как ты делаешь оральный секс.",
-            "Сделай что-то, чтобы возбудить всех вокруг.",
-            "Покажи свои подмышки.",
-            "Поцелуй одного из игроков тремя способами.",
-            "Веди себя как озабоченная собака или кот.",
-            "Сыграй слугу или раба другого игрока по выбору.",
-            "Покажи свой голый пупок.",
-            "Нежно поцелуй в шеу другого игрока.",
-            "Говори кому-то неприличные вещи, смотря в глаза.",
-            "Стань на расстоянии 1 сантиметра от одного из игроков и расскажи какую-то историю.",
-            "Сделай самое пошлое задание и действие, придумав самостоятельно.",
-            "Покажи свое лицо, которое у тебя на финише секса.",
-            "Разреши кому-то пощекотать тебя.",
-            "Станцуй на коленях у кого-то.",
-            "Позволь другим поставить тебя в любую позу.",
-            "Найти позу в Камасутре, а затем покажи ее на стуле или подушке.",
-            "Станцуй горячо, чтобы все возбудились.",
-            "Сделай отметок помадой не менее 10 на одном из игроков.",
-            "Поменяй фотографию в социальной сети на что-то более горячее.",
-            "Нежно укуси одного из игроков.",
-            "Ляг на кровать, а один из игроков ложиться на 10 секунд сверху.",
-            "Покажи, как ты бы подкупал одного из игроков для секса.",
-            "Сделай массаж другому игроку.",
-            "Дуй на одного из игроков.",
-            "Сними один элемент одежды.",
-            "Покажи или закажи нижнее белье, которое ты хочешь купить.",
-            "Покажи сексуальную позу с помощью предмета мебели.",
-            "Прижми одного из игроков к стене своим телом.",
-            "Подари кому-то страстный французский поцелуй.",
-            "Разреши поцеловать тебя в любом месте.",
-            "Изображай из себя нимфоманку или сатириазиса.",
-            "Покажи какой-то клип на YouTube.",
-            "Разреши слизать сливки с твоего живота.",
-            "Изобрази громкое чмокание.",
-            "Расскажи и покажи всем подробно, как ты будешь заниматься любовью.",
-            "Используй свою руку и одного из игроков, чтобы показать какой у вас будет секс.",
-            "Вылей немного напитка на ладонь другого игрока, а затем выпей ее.",
-            "Сделай что-то обычное, но очень вызывающе.",
-            "Возьми элемент одежды другого игрока, а затем надень на себя.",
-            "Покажи родинки в необычных местах.",
-            "Станцуй танец живота.",
-            "Разреши полапать тебя в определенном месте.",
-            "Пусть другой игрок обнимет тебя за талию.",
-            "Покажи всем, как будет выглядеть ваша первая брачная ночь.",
-            "Возбуди свои соски любым способом, а затем покажи остальным.",
-            "Попытайся продать себя, рассказывая свои интимные достоинства.",
-            "Имитируй оргазм со звуками и движениями.",
-            "Сними штаны и затем натяни.",
-            "Покажи всем грудь.",
-            "Научи кого-то целовать, объясняя и показывая.",
-            "Рассказывай какую-то неприличную историу, словно друзьям или подружкам.",
-            "Ползай по полу сексуально.",
-            "Выбери предмет, который ты можешь поместить в свое тело.",
-            "Станцуй сексуально, используя одну ногу.",
-            "Назови суммы, как проститутки, что ты за какую сумму сделаешь.",
-            "Попытайся уговорить одного из игроков, чтобы занялись с тобой сексом.",
-            "Попробуй возбудить какого-то игрока, используя свое тело.",
-            "Показывай всем свою эротическую часть тела и хвастайся ей.",
-            "У тебя есть 10 секунд, чтобы выглядеть горячо.",
-            "Скажи что-то неприличное всем игрокам на ушко.",
-            "Возьми любую книгу и прочитай страницу сексуально.",
-            "Засунь в трусы свой носок и ходи минуту так.",
-            "Покажи, как ты флиртуешь и соблазняешь на ком-то из игроков.",
-            "Станцуй русские народные танцы неприлично.",
-            "Придумай каждой части своего тела кличку.",
-            "Надень купальный костюм и попроси натереть тебя кремом.",
-            "Накорми кого-то, используя только рот.",
-            "Придумай для себя пошлое задание для «Правда или действие», что не ожидают.",
-            "Расскажи о своем неудачном соблазнении кого-то.",
-            "Горячо стони, словно ты вот-вот получишь оргазм.",
-            "Расскажи свой самый неприличный секрет.",
-            "Изобрази любовную сцену из любого из выбранного фильма.",
-            "Погладь промежность одного из игроков.",
-            "Сыграй сценку, словно ты прижат с кем-то из игроков в транспорте и давка вокруг.",
-            "Закажи себе игрушку из магазина для взрослых.",
-            "Станцуй брейк-данс горячо и неприлично.",
-            "Говори что-то неприличное и ласкай себя.",
-            "Опиши всем, какая у тебя интимная стрижка.",
-            "Выключи свет и попробуй кого-то зажечь.",
-            "Напиши короткий сексуальный рассказ.",
-            "Выбери кого-то, с кем ты можешь окунуться голышом в бассейн или речку.",
-            "Покажи наименее сексуальную часть тела.",
-            "Сделай кому-то массаж головы.",
-            "Накажи кого-то сексуально.",
-            "Признайся кому-то, как ты хочешь близости.",
-            "Станцуй приватный танец для кого-то из игроков «Правда или действия».",
-            "Прикоснись языком с кем-то.",
-            "Сделай соблазнительный массаж ступней.",
-            "Покажи свое любое взрослое видео остальным.",
-            "Притворись знаменитостью, которая делает пошлости.",
-            "⭐Пропусти ход",
-            "⭐Любой участник должен выполнить следующее задание за тебя",
-            "⭐Просто выпей🍺",
-            "⭐Пьет тот участник на которого ты укажешь",
-            "⭐Ты выполняешь задание за игрока справа",
-            "⭐Игрок слева выполняет задание за тебя",
-            "⭐Игрок справа выполняет задание за тебя",
-            "Опиши всем свой последний секс.",
-            "Придумай самое грязное предложение, что получится.",
-            "Изображай проводницу, которая хочет интима.",
-            "Сними с кого-то элемент одежды только зубами.",
-            "Выйти и сними с себя нижнее белье.",
-            "Дразни кого-то и соблазняй, но можно использовать только руки.",
-            "Придумай пошлое задание для игры «Правда или действие» любому игроку.",
-            "Убеди кого-то из присутствующих, сойти с тобой на свидание.",
-            "Веди себя минуту так, словно ты очень хочешь секса.",
-            "Оближи какую-то часть тела одного из игроков.",
-            "Все игроки снимают один элемент одежды.",
-            "Выбери того, с кем ты хочешь заняться сексом.",
-            "Изобрази своего любимого животного.",
-            "Спой песню без музыки.",
-            "Расскажи анекдот.",
-            "Сделай 10 приседаний.",
-            "Потанцуй как сумасшедший в течение 30 секунд.",
-            "Попробуй лизнуть свой локоть.",
-            "Поговори с акцентом до конца раунда.",
-            "Сделай комплимент человеку, сидящему слева от тебя.",
-            "Изобрази робота, идущего за водой.",
-            "Повтори 5 раз скороговорку: 'Карл у Клары украл кораллы, а Клара у Карла украла кларнет.'",
-             'Сними вещь.'] }
+            '18': { truth: ['Странный опыт в постели?', 'Дикая фантазия?'], dare: ['Поцелуй соседа справа.', 'Сними вещь.'] }
         };
         const globalJokers = ["ГЛОБАЛЬНО: ПЬЮТ ВСЕ!", "ГЛОБАЛЬНО: МЕНЯЕМСЯ МЕСТАМИ"];
 
@@ -1012,15 +663,137 @@
             localStorage.setItem('pid_customDB_v2', JSON.stringify(customDB));
         }
 
-        function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
-        function playSound(type) {
-            if (!audioCtx) return; const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); osc.connect(gain); gain.connect(audioCtx.destination); const now = audioCtx.currentTime;
-            if (type === 'click') { if(navigator.vibrate) navigator.vibrate(10); osc.type = 'sine'; osc.frequency.setValueAtTime(600, now); gain.gain.setValueAtTime(0.1, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1); osc.start(now); osc.stop(now + 0.1); }
-            else if (type === 'success') { if(navigator.vibrate) navigator.vibrate([30, 50, 30]); osc.type = 'triangle'; osc.frequency.setValueAtTime(400, now); osc.frequency.exponentialRampToValueAtTime(800, now + 0.2); gain.gain.setValueAtTime(0.1, now); gain.gain.linearRampToValueAtTime(0, now + 0.3); osc.start(now); osc.stop(now + 0.3); }
-            else if (type === 'fail') { if(navigator.vibrate) navigator.vibrate([100, 50, 100]); osc.type = 'sawtooth'; osc.frequency.setValueAtTime(200, now); osc.frequency.linearRampToValueAtTime(100, now + 0.3); gain.gain.setValueAtTime(0.1, now); gain.gain.linearRampToValueAtTime(0, now + 0.4); osc.start(now); osc.stop(now + 0.4); }
+        let currentSoundTheme = 'classic';
+        let customBgData = null;
+
+        const presets = {
+            'default': { bg: '#0d0d12', panel: 'rgba(25, 25, 35, 0.85)', blue: '#00e5ff', pink: '#ff0055' },
+            'neon': { bg: '#050510', panel: 'rgba(10, 10, 30, 0.85)', blue: '#00ffcc', pink: '#ff00ff' },
+            'blood': { bg: '#1a0000', panel: 'rgba(40, 0, 0, 0.85)', blue: '#ff3333', pink: '#990000' },
+            'toxic': { bg: '#0a1a0a', panel: 'rgba(10, 40, 10, 0.85)', blue: '#aaff00', pink: '#00ff66' }
+        };
+
+        function applyThemeColors(colors) {
+            const root = document.documentElement;
+            if(colors.bg) root.style.setProperty('--bg-color', colors.bg);
+            if(colors.panel) root.style.setProperty('--panel-bg', colors.panel);
+            if(colors.blue) root.style.setProperty('--blue', colors.blue);
+            if(colors.pink) root.style.setProperty('--pink', colors.pink);
         }
 
-        const screens = { players: document.getElementById('screen-players'), mode: document.getElementById('screen-mode'), turn: document.getElementById('screen-turn'), task: document.getElementById('screen-task'), results: document.getElementById('screen-results'), minigame: document.getElementById('screen-minigame'), pacman: document.getElementById('screen-pacman') };
+        document.getElementById('btn-main-menu').addEventListener('click', () => {
+            playSound('click'); document.getElementById('modal-main-menu').classList.add('active');
+        });
+        document.getElementById('btn-close-main-menu').addEventListener('click', () => {
+            playSound('click'); document.getElementById('modal-main-menu').classList.remove('active');
+        });
+
+        document.getElementById('sound-theme-select').addEventListener('change', (e) => { currentSoundTheme = e.target.value; });
+
+        document.querySelectorAll('.theme-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                playSound('click'); applyThemeColors(presets[e.target.dataset.theme]);
+            });
+        });
+
+        ['bg', 'panel', 'truth', 'dare'].forEach(type => {
+            document.getElementById(`color-${type}`).addEventListener('input', (e) => {
+                const prop = type === 'truth' ? '--blue' : type === 'dare' ? '--pink' : type === 'bg' ? '--bg-color' : '--panel-bg';
+                document.documentElement.style.setProperty(prop, e.target.value);
+            });
+        });
+
+        document.getElementById('bg-upload').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(event) {
+                    document.body.style.backgroundImage = `url(${event.target.result})`;
+                    document.body.style.backgroundSize = 'cover';
+                    document.body.style.backgroundPosition = 'center';
+                    document.getElementById('btn-clear-bg').style.display = 'block';
+                    document.getElementById('particles-bg').style.opacity = '0.5';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('btn-clear-bg').addEventListener('click', () => {
+            document.body.style.backgroundImage = 'none';
+            document.getElementById('btn-clear-bg').style.display = 'none';
+            document.getElementById('bg-upload').value = '';
+            document.getElementById('particles-bg').style.opacity = '1';
+        });
+
+        function playCardDealSounds(count, delaySec) {
+            if (!audioCtx || currentSoundTheme === 'mute') return;
+            const now = audioCtx.currentTime;
+            for (let i = 0; i < count; i++) {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                
+                let fStart = 150, fEnd = 40;
+                osc.type = 'sawtooth';
+                
+                if (currentSoundTheme === 'retro') { osc.type = 'square'; }
+                else if (currentSoundTheme === 'glass') { osc.type = 'triangle'; fStart = 1200; fEnd = 800; }
+                else if (currentSoundTheme === 'bass') { osc.type = 'sawtooth'; fStart = 80; fEnd = 30; }
+                else if (currentSoundTheme === 'arcade') { osc.type = 'square'; fStart = 600 + Math.random()*200; fEnd = fStart/2; }
+                
+                osc.frequency.setValueAtTime(fStart, now + i * delaySec);
+                osc.frequency.exponentialRampToValueAtTime(fEnd, now + i * delaySec + 0.03);
+                
+                gain.gain.setValueAtTime(0.08, now + i * delaySec);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + i * delaySec + 0.03);
+                
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(now + i * delaySec);
+                osc.stop(now + i * delaySec + 0.03);
+            }
+        }
+
+        function initAudio() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (audioCtx.state === 'suspended') audioCtx.resume(); }
+                function playSound(type) {
+            if (navigator.vibrate) {
+                if (type === 'click') navigator.vibrate(10);
+                else if (type === 'success') navigator.vibrate([30, 50, 30]);
+                else if (type === 'fail') navigator.vibrate([100, 50, 100]);
+            }
+
+            if (!audioCtx || currentSoundTheme === 'mute') return; 
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain(); 
+            osc.connect(gain); gain.connect(audioCtx.destination); 
+            const now = audioCtx.currentTime;
+            
+            if (type === 'click') { 
+                if (currentSoundTheme === 'glass') { osc.type = 'triangle'; osc.frequency.setValueAtTime(1500, now); }
+                else if (currentSoundTheme === 'bass') { osc.type = 'sawtooth'; osc.frequency.setValueAtTime(100, now); }
+                else if (currentSoundTheme === 'arcade') { osc.type = 'square'; osc.frequency.setValueAtTime(800, now); }
+                else { osc.type = 'sine'; osc.frequency.setValueAtTime(600, now); }
+                
+                gain.gain.setValueAtTime(0.1, now); 
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1); 
+                osc.start(now); osc.stop(now + 0.1); 
+            }
+            else if (type === 'success') { 
+                osc.type = currentSoundTheme === 'retro' || currentSoundTheme === 'arcade' ? 'square' : 'triangle'; 
+                osc.frequency.setValueAtTime(400, now); 
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.2); 
+                gain.gain.setValueAtTime(0.1, now); 
+                gain.gain.linearRampToValueAtTime(0, now + 0.3); 
+                osc.start(now); osc.stop(now + 0.3); 
+            }
+            else if (type === 'fail') { 
+                osc.type = currentSoundTheme === 'retro' || currentSoundTheme === 'arcade' ? 'square' : 'sawtooth'; 
+                osc.frequency.setValueAtTime(200, now); 
+                osc.frequency.linearRampToValueAtTime(100, now + 0.3); 
+                gain.gain.setValueAtTime(0.1, now); 
+                gain.gain.linearRampToValueAtTime(0, now + 0.4); 
+                osc.start(now); osc.stop(now + 0.4); 
+            }
+        }
+
+        const screens = { players: document.getElementById('screen-players'), mode: document.getElementById('screen-mode'), turn: document.getElementById('screen-turn'), task: document.getElementById('screen-task'), results: document.getElementById('screen-results'), minigame: document.getElementById('screen-minigame'), pacman: document.getElementById('screen-pacman'), snake: document.getElementById('screen-snake'), slingshot: document.getElementById('screen-slingshot') };
         const modals = { age: document.getElementById('modal-age'), penalty: document.getElementById('modal-penalty'), settings: document.getElementById('modal-settings'), targetDecision: document.getElementById('modal-target-decision') };
 
         function showScreen(name) {
@@ -1034,7 +807,7 @@
         document.getElementById('player-input').addEventListener('keypress', (e) => { if (e.key === 'Enter') addPlayer(); });
 
         document.getElementById('screen-players').addEventListener('click', (e) => {
-            if (!e.target.closest('input') && !e.target.closest('button') && !e.target.closest('.player-tag') && !e.target.closest('.top-left-controls')) {
+            if (!e.target.closest('input') && !e.target.closest('button') && !e.target.closest('.player-tag') && !e.target.closest('.top-left-controls') && !e.target.closest('.top-right-controls')) {
                 if (players.some(p => p.name === 'АДМИНИСТРАТОР')) { adminTapCount++; if (adminTapCount >= 10) document.getElementById('btn-settings').style.display = 'block'; } 
                 else adminTapCount = 0;
             }
@@ -1157,6 +930,9 @@
 
             document.getElementById('truth-anim-container').innerHTML = ''; document.getElementById('dare-anim-container').innerHTML = '';
             const remainingRounds = totalRounds - currentRound + 1; const maxCards = Math.min(remainingRounds - 1, 15);
+            
+            playCardDealSounds(maxCards * 2, 0.04);
+
             for (let i = 0; i < maxCards; i++) {
                 const delay = i * 0.04, rot = Math.random() * 8 - 4, tx = Math.random() * 4 - 2, ty = Math.random() * 4 - 2;
                 document.getElementById('truth-anim-container').innerHTML += `<div class="dummy-wrapper" style="animation-delay: ${delay}s"><div class="dummy-card dummy-truth" style="transform: rotate(${rot}deg) translate(${tx}px, ${ty}px)"></div></div>`;
@@ -1267,7 +1043,6 @@
             }, 600);
         }
 
-        /* --- ЛОГИКА ТАЙМЕРА ЗАДАНИЯ --- */
         let timeTotal = 0;
         function startTimer(type) {
             clearInterval(timerInterval); 
@@ -1290,7 +1065,6 @@
 
         function updateTimerDisplay(seconds, el) { el.textContent = `${Math.floor(seconds / 60).toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`; }
 
-        /* --- ЛОГИКА РЕДАКТИРОВАНИЯ "НА ЛЕТУ" (LONG PRESS) --- */
         const taskCardInner = document.getElementById('task-card-inner');
 
         function startLongPress(e) {
@@ -1369,7 +1143,6 @@
             generateTask(currentTaskType);
         });
 
-        /* --- КНОПКИ РЕШЕНИЙ --- */
         document.getElementById('btn-success').addEventListener('click', () => { 
             playSound('success'); clearInterval(timerInterval); setTaskButtonsDisabled(true); 
             document.getElementById('task-card-inner').classList.add('animate-success'); 
@@ -1408,13 +1181,31 @@
                 document.getElementById('penalty-normal-ui').style.display = 'none';
                 document.getElementById('penalty-transfer-ui').style.display = 'none';
                 document.getElementById('penalty-pacman-ui').style.display = 'none';
+                document.getElementById('penalty-snake-ui').style.display = 'none';
+                document.getElementById('penalty-slingshot-ui').style.display = 'none';
 
-                let isPacman = Math.random() < 0.20 && !currentIsJoker && !currentIsPaired;
+                let isSnake = false, isPacman = false, isSlingshot = false;
+                
+                // Рандом на игры ровно по 10%
+                if (!currentIsJoker && !currentIsPaired) {
+                    let r = Math.random();
+                    if (r < 0.10) isSnake = true;
+                    else if (r < 0.20) isPacman = true;
+                    else if (r < 0.30) isSlingshot = true;
+                }
 
                 if (currentIsJoker) {
                     document.getElementById('penalty-text').innerHTML = `<span style="color:var(--yellow)">ВНИМАНИЕ, ВСЕ ИГРОКИ!</span><br>${rolled.text}`;
                     document.getElementById('penalty-icon').textContent = '🥃';
                     document.getElementById('penalty-normal-ui').style.display = 'block';
+                } else if (isSnake) {
+                    document.getElementById('penalty-text').innerHTML = `<span style="color:${pColor}">${currentPlayer.name}</span><br>ЗМЕИНАЯ ЖАЖДА!<br><span style="font-size:14px; color:#ccc;">Собери рюмки, чтобы не пить!</span>`;
+                    document.getElementById('penalty-icon').textContent = '🐍';
+                    document.getElementById('penalty-snake-ui').style.display = 'block';
+                } else if (isSlingshot) {
+                    document.getElementById('penalty-text').innerHTML = `<span style="color:${pColor}">${currentPlayer.name}</span><br>МЕТКИЙ СТРЕЛОК!<br><span style="font-size:14px; color:#ccc;">Попади льдом в стакан! Натяни рогатку.</span>`;
+                    document.getElementById('penalty-icon').textContent = '🎯';
+                    document.getElementById('penalty-slingshot-ui').style.display = 'block';
                 } else if (isPacman) {
                     document.getElementById('penalty-text').innerHTML = `<span style="color:${pColor}">${currentPlayer.name}</span><br>БЕШЕНЫЙ БАРМЕН!<br><span style="font-size:14px; color:#ccc;">Собери капли, чтобы не пить!</span>`;
                     document.getElementById('penalty-icon').textContent = '🕹️';
@@ -1483,7 +1274,7 @@
         }
         document.getElementById('btn-restart').addEventListener('click', () => { playSound('click'); showScreen('players'); });
         
-        /* --- ХОККЕЙ --- */
+        /* --- ИГРА ХОККЕЙ --- */
         const hockeyCanvas = document.getElementById('hockey-canvas');
         const hctx = hockeyCanvas.getContext('2d');
         let hAnimationId, hWidth, hHeight;
@@ -1593,10 +1384,9 @@
             screens.task.classList.add('active'); 
         }
 
-        /* --- PACMAN МИНИ-ИГРА (ДЖОЙСТИК) --- */
-        // НАСТРОЙКИ СКОРОСТИ (Настраивать здесь)
-        const PLAYER_MAX_SPEED_COEF = 0.25; // Максимальная скорость стакана при полном отклонении стика
-        const ENEMY_SPEED_COEF = 0.03;      // Скорость бутылок
+        /* --- ИГРА ПАКМЕН --- */
+        const PLAYER_MAX_SPEED_COEF = 0.25; 
+        const ENEMY_SPEED_COEF = 0.03;      
         
         const pacCanvas = document.getElementById('pacman-canvas');
         const pacScreen = document.getElementById('screen-pacman');
@@ -1606,32 +1396,16 @@
         const cols = 11, rows = 15;
         let pacGameOver = false, pacFillLevel = 0;
 
-        // Переменные джойстика
-        let joyActive = false;
-        let joyOriginX = 0, joyOriginY = 0;
-        let joyCurX = 0, joyCurY = 0;
-        let joyMaxRadius = 50; 
-        let joyVector = { x: 0, y: 0, mag: 0 }; 
+        let joyActive = false, joyOriginX = 0, joyOriginY = 0, joyCurX = 0, joyCurY = 0, joyMaxRadius = 50, joyVector = { x: 0, y: 0, mag: 0 }; 
 
-        document.getElementById('btn-start-pacman').addEventListener('click', () => {
-            playSound('click');
-            modals.penalty.classList.remove('active');
-            startPacman();
-        });
+        document.getElementById('btn-start-pacman').addEventListener('click', () => { playSound('click'); modals.penalty.classList.remove('active'); startPacman(); });
 
-        function resizePacman() {
-            let w = window.innerWidth;
-            let h = window.innerHeight * 0.8;
-            cs = Math.floor(Math.min(w/cols, h/rows));
-            pacCanvas.width = cs * cols;
-            pacCanvas.height = cs * rows;
-        }
+        function resizePacman() { let w = window.innerWidth; let h = window.innerHeight * 0.8; cs = Math.floor(Math.min(w/cols, h/rows)); pacCanvas.width = cs * cols; pacCanvas.height = cs * rows; }
 
         function generatePacMap() {
             let m = Array(rows).fill(0).map(()=>Array(cols).fill(0));
             for(let i=0; i<cols; i++) { m[0][i]=1; m[rows-1][i]=1; }
             for(let i=0; i<rows; i++) { m[i][0]=1; m[i][cols-1]=1; }
-            
             for(let y=2; y<rows-2; y+=2) {
                 for(let x=2; x<Math.floor(cols/2); x+=2) {
                     if(Math.random() > 0.35) {
@@ -1647,281 +1421,402 @@
         }
 
         function startPacman() {
-            showScreen('pacman');
-            resizePacman();
+            showScreen('pacman'); resizePacman();
             document.getElementById('pacman-overlay').style.display = 'none';
-            pacGameOver = false; pacFillLevel = 0;
-            joyActive = false;
-            document.getElementById('joystick-base').style.display = 'none';
-            
-            pacMap = generatePacMap();
-            pacDotsLeft = 0;
-            for(let r=0; r<rows; r++) {
-                for(let c=0; c<cols; c++) {
-                    if(pacMap[r][c] === 0) pacDotsLeft++;
-                }
-            }
-            pacDotsLeft -= 1; 
-            document.getElementById('pacman-score-ui').textContent = `Собери всё: ${pacDotsLeft}`;
+            pacGameOver = false; pacFillLevel = 0; joyActive = false; document.getElementById('joystick-base').style.display = 'none';
+            pacMap = generatePacMap(); pacDotsLeft = 0;
+            for(let r=0; r<rows; r++) { for(let c=0; c<cols; c++) { if(pacMap[r][c] === 0) pacDotsLeft++; } }
+            pacDotsLeft -= 1; document.getElementById('pacman-score-ui').textContent = `Собери всё: ${pacDotsLeft}`;
 
-            let playerMaxSpeed = cs * PLAYER_MAX_SPEED_COEF;
-            let enemySpeed = cs * ENEMY_SPEED_COEF;
-            
-            pacPlayer = { 
-                x: Math.floor(cols/2)*cs + cs/2, 
-                y: (rows-2)*cs + cs/2, 
-                speed: playerMaxSpeed 
-            };
-            
-            pacEnemies = [
-                { x: 1*cs + cs/2, y: 1*cs + cs/2, vx: 0, vy: 1, speed: enemySpeed },
-                { x: (cols-2)*cs + cs/2, y: 1*cs + cs/2, vx: 0, vy: 1, speed: enemySpeed },
-                { x: Math.floor(cols/2)*cs + cs/2, y: 1*cs + cs/2, vx: 1, vy: 0, speed: enemySpeed }
-            ];
+            let playerMaxSpeed = cs * PLAYER_MAX_SPEED_COEF; let enemySpeed = cs * ENEMY_SPEED_COEF;
+            pacPlayer = { x: Math.floor(cols/2)*cs + cs/2, y: (rows-2)*cs + cs/2, speed: playerMaxSpeed };
+            pacEnemies = [ { x: 1*cs + cs/2, y: 1*cs + cs/2, vx: 0, vy: 1, speed: enemySpeed }, { x: (cols-2)*cs + cs/2, y: 1*cs + cs/2, vx: 0, vy: 1, speed: enemySpeed }, { x: Math.floor(cols/2)*cs + cs/2, y: 1*cs + cs/2, vx: 1, vy: 0, speed: enemySpeed } ];
 
-            pacScreen.addEventListener('touchstart', handleJoyStart, {passive: false});
-            pacScreen.addEventListener('touchmove', handleJoyMove, {passive: false});
-            pacScreen.addEventListener('touchend', handleJoyEnd);
-            pacScreen.addEventListener('touchcancel', handleJoyEnd);
-            
-            pacScreen.addEventListener('mousedown', handleJoyStart);
-            pacScreen.addEventListener('mousemove', e => { if (e.buttons > 0) handleJoyMove(e); });
-            pacScreen.addEventListener('mouseup', handleJoyEnd);
-            pacScreen.addEventListener('mouseleave', handleJoyEnd);
-            
+            pacScreen.addEventListener('touchstart', handleJoyStart, {passive: false}); pacScreen.addEventListener('touchmove', handleJoyMove, {passive: false}); pacScreen.addEventListener('touchend', handleJoyEnd); pacScreen.addEventListener('touchcancel', handleJoyEnd);
+            pacScreen.addEventListener('mousedown', handleJoyStart); pacScreen.addEventListener('mousemove', e => { if (e.buttons > 0) handleJoyMove(e); }); pacScreen.addEventListener('mouseup', handleJoyEnd); pacScreen.addEventListener('mouseleave', handleJoyEnd);
             pacAnimId = requestAnimationFrame(updatePacman);
         }
 
-        function handleJoyStart(e) {
-            if (pacGameOver) return;
-            e.preventDefault();
-            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            joyActive = true;
-            joyOriginX = clientX;
-            joyOriginY = clientY;
-            joyCurX = clientX;
-            joyCurY = clientY;
-            updateJoyVisuals();
-        }
-
-        function handleJoyMove(e) {
-            if (!joyActive || pacGameOver) return;
-            e.preventDefault();
-            let clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            let clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            joyCurX = clientX;
-            joyCurY = clientY;
-            updateJoyVisuals();
-        }
-
-        function handleJoyEnd(e) {
-            joyActive = false;
-            joyVector = { x: 0, y: 0, mag: 0 };
-            document.getElementById('joystick-base').style.display = 'none';
-        }
+        function handleJoyStart(e) { if (pacGameOver) return; e.preventDefault(); let cX = e.touches ? e.touches[0].clientX : e.clientX; let cY = e.touches ? e.touches[0].clientY : e.clientY; joyActive = true; joyOriginX = cX; joyOriginY = cY; joyCurX = cX; joyCurY = cY; updateJoyVisuals(); }
+        function handleJoyMove(e) { if (!joyActive || pacGameOver) return; e.preventDefault(); joyCurX = e.touches ? e.touches[0].clientX : e.clientX; joyCurY = e.touches ? e.touches[0].clientY : e.clientY; updateJoyVisuals(); }
+        function handleJoyEnd(e) { joyActive = false; joyVector = { x: 0, y: 0, mag: 0 }; document.getElementById('joystick-base').style.display = 'none'; }
 
         function updateJoyVisuals() {
-            let dx = joyCurX - joyOriginX;
-            let dy = joyCurY - joyOriginY;
-            let dist = Math.hypot(dx, dy);
-            
-            if (dist > joyMaxRadius) {
-                dx = (dx / dist) * joyMaxRadius;
-                dy = (dy / dist) * joyMaxRadius;
-                dist = joyMaxRadius;
-            }
-            
-            joyVector.x = dx / joyMaxRadius; 
-            joyVector.y = dy / joyMaxRadius; 
-            joyVector.mag = dist / joyMaxRadius;
-            
-            let base = document.getElementById('joystick-base');
-            let stick = document.getElementById('joystick-stick');
-            base.style.display = 'block';
-            base.style.left = joyOriginX + 'px';
-            base.style.top = joyOriginY + 'px';
+            let dx = joyCurX - joyOriginX; let dy = joyCurY - joyOriginY; let dist = Math.hypot(dx, dy);
+            if (dist > joyMaxRadius) { dx = (dx / dist) * joyMaxRadius; dy = (dy / dist) * joyMaxRadius; dist = joyMaxRadius; }
+            joyVector.x = dx / joyMaxRadius; joyVector.y = dy / joyMaxRadius; joyVector.mag = dist / joyMaxRadius;
+            let base = document.getElementById('joystick-base'); let stick = document.getElementById('joystick-stick');
+            base.style.display = 'block'; base.style.left = joyOriginX + 'px'; base.style.top = joyOriginY + 'px';
             stick.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
         }
 
         function checkWallCollision(x, y, radius) {
-            let left = Math.floor((x - radius) / cs);
-            let right = Math.floor((x + radius) / cs);
-            let top = Math.floor((y - radius) / cs);
-            let bottom = Math.floor((y + radius) / cs);
-            
+            let left = Math.floor((x - radius) / cs), right = Math.floor((x + radius) / cs), top = Math.floor((y - radius) / cs), bottom = Math.floor((y + radius) / cs);
             if (left < 0 || right >= cols || top < 0 || bottom >= rows) return true;
-            if (pacMap[top][left] === 1) return true;
-            if (pacMap[top][right] === 1) return true;
-            if (pacMap[bottom][left] === 1) return true;
-            if (pacMap[bottom][right] === 1) return true;
-            
-            return false;
+            if (pacMap[top][left] === 1 || pacMap[top][right] === 1 || pacMap[bottom][left] === 1 || pacMap[bottom][right] === 1) return true; return false;
         }
 
         function moveEnemy(ent) {
-            let c = Math.floor(ent.x / cs);
-            let r = Math.floor(ent.y / cs);
-            if (c < 0) c = 0; if (c >= cols) c = cols - 1;
-            if (r < 0) r = 0; if (r >= rows) r = rows - 1;
-
-            let cx = c * cs + cs/2;
-            let cy = r * cs + cs/2;
-            let dist = Math.hypot(ent.x - cx, ent.y - cy);
+            let c = Math.floor(ent.x / cs), r = Math.floor(ent.y / cs);
+            if (c < 0) c = 0; if (c >= cols) c = cols - 1; if (r < 0) r = 0; if (r >= rows) r = rows - 1;
+            let cx = c * cs + cs/2, cy = r * cs + cs/2; let dist = Math.hypot(ent.x - cx, ent.y - cy);
 
             if (dist <= ent.speed) {
-                ent.x = cx; 
-                ent.y = cy;
-                let validDirs = [];
+                ent.x = cx; ent.y = cy; let validDirs = [];
                 if(pacMap[r-1] && pacMap[r-1][c] !== 1) validDirs.push({vx:0,vy:-1});
                 if(pacMap[r+1] && pacMap[r+1][c] !== 1) validDirs.push({vx:0,vy:1});
                 if(pacMap[r] && pacMap[r][c-1] !== 1) validDirs.push({vx:-1,vy:0});
                 if(pacMap[r] && pacMap[r][c+1] !== 1) validDirs.push({vx:1,vy:0});
-                
-                if (validDirs.length > 1 && (ent.vx !== 0 || ent.vy !== 0)) {
-                    let forward = validDirs.filter(d => d.vx !== -ent.vx || d.vy !== -ent.vy);
-                    if (forward.length > 0) validDirs = forward;
-                }
-                
+                if (validDirs.length > 1 && (ent.vx !== 0 || ent.vy !== 0)) { let fwd = validDirs.filter(d => d.vx !== -ent.vx || d.vy !== -ent.vy); if (fwd.length > 0) validDirs = fwd; }
                 let chosen = validDirs[Math.floor(Math.random()*validDirs.length)];
-                if (chosen) { 
-                    ent.vx = chosen.vx; 
-                    ent.vy = chosen.vy; 
-                } else { 
-                    ent.vx = 0; 
-                    ent.vy = 0; 
-                }
-                
-                if (ent.vx !== 0 || ent.vy !== 0) {
-                    ent.x += ent.vx * (ent.speed + 0.1); 
-                    ent.y += ent.vy * (ent.speed + 0.1);
-                }
-            } else {
-                ent.x += ent.vx * ent.speed; 
-                ent.y += ent.vy * ent.speed;
-            }
+                if (chosen) { ent.vx = chosen.vx; ent.vy = chosen.vy; } else { ent.vx = 0; ent.vy = 0; }
+                if (ent.vx !== 0 || ent.vy !== 0) { ent.x += ent.vx * (ent.speed + 0.1); ent.y += ent.vy * (ent.speed + 0.1); }
+            } else { ent.x += ent.vx * ent.speed; ent.y += ent.vy * ent.speed; }
         }
 
         function drawGlass(x, y, fill) {
-            pacCtx.save(); pacCtx.translate(x, y);
-            pacCtx.strokeStyle = "rgba(255,255,255,0.9)"; pacCtx.lineWidth = 2;
-            pacCtx.beginPath(); pacCtx.moveTo(-cs*0.3, -cs*0.4); pacCtx.lineTo(-cs*0.2, cs*0.4); 
-            pacCtx.lineTo(cs*0.2, cs*0.4); pacCtx.lineTo(cs*0.3, -cs*0.4); pacCtx.stroke();
+            pacCtx.save(); pacCtx.translate(x, y); pacCtx.strokeStyle = "rgba(255,255,255,0.9)"; pacCtx.lineWidth = 2;
+            pacCtx.beginPath(); pacCtx.moveTo(-cs*0.3, -cs*0.4); pacCtx.lineTo(-cs*0.2, cs*0.4); pacCtx.lineTo(cs*0.2, cs*0.4); pacCtx.lineTo(cs*0.3, -cs*0.4); pacCtx.stroke();
             if(fill > 0) {
-                pacCtx.fillStyle = "rgba(255,234,0,0.8)";
-                pacCtx.beginPath();
-                let bottomW = cs*0.2, topW = cs*0.2 + (cs*0.1)*fill;
-                let h = cs*0.8 * fill;
-                pacCtx.moveTo(-topW, cs*0.4 - h); pacCtx.lineTo(-bottomW, cs*0.4);
-                pacCtx.lineTo(bottomW, cs*0.4); pacCtx.lineTo(topW, cs*0.4 - h); pacCtx.fill();
+                pacCtx.fillStyle = "rgba(255,234,0,0.8)"; pacCtx.beginPath(); let bw = cs*0.2, tw = cs*0.2 + (cs*0.1)*fill, h = cs*0.8 * fill;
+                pacCtx.moveTo(-tw, cs*0.4 - h); pacCtx.lineTo(-bw, cs*0.4); pacCtx.lineTo(bw, cs*0.4); pacCtx.lineTo(tw, cs*0.4 - h); pacCtx.fill();
             }
             pacCtx.restore();
         }
 
-        function drawBottle(x, y) {
-            pacCtx.save(); pacCtx.translate(x, y);
-            pacCtx.fillStyle = "#00ff66";
-            pacCtx.fillRect(-cs*0.15, -cs*0.1, cs*0.3, cs*0.5); 
-            pacCtx.fillRect(-cs*0.06, -cs*0.4, cs*0.12, cs*0.3); 
-            pacCtx.restore();
-        }
+        function drawBottle(x, y) { pacCtx.save(); pacCtx.translate(x, y); pacCtx.fillStyle = "#00ff66"; pacCtx.fillRect(-cs*0.15, -cs*0.1, cs*0.3, cs*0.5); pacCtx.fillRect(-cs*0.06, -cs*0.4, cs*0.12, cs*0.3); pacCtx.restore(); }
 
         function updatePacman() {
             if(!pacGameOver) {
-                // Аналоговое перемещение игрока с джойстика
                 if (joyActive && joyVector.mag > 0.05) {
-                    let stepX = joyVector.x * pacPlayer.speed;
-                    let stepY = joyVector.y * pacPlayer.speed;
-                    let pr = cs * 0.25; 
-                    
-                    if (!checkWallCollision(pacPlayer.x + stepX, pacPlayer.y, pr)) {
-                        pacPlayer.x += stepX;
-                    }
-                    if (!checkWallCollision(pacPlayer.x, pacPlayer.y + stepY, pr)) {
-                        pacPlayer.y += stepY;
-                    }
+                    let stX = joyVector.x * pacPlayer.speed, stY = joyVector.y * pacPlayer.speed, pr = cs * 0.25; 
+                    if (!checkWallCollision(pacPlayer.x + stX, pacPlayer.y, pr)) pacPlayer.x += stX;
+                    if (!checkWallCollision(pacPlayer.x, pacPlayer.y + stY, pr)) pacPlayer.y += stY;
                 }
-
-                // Сбор капель
-                let curC = Math.floor(pacPlayer.x / cs);
-                let curR = Math.floor(pacPlayer.y / cs);
+                let curC = Math.floor(pacPlayer.x / cs), curR = Math.floor(pacPlayer.y / cs);
                 if (curR >= 0 && curR < rows && curC >= 0 && curC < cols && pacMap[curR][curC] === 0) {
-                    pacMap[curR][curC] = 2; 
-                    pacDotsLeft--;
-                    document.getElementById('pacman-score-ui').textContent = `Собери всё: ${pacDotsLeft}`;
-                    if (pacDotsLeft <= 0) winPacman();
+                    pacMap[curR][curC] = 2; pacDotsLeft--; document.getElementById('pacman-score-ui').textContent = `Собери всё: ${pacDotsLeft}`; if (pacDotsLeft <= 0) winPacman();
                 }
-
-                // Движение врагов
                 pacEnemies.forEach(e => moveEnemy(e));
-                
-                // Коллизия с врагами
-                for(let e of pacEnemies) {
-                    if(Math.hypot(pacPlayer.x - e.x, pacPlayer.y - e.y) < cs*0.7) {
-                        pacGameOver = true;
-                        document.getElementById('joystick-base').style.display = 'none';
-                        playSound('fail');
-                    }
-                }
+                for(let e of pacEnemies) { if(Math.hypot(pacPlayer.x - e.x, pacPlayer.y - e.y) < cs*0.7) { pacGameOver = true; document.getElementById('joystick-base').style.display = 'none'; playSound('fail'); } }
             }
-
-            // Отрисовка
-            pacCtx.clearRect(0, 0, pacCanvas.width, pacCanvas.height);
-            pacCtx.fillStyle = "#222";
+            pacCtx.clearRect(0, 0, pacCanvas.width, pacCanvas.height); pacCtx.fillStyle = "#222";
             for(let r=0; r<rows; r++) {
                 for(let c=0; c<cols; c++) {
                     if(pacMap[r][c] === 1) pacCtx.fillRect(c*cs, r*cs, cs, cs);
-                    else if(pacMap[r][c] === 0) {
-                        pacCtx.fillStyle = "rgba(0, 229, 255, 0.6)";
-                        pacCtx.beginPath(); pacCtx.arc(c*cs + cs/2, r*cs + cs/2, cs*0.1, 0, Math.PI*2); pacCtx.fill();
-                        pacCtx.fillStyle = "#222";
-                    }
+                    else if(pacMap[r][c] === 0) { pacCtx.fillStyle = "rgba(0, 229, 255, 0.6)"; pacCtx.beginPath(); pacCtx.arc(c*cs + cs/2, r*cs + cs/2, cs*0.1, 0, Math.PI*2); pacCtx.fill(); pacCtx.fillStyle = "#222"; }
                 }
             }
-
             if(pacGameOver) {
-                pacFillLevel += 0.02;
-                drawGlass(pacPlayer.x, pacPlayer.y, Math.min(pacFillLevel, 1));
-                pacEnemies.forEach(e => drawBottle(e.x, e.y));
-                if(pacFillLevel >= 1.5) { endPacman(false); return; } 
-            } else {
-                drawGlass(pacPlayer.x, pacPlayer.y, 0);
-                pacEnemies.forEach(e => drawBottle(e.x, e.y));
-            }
-
+                pacFillLevel += 0.02; drawGlass(pacPlayer.x, pacPlayer.y, Math.min(pacFillLevel, 1)); pacEnemies.forEach(e => drawBottle(e.x, e.y)); if(pacFillLevel >= 1.5) { endPacman(false); return; } 
+            } else { drawGlass(pacPlayer.x, pacPlayer.y, 0); pacEnemies.forEach(e => drawBottle(e.x, e.y)); }
             if(pacDotsLeft > 0) pacAnimId = requestAnimationFrame(updatePacman);
         }
 
         function winPacman() {
-            playSound('success');
-            cancelAnimationFrame(pacAnimId);
-            pacScreen.removeEventListener('touchstart', handleJoyStart);
-            pacScreen.removeEventListener('touchmove', handleJoyMove);
-            pacScreen.removeEventListener('touchend', handleJoyEnd);
-            
+            playSound('success'); cancelAnimationFrame(pacAnimId);
+            pacScreen.removeEventListener('touchstart', handleJoyStart); pacScreen.removeEventListener('touchmove', handleJoyMove); pacScreen.removeEventListener('touchend', handleJoyEnd);
             document.getElementById('joystick-base').style.display = 'none';
-            let ov = document.getElementById('pacman-overlay');
-            ov.style.display = 'flex';
-            document.getElementById('pacman-overlay-title').textContent = 'СПАССЯ!';
-            document.getElementById('pacman-overlay-title').style.color = 'var(--green)';
-            document.getElementById('pacman-overlay-sub').textContent = 'Красавчик.';
-            
+            let ov = document.getElementById('pacman-overlay'); ov.style.display = 'flex';
+            document.getElementById('pacman-overlay-title').textContent = 'СПАССЯ!'; document.getElementById('pacman-overlay-title').style.color = 'var(--green)'; document.getElementById('pacman-overlay-sub').textContent = 'Красавчик.';
             setTimeout(() => { showScreen('task'); nextTurn(); }, 2000);
         }
 
         function endPacman(win) {
             cancelAnimationFrame(pacAnimId);
-            pacScreen.removeEventListener('touchstart', handleJoyStart);
-            pacScreen.removeEventListener('touchmove', handleJoyMove);
-            pacScreen.removeEventListener('touchend', handleJoyEnd);
-            
+            pacScreen.removeEventListener('touchstart', handleJoyStart); pacScreen.removeEventListener('touchmove', handleJoyMove); pacScreen.removeEventListener('touchend', handleJoyEnd);
             document.getElementById('joystick-base').style.display = 'none';
-            let ov = document.getElementById('pacman-overlay');
-            ov.style.display = 'flex';
-            document.getElementById('pacman-overlay-title').textContent = 'ПОПАЛСЯ!';
-            document.getElementById('pacman-overlay-title').style.color = 'var(--pink)';
-            document.getElementById('pacman-overlay-sub').textContent = 'Пей до дна!';
+            let ov = document.getElementById('pacman-overlay'); ov.style.display = 'flex';
+            document.getElementById('pacman-overlay-title').textContent = 'ПОПАЛСЯ!'; document.getElementById('pacman-overlay-title').style.color = 'var(--pink)'; document.getElementById('pacman-overlay-sub').textContent = 'Пей до дна!';
+            setTimeout(() => { showScreen('task'); nextTurn(); }, 2500);
+        }
 
+        /* --- ИГРА ЗМЕЙКА (ПЛАВНАЯ) --- */
+        const snakeCanvas = document.getElementById('snake-canvas'); const snakeScreen = document.getElementById('screen-snake'); const snakeCtx = snakeCanvas.getContext('2d'); const sDpad = document.getElementById('snake-dpad');
+        let snakeAnimId, snakeBody, snakeFood, snakeDotsTarget, snakeDotsCurrent;
+        let snakeSpeed = 150; let snakeLastTime = 0; let sCols = 11, sRows = 15, scs;
+        let snakeDir = {x: 1, y: 0}, snakeNextDir = {x: 1, y: 0}; let snakeGameOver = false; let snakeMouthOpen = 0, snakeMouthDir = 1;
+
+        document.getElementById('btn-snake-up').addEventListener('pointerdown', () => setSnakeNextDir(0, -1)); document.getElementById('btn-snake-down').addEventListener('pointerdown', () => setSnakeNextDir(0, 1));
+        document.getElementById('btn-snake-left').addEventListener('pointerdown', () => setSnakeNextDir(-1, 0)); document.getElementById('btn-snake-right').addEventListener('pointerdown', () => setSnakeNextDir(1, 0));
+
+        function setSnakeNextDir(x, y) { if (snakeGameOver) return; if (x === -snakeDir.x || y === -snakeDir.y) return; snakeNextDir = {x, y}; if(navigator.vibrate) navigator.vibrate(20); }
+        document.getElementById('btn-start-snake').addEventListener('click', () => { playSound('click'); modals.penalty.classList.remove('active'); startSnake(); });
+
+        function resizeSnake() { let w = window.innerWidth * 0.9; let h = window.innerHeight * 0.6; scs = Math.floor(Math.min(w/sCols, h/sRows)); snakeCanvas.width = scs * sCols; snakeCanvas.height = scs * sRows; }
+        function spawnSnakeFood() { while (true) { let fx = Math.floor(Math.random() * sCols); let fy = Math.floor(Math.random() * sRows); if (!snakeBody.some(part => part.x === fx && part.y === fy)) { snakeFood = {x: fx, y: fy}; break; } } }
+
+        function startSnake() {
+            showScreen('snake'); resizeSnake(); document.getElementById('snake-overlay').style.display = 'none'; sDpad.style.display = 'grid'; 
+            snakeDotsTarget = Math.floor(Math.random() * 11) + 20; snakeDotsCurrent = 0; document.getElementById('snake-score-ui').textContent = `Собери: 0 / ${snakeDotsTarget}`;
+            let startX = Math.floor(sCols/2), startY = Math.floor(sRows/2); snakeBody = [{x: startX, y: startY, vX: startX * scs, vY: startY * scs}]; snakeDir = {x: 1, y: 0}; snakeNextDir = {x: 1, y: 0}; snakeGameOver = false;
+            spawnSnakeFood(); snakeScreen.addEventListener('touchstart', handleSnakeTouchStart, {passive: false}); snakeScreen.addEventListener('touchmove', handleSnakeTouchMove, {passive: false}); window.addEventListener('keydown', handleSnakeKey);
+            snakeLastTime = performance.now(); snakeAnimId = requestAnimationFrame(updateSnake);
+        }
+
+        let sTouchStartX = 0, sTouchStartY = 0;
+        function handleSnakeTouchStart(e) { if (snakeGameOver) return; sTouchStartX = e.touches[0].clientX; sTouchStartY = e.touches[0].clientY; }
+        function handleSnakeTouchMove(e) { if (snakeGameOver || !sTouchStartX || !sTouchStartY) return; e.preventDefault(); let dx = e.touches[0].clientX - sTouchStartX, dy = e.touches[0].clientY - sTouchStartY; if (Math.abs(dx) > 30 || Math.abs(dy) > 30) { if (Math.abs(dx) > Math.abs(dy)) { setSnakeNextDir(dx > 0 ? 1 : -1, 0); } else { setSnakeNextDir(0, dy > 0 ? 1 : -1); } sTouchStartX = 0; sTouchStartY = 0; } }
+        function handleSnakeKey(e) { if (e.key === 'ArrowUp' || e.key === 'w') setSnakeNextDir(0, -1); else if (e.key === 'ArrowDown' || e.key === 's') setSnakeNextDir(0, 1); else if (e.key === 'ArrowLeft' || e.key === 'a') setSnakeNextDir(-1, 0); else if (e.key === 'ArrowRight' || e.key === 'd') setSnakeNextDir(1, 0); }
+
+        function drawSnakePacmanHead(ctx, x, y, size, dir, openRatio) { ctx.save(); ctx.translate(x + size/2, y + size/2); let angle = 0; if (dir.x === 1) angle = 0; else if (dir.x === -1) angle = Math.PI; else if (dir.y === 1) angle = Math.PI/2; else if (dir.y === -1) angle = -Math.PI/2; ctx.rotate(angle); ctx.fillStyle = "#ffea00"; ctx.beginPath(); let mouth = 0.2 * Math.PI * openRatio; ctx.arc(0, 0, size/2 * 0.8, mouth, 2 * Math.PI - mouth); ctx.lineTo(0, 0); ctx.fill(); ctx.restore(); }
+        function drawEmptyShot(ctx, x, y, size) { ctx.save(); ctx.translate(x, y); ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(size*0.3, size*0.2); ctx.lineTo(size*0.4, size*0.8); ctx.lineTo(size*0.6, size*0.8); ctx.lineTo(size*0.7, size*0.2); ctx.closePath(); ctx.stroke(); ctx.restore(); }
+
+        function updateSnake(time) {
+            if (snakeGameOver) return; snakeMouthOpen += 0.1 * snakeMouthDir; if (snakeMouthOpen >= 1) { snakeMouthOpen = 1; snakeMouthDir = -1; } if (snakeMouthOpen <= 0) { snakeMouthOpen = 0; snakeMouthDir = 1; } let dt = time - snakeLastTime;
+            snakeCtx.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height); snakeCtx.strokeStyle = 'rgba(255,255,255,0.03)'; snakeCtx.lineWidth = 1; for(let c=0; c<=sCols; c++) { snakeCtx.beginPath(); snakeCtx.moveTo(c*scs, 0); snakeCtx.lineTo(c*scs, snakeCanvas.height); snakeCtx.stroke(); } for(let r=0; r<=sRows; r++) { snakeCtx.beginPath(); snakeCtx.moveTo(0, r*scs); snakeCtx.lineTo(snakeCanvas.width, r*scs); snakeCtx.stroke(); }
+            snakeCtx.font = `bold ${scs * 0.8}px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif`;; snakeCtx.textAlign = "center"; snakeCtx.textBaseline = "middle"; snakeCtx.fillText("🥃", snakeFood.x * scs + scs/2, snakeFood.y * scs + scs/2);
+            if (dt >= snakeSpeed) {
+                snakeLastTime = time; snakeDir = snakeNextDir; let h = snakeBody[0]; let hx = h.x + snakeDir.x; let hy = h.y + snakeDir.y;
+                if (hx < 0 || hx >= sCols || hy < 0 || hy >= sRows) { endSnake(false); return; } for(let i=1; i<snakeBody.length; i++) { if(snakeBody[i].x === hx && snakeBody[i].y === hy) { endSnake(false); return; } }
+                let newHead = {x: hx, y: hy, vX: h.x * scs, vY: h.y * scs}; snakeBody.unshift(newHead);
+                if (hx === snakeFood.x && hy === snakeFood.y) { snakeDotsCurrent++; document.getElementById('snake-score-ui').textContent = `Собери: ${snakeDotsCurrent} / ${snakeDotsTarget}`; playSound('click'); if (snakeDotsCurrent >= snakeDotsTarget) { endSnake(true); return; } spawnSnakeFood(); } else { snakeBody.pop(); } dt = 0;
+            }
+            let ratio = dt / snakeSpeed;
+            for (let i = snakeBody.length - 1; i > 0; i--) { let curr = snakeBody[i]; let next = snakeBody[i-1]; curr.vX = curr.x * scs + (next.x - curr.x) * scs * ratio; curr.vY = curr.y * scs + (next.y - curr.y) * scs * ratio; drawEmptyShot(snakeCtx, curr.vX, curr.vY, scs); }
+            let head = snakeBody[0]; head.vX = head.x * scs + snakeDir.x * scs * (ratio - 1); head.vY = head.y * scs + snakeDir.y * scs * (ratio - 1);
+            if(snakeBody.length > 1 && ratio < 0.1) { head.vX = snakeBody[1].x * scs + snakeDir.x * scs * ratio; head.vY = snakeBody[1].y * scs + snakeDir.y * scs * ratio; }
+            drawSnakePacmanHead(snakeCtx, head.vX, head.vY, scs, snakeDir, snakeMouthOpen); snakeAnimId = requestAnimationFrame(updateSnake);
+        }
+
+        function endSnake(win) {
+            snakeGameOver = true; cancelAnimationFrame(snakeAnimId); sDpad.style.display = 'none'; snakeScreen.removeEventListener('touchstart', handleSnakeTouchStart); snakeScreen.removeEventListener('touchmove', handleSnakeTouchMove); window.removeEventListener('keydown', handleSnakeKey);
+            let ov = document.getElementById('snake-overlay'); ov.style.display = 'flex';
+            if (win) { playSound('success'); document.getElementById('snake-overlay-title').textContent = 'ПОЗДРАВЛЯЮ'; document.getElementById('snake-overlay-title').style.color = 'var(--green)'; document.getElementById('snake-overlay-sub1').textContent = 'Ты выпил достаточно'; document.getElementById('snake-overlay-sub2').textContent = 'Пока хватит'; } else { playSound('fail'); document.getElementById('snake-overlay-title').textContent = 'ПОХОЖЕ ТЫ НЕ ДОБРАЛ'; document.getElementById('snake-overlay-title').style.color = 'var(--pink)'; document.getElementById('snake-overlay-sub1').textContent = 'Выпей'; document.getElementById('snake-overlay-sub2').textContent = ''; }
+            setTimeout(() => { showScreen('task'); nextTurn(); }, 3000);
+        }
+
+        /* --- ИГРА РОГАТКА --- */
+        const slCanvas = document.getElementById('slingshot-canvas');
+        const slScreen = document.getElementById('screen-slingshot');
+        const slCtx = slCanvas.getContext('2d');
+        let slAnimId, slState = 'idle'; // idle, drag, fly, over
+        let slIce, slGlass, slObstacles = [];
+        const SL_GRAVITY = 0.4;
+        const MAX_PULL = 100;
+        let handleSlStart, handleSlMove, handleSlEnd;
+
+        document.getElementById('btn-start-slingshot').addEventListener('click', () => {
+            playSound('click'); modals.penalty.classList.remove('active'); startSlingshot();
+        });
+
+        function initSlingshotLevel() {
+            let w = slCanvas.width, h = slCanvas.height;
+            slIce = { startX: Math.min(100, w*0.2), startY: h * 0.7, x: 0, y: 0, vx: 0, vy: 0, r: 15 };
+            slIce.x = slIce.startX; slIce.y = slIce.startY;
+            
+            let gw = 70, gh = 90;
+            slGlass = {
+                x: w * 0.5 + Math.random() * (w * 0.4 - gw),
+                y: h * 0.4 + Math.random() * (h * 0.4 - gh),
+                w: gw, h: gh
+            };
+
+            slObstacles = [];
+            let numObs = Math.floor(Math.random() * 3) + 1; 
+            for(let i=0; i<numObs; i++) {
+                let ow = 20 + Math.random() * 30;
+                let oh = 60 + Math.random() * 100;
+                let ox = slIce.startX + 100 + Math.random() * (slGlass.x - slIce.startX - 150 - ow);
+                let oy = h * 0.3 + Math.random() * (h * 0.6 - oh);
+                slObstacles.push({x: ox, y: oy, w: ow, h: oh});
+            }
+            slState = 'idle';
+        }
+
+        function startSlingshot() {
+            showScreen('slingshot');
+            slCanvas.width = window.innerWidth; slCanvas.height = window.innerHeight;
+            document.getElementById('slingshot-overlay').style.display = 'none';
+            initSlingshotLevel();
+
+            const getTouchPos = (e) => {
+                let rect = slCanvas.getBoundingClientRect();
+                let t = e.touches ? e.touches[0] : e;
+                return {x: t.clientX - rect.left, y: t.clientY - rect.top};
+            };
+
+            handleSlStart = (e) => {
+                if (slState !== 'idle' && slState !== 'drag') return;
+                e.preventDefault();
+                let pos = getTouchPos(e);
+                let dist = Math.hypot(pos.x - slIce.startX, pos.y - slIce.startY);
+                if (dist < 60 || slState === 'idle') {
+                    slState = 'drag';
+                    updateDrag(pos.x, pos.y);
+                }
+            };
+
+            handleSlMove = (e) => {
+                if (slState !== 'drag') return;
+                e.preventDefault();
+                let pos = getTouchPos(e);
+                updateDrag(pos.x, pos.y);
+            };
+
+            handleSlEnd = (e) => {
+                if (slState === 'drag') {
+                    slState = 'fly';
+                    slIce.vx = (slIce.startX - slIce.x) * 0.22;
+                    slIce.vy = (slIce.startY - slIce.y) * 0.22;
+                    playSound('success');
+                }
+            };
+
+            slScreen.addEventListener('touchstart', handleSlStart, {passive: false});
+            slScreen.addEventListener('touchmove', handleSlMove, {passive: false});
+            slScreen.addEventListener('touchend', handleSlEnd);
+            slScreen.addEventListener('mousedown', handleSlStart);
+            slScreen.addEventListener('mousemove', e => { if(e.buttons>0) handleSlMove(e); });
+            slScreen.addEventListener('mouseup', handleSlEnd);
+
+            slAnimId = requestAnimationFrame(updateSlingshot);
+        }
+
+        function updateDrag(mx, my) {
+            let dx = mx - slIce.startX, dy = my - slIce.startY;
+            let dist = Math.hypot(dx, dy);
+            if (dist > MAX_PULL) { dx = (dx/dist)*MAX_PULL; dy = (dy/dist)*MAX_PULL; }
+            slIce.x = slIce.startX + dx; slIce.y = slIce.startY + dy;
+        }
+
+        function resolveAABB(rect) {
+            let testX = slIce.x, testY = slIce.y;
+            if (slIce.x < rect.x) testX = rect.x; else if (slIce.x > rect.x + rect.w) testX = rect.x + rect.w;
+            if (slIce.y < rect.y) testY = rect.y; else if (slIce.y > rect.y + rect.h) testY = rect.y + rect.h;
+            
+            let dx = slIce.x - testX, dy = slIce.y - testY;
+            let dist = Math.hypot(dx, dy);
+            if (dist < slIce.r) {
+                let overlap = slIce.r - dist;
+                let nx = dx / dist || 0, ny = dy / dist || 0;
+                slIce.x += nx * overlap; slIce.y += ny * overlap;
+                let dot = slIce.vx * nx + slIce.vy * ny;
+                slIce.vx -= 2 * dot * nx; slIce.vy -= 2 * dot * ny;
+                slIce.vx *= 0.7; slIce.vy *= 0.7;
+                playSound('click');
+            }
+        }
+
+        function updateSlingshot() {
+            let w = slCanvas.width, h = slCanvas.height;
+
+            if (slState === 'fly') {
+                slIce.vy += SL_GRAVITY;
+                slIce.x += slIce.vx; slIce.y += slIce.vy;
+
+                if (slIce.x < slIce.r) { slIce.x = slIce.r; slIce.vx *= -0.7; }
+                if (slIce.x > w + 100 || slIce.y > h + 100) { endSlingshot(false); return; }
+
+                slObstacles.forEach(o => resolveAABB(o));
+
+                let th = 6; 
+                resolveAABB({x: slGlass.x, y: slGlass.y, w: th, h: slGlass.h});
+                resolveAABB({x: slGlass.x + slGlass.w - th, y: slGlass.y, w: th, h: slGlass.h});
+                resolveAABB({x: slGlass.x, y: slGlass.y + slGlass.h - th, w: slGlass.w, h: th});
+
+                if (slIce.x > slGlass.x + th && slIce.x < slGlass.x + slGlass.w - th &&
+                    slIce.y > slGlass.y + slGlass.h / 2 && slIce.y < slGlass.y + slGlass.h) {
+                    slIce.vx *= 0.8; slIce.vy *= 0.8;
+                    if (Math.abs(slIce.vx) < 0.5 && Math.abs(slIce.vy) < 0.5 && slState !== 'over') {
+                        slState = 'over';
+                        endSlingshot(true);
+                        return;
+                    }
+                }
+
+                if (slIce.y > h - slIce.r) {
+                    slIce.y = h - slIce.r; slIce.vy *= -0.5; slIce.vx *= 0.9;
+                    if (Math.abs(slIce.vx) < 0.5 && Math.abs(slIce.vy) < 0.5 && slState !== 'over') {
+                        slState = 'over';
+                        endSlingshot(false);
+                        return;
+                    }
+                }
+            }
+
+            slCtx.clearRect(0, 0, w, h);
+
+            slCtx.fillStyle = "#222"; slCtx.fillRect(0, h-10, w, 10);
+
+            slCtx.beginPath(); slCtx.moveTo(slIce.startX, slIce.startY); slCtx.lineTo(slIce.startX, h);
+            slCtx.strokeStyle = "#8b5a2b"; slCtx.lineWidth = 10; slCtx.stroke();
+
+            if (slState === 'drag' || slState === 'idle') {
+                slCtx.beginPath(); slCtx.moveTo(slIce.startX - 15, slIce.startY - 10);
+                slCtx.lineTo(slIce.x, slIce.y); slCtx.strokeStyle = "#551100"; slCtx.lineWidth = 4; slCtx.stroke();
+            }
+
+            if (slState === 'drag') {
+                slCtx.beginPath();
+                let tx = slIce.x, ty = slIce.y;
+                let tvx = (slIce.startX - slIce.x) * 0.22;
+                let tvy = (slIce.startY - slIce.y) * 0.22;
+                for(let i=0; i<30; i++) {
+                    tx += tvx * 3; ty += tvy * 3; tvy += SL_GRAVITY * 3;
+                    if (i%2===0) { slCtx.lineTo(tx, ty); } else { slCtx.moveTo(tx, ty); }
+                }
+                slCtx.strokeStyle = "rgba(255,255,255,0.3)"; slCtx.lineWidth = 2; slCtx.stroke();
+            }
+
+            slCtx.save();
+            slCtx.translate(slIce.x, slIce.y);
+            slCtx.rotate(slState==='fly' ? slIce.vx*0.1 : 0);
+            slCtx.font = `${slIce.r * 2.5}px Arial`; slCtx.textAlign = "center"; slCtx.textBaseline = "middle";
+            slCtx.fillText("🧊", 0, 0);
+            slCtx.restore();
+
+            if (slState === 'drag' || slState === 'idle') {
+                slCtx.beginPath(); slCtx.moveTo(slIce.startX + 15, slIce.startY - 10);
+                slCtx.lineTo(slIce.x, slIce.y); slCtx.strokeStyle = "#aa3311"; slCtx.lineWidth = 4; slCtx.stroke();
+            }
+
+            slCtx.fillStyle = "rgba(0, 229, 255, 0.2)";
+            slCtx.strokeStyle = "var(--blue)";
+            slCtx.lineWidth = 2;
+            slObstacles.forEach(o => {
+                slCtx.fillRect(o.x, o.y, o.w, o.h);
+                slCtx.strokeRect(o.x, o.y, o.w, o.h);
+                slCtx.beginPath(); slCtx.moveTo(o.x+5, o.y+5); slCtx.lineTo(o.x+o.w-5, o.y+o.h-5); slCtx.stroke();
+            });
+
+            slCtx.fillStyle = "rgba(255, 255, 255, 0.1)";
+            slCtx.strokeStyle = "var(--yellow)";
+            slCtx.lineWidth = 4;
+            slCtx.beginPath();
+            slCtx.moveTo(slGlass.x, slGlass.y);
+            slCtx.lineTo(slGlass.x, slGlass.y + slGlass.h);
+            slCtx.lineTo(slGlass.x + slGlass.w, slGlass.y + slGlass.h);
+            slCtx.lineTo(slGlass.x + slGlass.w, slGlass.y);
+            slCtx.stroke();
+            slCtx.fill();
+            
+            slCtx.beginPath(); slCtx.moveTo(slGlass.x, slGlass.y); slCtx.lineTo(slGlass.x + slGlass.w, slGlass.y);
+            slCtx.strokeStyle = "rgba(255,255,255,0.3)"; slCtx.lineWidth=2; slCtx.stroke();
+
+            if (slState !== 'over') slAnimId = requestAnimationFrame(updateSlingshot);
+        }
+
+        function endSlingshot(win) {
+            cancelAnimationFrame(slAnimId);
+            slScreen.removeEventListener('touchstart', handleSlStart);
+            slScreen.removeEventListener('touchmove', handleSlMove);
+            slScreen.removeEventListener('touchend', handleSlEnd);
+            slScreen.removeEventListener('mousedown', handleSlStart);
+            
+            let ov = document.getElementById('slingshot-overlay');
+            ov.style.display = 'flex';
+            if (win) {
+                playSound('success');
+                document.getElementById('slingshot-overlay-title').textContent = 'В ЯБЛОЧКО!';
+                document.getElementById('slingshot-overlay-title').style.color = 'var(--green)';
+                document.getElementById('slingshot-overlay-sub').textContent = 'Штраф отменен';
+            } else {
+                playSound('fail');
+                document.getElementById('slingshot-overlay-title').textContent = 'ПРОМАХ!';
+                document.getElementById('slingshot-overlay-title').style.color = 'var(--pink)';
+                document.getElementById('slingshot-overlay-sub').textContent = 'Пей до дна!';
+            }
             setTimeout(() => { showScreen('task'); nextTurn(); }, 2500);
         }
 
@@ -1932,12 +1827,8 @@
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
-                    .then(registration => {
-                        console.log('ServiceWorker успешно зарегистрирован. Scope: ', registration.scope);
-                    })
-                    .catch(error => {
-                        console.log('Сбой регистрации ServiceWorker: ', error);
-                    });
+                    .then(registration => { console.log('ServiceWorker успешно зарегистрирован.'); })
+                    .catch(error => { console.log('Сбой регистрации ServiceWorker: ', error); });
             });
         }
     </script>
